@@ -35,7 +35,7 @@ public class Panel {
     private JLabel dateGlobal;
 
     public void dateTime(){
-        dateGlobal = new JLabel("1/April/2020    00:00");
+        dateGlobal = new JLabel("1/April/2020    00:00:00");
         dateGlobal.setFont(new Font("Arial", Font.BOLD, 30));
         dateGlobal.setSize(350, 75);
         dateGlobal.setLocation(20, 20);
@@ -114,6 +114,7 @@ public class Panel {
         int countDay = 1;
         int countMonth = 4;
         int countYear = 2020;
+        int countSec = 0;
 
 
         @Override
@@ -126,6 +127,10 @@ public class Panel {
 
                     if(time() >= 1000/boosterTimer) {
                         startTime = System.currentTimeMillis();
+                        countSec++;
+                    }
+                    if(countSec >= 60){
+                        countSec = 0;
                         countMinute++;
                     }
 
@@ -150,7 +155,7 @@ public class Panel {
                             countYear++;
                         }
 
-                    dateGlobal.setText(countDay + "/" + countMonth + "/"  + countYear + "     " + countHour + ":" + countMinute);
+                    dateGlobal.setText(countDay + "/" + countMonth + "/"  + countYear + "     " + countHour + ":" + countMinute + ":" +countSec);
                     indicator.setText("X" + boosterTimer);
                 }
             });
