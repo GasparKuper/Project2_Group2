@@ -3,7 +3,7 @@ package MAIN.Body;
 import MAIN.Interfaces.Vector3dInterface;
 import java.lang.Math;
 
-public class Vector3D implements Vector3dInterface{
+public class Vector3d implements Vector3dInterface{
 
     private double x;
     private double y;
@@ -15,7 +15,7 @@ public class Vector3D implements Vector3dInterface{
      * @param y is the y coordinates of the vector
      * @param z is the z coordinates of the vector
      */
-    public Vector3D(double x, double y, double z) {
+    public Vector3d(double x, double y, double z) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -75,7 +75,7 @@ public class Vector3D implements Vector3dInterface{
      * @return the result of the addition
      */
     public Vector3dInterface add(Vector3dInterface other) {
-        Vector3dInterface vector = new Vector3D(this.x + other.getX(), this.y + other.getY(), this.z + other.getZ());
+        Vector3dInterface vector = new Vector3d(this.x + other.getX(), this.y + other.getY(), this.z + other.getZ());
         return vector;
     }
 
@@ -85,7 +85,7 @@ public class Vector3D implements Vector3dInterface{
      * @return the result of the substraction
      */
     public Vector3dInterface sub(Vector3dInterface other) {
-        Vector3dInterface vector = new Vector3D(this.x - other.getX(), this.y - other.getY(), this.z - other.getZ());
+        Vector3dInterface vector = new Vector3d(this.x - other.getX(), this.y - other.getY(), this.z - other.getZ());
         return vector;
     }
 
@@ -95,7 +95,7 @@ public class Vector3D implements Vector3dInterface{
      * @return the result of the multiplication
      */
     public Vector3dInterface mul(double scalar) {
-        Vector3dInterface vector = new Vector3D(this.x*scalar,this.y*scalar,this.z*scalar);
+        Vector3dInterface vector = new Vector3d(this.x*scalar,this.y*scalar,this.z*scalar);
         return vector;
     }
 

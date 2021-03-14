@@ -6,9 +6,9 @@ public class PlanetBody {
 
     private PointCoordinate point;
 
-    private Vector3D vector;
+    private Vector3d vector;
 
-    public PlanetBody(double m, PointCoordinate point, Vector3D vector){
+    public PlanetBody(double m, PointCoordinate point, Vector3d vector){
         this.m = m;
         this.point = point;
         this.vector = vector;
@@ -22,7 +22,7 @@ public class PlanetBody {
         return point;
     }
 
-    public Vector3D getVector() {
+    public Vector3d getVector() {
         return vector;
     }
 
@@ -34,7 +34,7 @@ public class PlanetBody {
         this.point = point;
     }
 
-    public void setVector(Vector3D vector) {
+    public void setVector(Vector3d vector) {
         this.vector = vector;
     }
 

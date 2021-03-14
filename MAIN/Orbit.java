@@ -8,7 +8,7 @@ import javafx.scene.image.Image;
 
 public class Orbit {
 
-	public Vector3dInterface solarSystemBarycenter = new Vector3D(1500/2.0, 0.0, -750/2.0); // position of the SSB on the screen
+	public Vector3dInterface solarSystemBarycenter = new Vector3d(1500/2.0, 0.0, -750/2.0); // position of the SSB on the screen
 
 	private Vector3dInterface position; // position of the planet compared to the SSB
 	private Sphere shape; // 3d component that models the orbit
@@ -21,7 +21,7 @@ public class Orbit {
 	@param radius radius of its model in meters
 	**/
 	public Orbit(double x, double y, double z, double radius) {
-		this.position = new Vector3D(x, y, z).add(solarSystemBarycenter);
+		this.position = new Vector3d(x, y, z).add(solarSystemBarycenter);
 		this.shape = new Sphere(radius);
 
 		this.shape.translateXProperty().set(position.getX());
