@@ -3,10 +3,10 @@ package MAIN.NWGravitation;
 import MAIN.Body.Data;
 import MAIN.Body.PlanetBody;
 
-import static MAIN.Constant.Constant.*;
 
 public class Force {
 
+    public final static double G = 6.674e-11;
 
     public static void main(String[] args) {
 
