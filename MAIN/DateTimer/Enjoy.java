@@ -22,7 +22,7 @@ public class Enjoy {
         JPanel panel = null;
 
         try {
-            Image img = ImageIO.read(new File("Background.jpg"));
+            Image img = ImageIO.read(new File("Image/Background.jpg"));
             panel = new ImagePanel(img);
             main.add(panel);
             main.setLocationRelativeTo(null);

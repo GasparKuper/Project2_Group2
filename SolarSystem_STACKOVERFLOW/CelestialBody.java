@@ -1,4 +1,4 @@
-package GUI_SolarSystem_Maria;
+package SolarSystem_STACKOVERFLOW;
 
 import java.awt.*;
 import java.util.*;

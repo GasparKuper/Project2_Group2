@@ -1,4 +1,4 @@
-package SolarSystem_STACKOVERFLOW;
+package GUI_SolarSystem_Maria;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -42,7 +42,7 @@ public class SolarSystem extends Application {
         Sphere sun = new Sphere(SIZE_SUN);
         PhongMaterial sunMaterial = new PhongMaterial(); // Creating the sun Material
         sunMaterial.setDiffuseColor(Color.YELLOW); // Setting the Material color
-        sunMaterial.setSelfIlluminationMap(new Image(getClass().getResourceAsStream("/Resources/Map_of_the_full_sun.jpg")));
+        sunMaterial.setSelfIlluminationMap(new Image(getClass().getResourceAsStream("/Image/Textures/Map_of_the_full_sun.jpg")));
         sun.setMaterial(sunMaterial); // Setting the material to the sun
 
 
@@ -50,7 +50,7 @@ public class SolarSystem extends Application {
         //Sphere earth = new Sphere(SIZE_EARTH);
         PhongMaterial earthMaterial = new PhongMaterial(); // Creating the earth Material
         earthMaterial.setDiffuseColor(Color.LIGHTSKYBLUE); // Setting the Material color
-        earthMaterial.setDiffuseMap(new Image(getClass().getResourceAsStream("/Resources/earthmap-1280x720.jpg")));
+        earthMaterial.setDiffuseMap(new Image(getClass().getResourceAsStream("/Image/Textures/earthmap-1280x720.jpg")));
         earth.setMaterial(earthMaterial); // Setting the material to the earth
 
         earth.setRotationAxis(Rotate.Y_AXIS); // setting the rotation Axis of the earth
