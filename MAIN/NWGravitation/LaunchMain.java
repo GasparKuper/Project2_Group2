@@ -1,4 +1,7 @@
-package NWGravitation;
+package MAIN.NWGravitation;
+
+import MAIN.Body.Data;
+import MAIN.Body.PlanetBody;
 
 public class LaunchMain {
 

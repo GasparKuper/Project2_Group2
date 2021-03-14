@@ -1,5 +1,6 @@
-package NWGravitation;
+package MAIN.Body;
 
+import MAIN.Interfaces.Vector3dInterface;
 import java.lang.Math;
 public class Vector3D implements Vector3dInterface{
 

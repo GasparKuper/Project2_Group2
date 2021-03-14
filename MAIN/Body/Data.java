@@ -1,8 +1,12 @@
-package NWGravitation;
+package MAIN.Body;
+
+import MAIN.Body.PlanetBody;
+import MAIN.Body.PointCoordinate;
+import MAIN.Body.Vector3D;
 
 public class Data {
 
-    protected PlanetBody[] SolarSystem(){
+    public PlanetBody[] SolarSystem(){
         PlanetBody[] planets = new PlanetBody[12];
         //Object
         planets[0] = new PlanetBody(1,

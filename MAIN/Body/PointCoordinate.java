@@ -1,4 +1,4 @@
-package NWGravitation;
+package MAIN.Body;
 
 public class PointCoordinate {
 
