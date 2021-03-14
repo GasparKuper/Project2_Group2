@@ -33,6 +33,6 @@ public class LaunchMain {
     }
 
     private static double force(PlanetBody one, PlanetBody other){
-        return (G * one.getM() * other.getM() / Math.pow(one.getVector().dist(other.getVector()), 2));
+        return (G * one.getM() * other.getM() / Math.pow(one.getVelocity().dist(other.getVelocity()), 2));
     }
 }
