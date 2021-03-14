@@ -4,38 +4,38 @@ public class PlanetBody {
 
     private double m;
 
-    private PointCoordinate point;
+    private Vector3d position;
 
-    private Vector3d vector;
+    private Vector3d velocity;
 
-    public PlanetBody(double m, PointCoordinate point, Vector3d vector){
+    public PlanetBody(double m, Vector3d position, Vector3d velocity){
         this.m = m;
-        this.point = point;
-        this.vector = vector;
+        this.position = position;
+        this.velocity = velocity;
     }
 
     public double getM() {
         return m;
     }
 
-    public PointCoordinate getPoint() {
-        return point;
+    public Vector3d getPosition() {
+        return position;
     }
 
-    public Vector3d getVector() {
-        return vector;
+    public Vector3d getVelocity() {
+        return velocity;
     }
 
     public void setM(double m) {
         this.m = m;
     }
 
-    public void setPoint(PointCoordinate point) {
-        this.point = point;
+    public void setPosition(Vector3d position) {
+        this.position = position;
     }
 
-    public void setVector(Vector3d vector) {
-        this.vector = vector;
+    public void setVelocity(Vector3d velocity) {
+        this.velocity = velocity;
     }
 
 }
