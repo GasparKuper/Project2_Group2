@@ -1,4 +1,6 @@
-import titan.*;
+package MAIN.Body;
+
+import MAIN.Interfaces.*;
 
 public class Function implements FunctionInterface {
 
@@ -13,7 +15,7 @@ public class Function implements FunctionInterface {
 	}
 
 	public Vector3dInterface call(double t, Vector3dInterface s) {
-		Vector3dInterface result = new Vector3d((s.getX() - xInit) / t, (s.getY() - yInit) / t, (s.getZ() - zInit) / t);
+		Vector3dInterface result = new Vector3D((s.getX() - xInit) / t, (s.getY() - yInit) / t, (s.getZ() - zInit) / t);
 		return result;
 	}
 
