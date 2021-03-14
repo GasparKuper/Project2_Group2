@@ -3,9 +3,10 @@ package MAIN.NWGravitation;
 import MAIN.Body.Data;
 import MAIN.Body.PlanetBody;
 
-public class LaunchMain {
+import static MAIN.Constant.Constant.*;
 
-    private final static double G = 6.674e-11;
+public class Force {
+
 
     public static void main(String[] args) {
 
@@ -26,13 +27,13 @@ public class LaunchMain {
         for (PlanetBody body1 : object) {
             for (PlanetBody body2 : object) {
                 if (body1 != body2) {
-                    totalForce[point++] = force(body1, body2);
+                    totalForce[point++] = ForceBetween(body1, body2);
                 }
             }
         }
     }
 
-    private static double force(PlanetBody one, PlanetBody other){
+    public static double ForceBetween(PlanetBody one, PlanetBody other){
         return (G * one.getM() * other.getM() / Math.pow(one.getVelocity().dist(other.getVelocity()), 2));
     }
 }
