@@ -1,10 +1,5 @@
 package MAIN.Body;
 
-import MAIN.Interfaces.Vector3dInterface;
-import javafx.scene.image.Image;
-import javafx.scene.paint.PhongMaterial;
-import javafx.scene.shape.Sphere;
-
 public class PlanetBody {
 
     private double m;

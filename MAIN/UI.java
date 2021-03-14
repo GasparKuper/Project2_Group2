@@ -1,4 +1,5 @@
-package MAIN;// Scale x,y,z  - 1:1*10^(-9)
+package MAIN;
+// Scale x,y,z  - 1:1*10^(-9)
 // Scale volume - 1:1*10^(-6)
 
 import javafx.application.Application;

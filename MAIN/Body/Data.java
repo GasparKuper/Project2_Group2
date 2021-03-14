@@ -1,9 +1,5 @@
 package MAIN.Body;
 
-import MAIN.Body.PlanetBody;
-import MAIN.Body.PointCoordinate;
-import MAIN.Body.Vector3D;
-
 public class Data {
 
     public PlanetBody[] SolarSystem(){
