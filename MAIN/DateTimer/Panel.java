@@ -146,7 +146,13 @@ public class Panel {
                             countDay++;
                         }
 
-                        if (countDay >= 31) {
+                        if(countDay == 29 && countMonth == 2){
+                            countDay = 1;
+                            countMonth++;
+                        } else if(countDay == 31 && (countMonth == 4 || countMonth == 6 || countMonth == 9 || countMonth == 11)){
+                            countDay = 1;
+                            countMonth++;
+                        } else if (countDay == 32 && (countMonth == 1 || countMonth == 3 || countMonth == 5 || countMonth == 7 || countMonth == 8 || countMonth == 10 || countMonth == 12)) {
                             countDay = 1;
                             countMonth++;
                         }
