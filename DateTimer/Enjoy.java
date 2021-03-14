@@ -1,4 +1,4 @@
-package src;
+package DateTimer;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

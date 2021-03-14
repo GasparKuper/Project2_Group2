@@ -1,4 +1,4 @@
-package src;
+package GUI_SolarSystem_Maria;
 
 import java.awt.*;
 import java.util.*;

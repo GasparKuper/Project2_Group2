@@ -1,4 +1,4 @@
-package src;
+package SolarSystem_STACKOVERFLOW;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;

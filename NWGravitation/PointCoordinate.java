@@ -1,4 +1,4 @@
-package NWGravity;
+package NWGravitation;
 
 public class PointCoordinate {
 

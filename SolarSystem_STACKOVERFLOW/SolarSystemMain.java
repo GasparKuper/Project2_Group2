@@ -1,6 +1,7 @@
-package src;
+package SolarSystem_STACKOVERFLOW;
 
-import java.util.*;
+import GUI_SolarSystem_Maria.CelestialBody;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
