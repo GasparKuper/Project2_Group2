@@ -16,13 +16,13 @@ public class Orbit {
 
         Force := G * m0*m / r^2
 
-        a := G * M0 * (x0-x) / r^3    OR  a:= Force/M ==== G * m0*m / (r^2) * m   TODO
+        TODO a := G * M0 * (x0-x) / r^3    TODO a:= Force/M  or a:= G * m0*m / (r^2) * m
 
         //New velocity of the object
-        v := v + T * a  TODO
+        v := v + T * a  TODO  y(t) = a*t + b
 
         //New position of the object
-        x := x + T * v  TODO
+        x := x + T * v  TODO  y(t) = a*t + b
 
      */
 
