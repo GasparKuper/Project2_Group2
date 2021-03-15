@@ -43,17 +43,17 @@ public class Orbit {
 
     public static double AccX_Between(PlanetBody one, PlanetBody other) {
         return (G * one.getM() * (one.getPosition().getX() - other.getPosition().getX())
-                / Math.pow(one.getPosition().dist(other.getPosition()), 3));
+                / Math.pow(other.getPosition().dist(one.getPosition()), 3));
     }
 
     public static double AccY_Between(PlanetBody one, PlanetBody other) {
         return (G * one.getM() * (one.getPosition().getY() - other.getPosition().getY())
-                / Math.pow(one.getPosition().dist(other.getPosition()), 3));
+                / Math.pow(other.getPosition().dist(one.getPosition()), 3));
     }
 
     public static double AccZ_Between(PlanetBody one, PlanetBody other) {
         return (G * one.getM() * (one.getPosition().getZ() - other.getPosition().getZ())
-                / Math.pow(one.getPosition().dist(other.getPosition()), 3));
+                / Math.pow(other.getPosition().dist(one.getPosition()), 3));
     }
 
     public static void main(String[] args) {
