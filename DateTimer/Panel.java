@@ -1,4 +1,4 @@
-package MAIN.DateTimer;
+package DateTimer;
 
 import javax.swing.*;
 import java.awt.*;
