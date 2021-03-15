@@ -63,9 +63,9 @@ public class Force {
         PlanetBody[] object = data.SolarSystem();
 
         for(PlanetBody planet: object){
-            //get position of planet
             Vector3d positionofplanet = planet.getPosition();
 
+            //still need to implemment the probe
             double probeX = 0;
             double probeY = 0;
             double probeZ = 0;
