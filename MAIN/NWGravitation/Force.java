@@ -40,7 +40,6 @@ public class Force {
 
     
       /*
-      /*
             Finding force in 3d
             find vector distance between both masses
             distance vector between two bodies= |x,y,z|
