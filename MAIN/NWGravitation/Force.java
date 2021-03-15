@@ -37,7 +37,12 @@ public class Force {
         Vector3dInterface position2 =  other.getPosition();
         return (G * one.getM() * other.getM() / Math.pow(position1.dist(position2)), 2));
     }
-
+    
+     public static double ForceBetween(PlanetBody planet, SpaceShip probe){
+        Vector3dInterface position1 =  planet.getPosition();
+        Vector3dInterface position2 =  probe.getPosition();
+        return (G * planet.getM() * probe.getM() / Math.pow(position1.dist(position2)), 2));
+    }
     
       /*
             Finding force in 3d
