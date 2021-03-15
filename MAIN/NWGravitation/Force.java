@@ -38,6 +38,7 @@ public class Force {
     }
     
       /*
+      /*
             Finding force in 3d
             find vector distance between both masses
             distance vector between two bodies= |x,y,z|
@@ -50,14 +51,36 @@ public class Force {
             c = |F|/ √(x^2 + y^2 + z^2)
             F= |xc, yc, zc|
 
+            adding all vectors
+            |x,y,z| + |i,j,k| = |x+i, y+j, z+k|
      */
 
+    public Vector3d forceVectorOnProbe(Object probe){
 
-    //
-    public Vector3d forceVector(PlanetBody planet){
+        Vector3d force = new Vector3d(0,0,0);
 
+        Data data = new Data();
+        PlanetBody[] object = data.SolarSystem();
 
-        return null;
+        for(PlanetBody planet: object){
+            //get position of planet
+            Vector3d positionofplanet = planet.getPosition();
+
+            double probeX = 0;
+            double probeY = 0;
+            double probeZ = 0;
+
+            Vector3d distanceBetween = new Vector3d(positionofplanet.getX()-probeX, positionofplanet.getY()-probeY, positionofplanet.getZ()-probeZ);
+
+            double result = ForceBetween(planet, probe);
+            double coefficient = result / Math.sqrt(Math.pow(distanceBetween.getX(),2) + Math.pow(distanceBetween.getY(),2) + Math.pow(distanceBetween.getZ(),2));
+
+            Vector3d temp = new Vector3d(distanceBetween.getX()*coefficient, distanceBetween.getY()*coefficient, distanceBetween.getZ()*coefficient);
+
+            force.add(temp);
+        }
+
+        return force;
     }
 
 }
