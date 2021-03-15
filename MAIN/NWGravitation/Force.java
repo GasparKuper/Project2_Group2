@@ -57,7 +57,7 @@ public class Force {
             |x,y,z| + |i,j,k| = |x+i, y+j, z+k|
      */
 
-    public Vector3d forceVectorOnProbe(Object probe){
+      public Vector3d forceVectorOnProbe(SpaceShip probe){
 
         Vector3d force = new Vector3d(0,0,0);
 
@@ -68,11 +68,9 @@ public class Force {
             //get position of planet
             Vector3dInterface positionofplanet = planet.getPosition();
 
-            double probeX = 0;
-            double probeY = 0;
-            double probeZ = 0;
+            Vector3d positionOfProbe = probe.getPosition():
 
-            Vector3d distanceBetween = new Vector3d(positionofplanet.getX()-probeX, positionofplanet.getY()-probeY, positionofplanet.getZ()-probeZ);
+            Vector3d distanceBetween = new Vector3d(positionofplanet.getX()-positionOfProbe.getX(), positionofplanet.getY()-positionOfProbe.getY(), positionofplanet.getZ()-positionOfProbe.getZ());
 
             //make a ForceBetween method that takes the planet and the probe
             double result = ForceBetween(planet, probe);
@@ -85,5 +83,4 @@ public class Force {
 
         return force;
     }
-
 }
