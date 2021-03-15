@@ -36,4 +36,28 @@ public class Force {
     public static double ForceBetween(PlanetBody one, PlanetBody other){
         return (G * one.getM() * other.getM() / Math.pow(one.getVelocity().dist(other.getVelocity()), 2));
     }
+    
+      /*
+            Finding force in 3d
+            find vector distance between both masses
+            distance vector between two bodies= |x,y,z|
+            F= c( xi + yj + zk)
+            F(force)
+            c(coefficient)
+            i,j,k(direction)
+
+            |F| = √(x^2c^2 + y^2c^2 + z^2c^2)
+            c = |F|/ √(x^2 + y^2 + z^2)
+            F= |xc, yc, zc|
+
+     */
+
+
+    //
+    public Vector3d forceVector(PlanetBody one, PlanetBody two){
+
+
+        return null;
+    }
+
 }
