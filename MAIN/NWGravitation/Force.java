@@ -54,7 +54,7 @@ public class Force {
 
 
     //
-    public Vector3d forceVector(PlanetBody one, PlanetBody two){
+    public Vector3d forceVector(PlanetBody planet){
 
 
         return null;
