@@ -1,5 +1,8 @@
-package MAIN.Body;
+package MAIN.OrbitAcc;
 
+import MAIN.Body.Data;
+import MAIN.Body.PlanetBody;
+import MAIN.Body.Vector3d;
 import MAIN.Interfaces.Vector3dInterface;
 
 public class Orbit {
@@ -7,7 +10,7 @@ public class Orbit {
     public final static double G = 6.674e-11;
 
     /*
-        ONE STEP TODO
+        ONE STEP TODO one step == one second
 
         Acceleration == a
         Velocity == v
@@ -51,5 +54,19 @@ public class Orbit {
     public static double AccZ_Between(PlanetBody one, PlanetBody other) {
         return (G * one.getM() * (one.getPosition().getZ() - other.getPosition().getZ())
                 / Math.pow(one.getPosition().dist(other.getPosition()), 3));
+    }
+
+    public static void main(String[] args) {
+        Data data = new Data();
+
+        PlanetBody[] planets = data.SolarSystem();
+
+        Orbit orbit = new Orbit();
+
+        Vector3d[] acceleration = (Vector3d[]) orbit.AccelerationVectorPlanet(planets);
+
+        for (Vector3d vector3d : acceleration) {
+            System.out.println(vector3d.toString());
+        }
     }
 }
