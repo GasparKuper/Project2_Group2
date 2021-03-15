@@ -1,6 +1,5 @@
 package MAIN.OrbitAcc;
 
-import MAIN.Body.Data;
 import MAIN.Body.PlanetBody;
 import MAIN.Body.Vector3d;
 import MAIN.Interfaces.Vector3dInterface;
@@ -31,11 +30,13 @@ public class Orbit {
 
     public Vector3dInterface[] AccelerationVectorPlanet(PlanetBody[] planets) {
 
-        Vector3d[] accAllPlanets = new Vector3d[10];
+        Vector3d[] accAllPlanets = new Vector3d[11*10];
         int point = 0;
-        for (PlanetBody body : planets) {
-            if (body != planets[0]) {
-                accAllPlanets[point++] = new Vector3d(AccX_Between(planets[0], body), AccY_Between(planets[0], body), AccZ_Between(planets[0], body));
+        for (PlanetBody body1 : planets) {
+            for (PlanetBody body2 : planets) {
+                if (body1 != body2) {
+                    accAllPlanets[point++] = new Vector3d(AccX_Between(body1, body2), AccY_Between(body1, body2), AccZ_Between(body1, body2));
+                }
             }
         }
         return accAllPlanets;
@@ -55,18 +56,5 @@ public class Orbit {
         return (G * one.getM() * (one.getPosition().getZ() - other.getPosition().getZ())
                 / Math.pow(other.getPosition().dist(one.getPosition()), 3));
     }
-
-    public static void main(String[] args) {
-        Data data = new Data();
-
-        PlanetBody[] planets = data.SolarSystem();
-
-        Orbit orbit = new Orbit();
-
-        Vector3d[] acceleration = (Vector3d[]) orbit.AccelerationVectorPlanet(planets);
-
-        for (Vector3d vector3d : acceleration) {
-            System.out.println(vector3d.toString());
-        }
-    }
 }
+
