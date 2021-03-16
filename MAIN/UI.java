@@ -2,10 +2,29 @@ package MAIN;
 // Scale x,y,z  - 1:1*10^(-9)
 // Scale volume - 1:1*10^(-6)
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.geometry.Point3D;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Cylinder;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Sphere;
+import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 import javafx.scene.*;
 import javafx.scene.image.*;
+import javafx.util.Duration;
+
+import javax.xml.crypto.dsig.keyinfo.KeyValue;
+import java.security.KeyException;
+import java.security.PublicKey;
 
 public class UI extends Application{
 
@@ -16,6 +35,13 @@ public class UI extends Application{
 
 		Group solarSystem = new Group();
 		Scene scene = new Scene(solarSystem, WIDTH, HEIGHT);
+
+		Sphere sunPivot = new Sphere(50);
+		sunPivot.setTranslateX(-0.6806783239281648);
+		sunPivot.setTranslateY(-0.006564012751690170);
+		sunPivot.setTranslateZ(-1.080005533878725);
+
+
 
 		Orbit sun = new Orbit(-0.6806783239281648, 1.080005533878725, 0.006564012751690170, 695.508);
 		sun.setImage("/Image/Textures/Sun.JPG");
@@ -61,17 +87,117 @@ public class UI extends Application{
 		neptune.setImage("/Image/Textures/Neptune.JPG");
 		solarSystem.getChildren().add(neptune.getShape());
 
-		ImageView background = new ImageView("/Image/Textures/Space.JPG");
+		/*ImageView background = new ImageView("/Image/Textures/Space.JPG");
 		background.setPreserveRatio(true);
 		background.setFitWidth(WIDTH*1.3);
 		background.setFitHeight(HEIGHT*1.2);
-		solarSystem.getChildren().add(background);
-		background.toBack();
+		solarSystem.getChildren().add(background);*/
 
+		scene.setFill(Color.BLACK);
+
+		PerspectiveCamera camera = new PerspectiveCamera(true);
+		camera.setFieldOfView(25); // setting the camera to be telephoto
+		camera.translateXProperty().set(-300); // setting the camera in the solar system
+		camera.translateYProperty().set(0);  // setting the camera in the solar system
+		camera.translateZProperty().set(-3300); // moving the camera back in the scence
+		camera.setRotationAxis(Rotate.Y_AXIS);
+		camera.setRotate(0);
+		camera.setNearClip(1);
+		camera.setFarClip(100000);
+
+
+		//Point3D pivot3D = new Point3D(sunPivot.getTranslateX(),sunPivot.getTranslateY(),sunPivot.getTranslateZ());
+		Rotate yRotate = new Rotate(0, Rotate.Y_AXIS); // Lets the camera rotate around the Y Axis
+		yRotate.pivotXProperty().bind(sunPivot.translateXProperty());
+		yRotate.pivotZProperty().bind(sunPivot.translateZProperty());
+		yRotate.pivotYProperty().bind(sunPivot.translateYProperty());
+
+		Rotate cameraRotate = new Rotate(0, Rotate.Y_AXIS);
+		Translate pivot = new Translate();
+
+
+		camera.getTransforms().addAll(
+				pivot,
+				yRotate,
+				cameraRotate,
+				new Translate(0,0,-500)
+		);
+
+
+		primaryStage.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
+			switch (event.getCode()) {
+				case V:
+					yRotate.angleProperty().set(yRotate.getAngle() + 10);
+					//cameraRotate.angleProperty().set(cameraRotate.getAngle() -10);
+					System.out.println("cameraRotate" + cameraRotate.getAngle());
+					System.out.println("yRotate" + yRotate.getAngle());
+					break;
+			}
+
+			switch (event.getCode()) {
+				case B:
+					yRotate.setAngle(yRotate.getAngle() - 10);
+					//cameraRotate.angleProperty().set(cameraRotate.getAngle() + 10);
+					System.out.println("cameraRotate" + cameraRotate.getAngle());
+					System.out.println("yRotate" + yRotate.getAngle());
+					break;
+			}
+		});
+
+
+		// set the pivot for the camera position animation base upon mouse clicks on objects
+		solarSystem.getChildren().stream()
+				.filter(node -> !(node instanceof Camera))
+				.forEach(node ->
+						node.setOnMouseClicked(event -> {
+							pivot.setX(node.getTranslateX());
+							pivot.setY(node.getTranslateY());
+							pivot.setZ(node.getTranslateZ());
+						})
+				);
+
+
+		primaryStage.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
+			//				case Q:
+			//					yRotate.angleProperty().set(yRotate.getAngle() + 10);
+			//					System.out.println("yRotate" + yRotate.getAngle());
+			//					break;
+			switch (event.getCode()) {
+				case F -> {
+					camera.translateYProperty().set(camera.getTranslateY() + 100);
+					System.out.println("X Position: " + camera.getTranslateX() + "  Y Position: " + camera.getTranslateY() + "  Z Position: " + camera.getTranslateZ());
+				}
+				case R -> {
+					camera.translateYProperty().set(camera.getTranslateY() - 100);
+					System.out.println("X Position: " + camera.getTranslateX() + "  Y Position: " + camera.getTranslateY() + "  Z Position: " + camera.getTranslateZ());
+				}
+				case A -> {
+					camera.translateXProperty().set(camera.getTranslateX() - 100);
+					System.out.println("X Position: " + camera.getTranslateX() + "  Y Position: " + camera.getTranslateY() + "  Z Position: " + camera.getTranslateZ());
+				}
+				case D -> {
+					camera.translateXProperty().set(camera.getTranslateX() + 100);
+					System.out.println("X Position: " + camera.getTranslateX() + "  Y Position: " + camera.getTranslateY() + "  Z Position: " + camera.getTranslateZ());
+				}
+				case W -> {
+					camera.translateZProperty().set(camera.getTranslateZ() + 100);
+					System.out.println("X Position: " + camera.getTranslateX() + "  Y Position: " + camera.getTranslateY() + "  Z Position: " + camera.getTranslateZ());
+				}
+				case S -> {
+					camera.translateZProperty().set(camera.getTranslateZ() - 100);
+					System.out.println("X Position: " + camera.getTranslateX() + "  Y Position: " + camera.getTranslateY() + "  Z Position: " + camera.getTranslateZ());
+				}
+			}
+		});
+
+
+		scene.setCamera(camera);  // Setting the camera into the scene
 		primaryStage.setTitle("Flight to Titan - Group 20");
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
+
+
 
 	public static void main(String args[]) {
 		launch(args);
