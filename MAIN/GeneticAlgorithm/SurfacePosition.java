@@ -15,6 +15,8 @@ public class SurfacePosition {
      * @param latitude north-south range from -90 to 90 degree
      * @return The position on the Earth
      */
+
+    //https://gis.stackexchange.com/questions/23793/how-do-i-calculate-a-xyz-position-of-one-gps-position-relative-to-another
     public Vector3dInterface positionOnEarth(double altitude, double longitude, double latitude){
 
         double radius = radiusOfEarth + altitude;
