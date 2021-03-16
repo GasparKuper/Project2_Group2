@@ -49,9 +49,11 @@ public class ODESolver implements ODESolverInterface {
     @Override
     public StateInterface[] solve(ODEFunctionInterface f, StateInterface y0, double tf, double h) {
 
-        double[] ts = new double[(int) (tf/h)];
+        double [] ts = new double[(int) (tf/h)];
 
-        ts[1] = h;
+        for(int x = 0; x < ts.length; x++){
+            ts[x] = h*x;
+        }
 
         return solve(f, y0, ts );
     }
