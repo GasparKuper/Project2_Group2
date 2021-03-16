@@ -8,7 +8,7 @@ import javafx.scene.image.Image;
 
 public class Orbit {
 
-	public Vector3dInterface solarSystemBarycenter = new Vector3d(1500/2.0, 0.0, -750/2.0); // position of the SSB on the screen
+	public final Vector3dInterface solarSystemBarycenter = new Vector3d(1500/2.0, 0.0, -750/2.0); // position of the SSB on the screen
 
 	private Vector3dInterface position; // position of the planet compared to the SSB
 	private Sphere shape; // 3d component that models the orbit
@@ -49,6 +49,16 @@ public class Orbit {
 	public void setImage(String fileName) {
 		PhongMaterial overlay = new PhongMaterial();
 		overlay.setDiffuseMap(new Image((fileName)));
+		this.shape.setMaterial(overlay);
+	}
+	
+	/**
+	Sets a self-illuminating overlay for the orbit
+	@param fileName name of the file used as overlay
+	**/
+	public void setLight(String fileName) {
+		PhongMaterial overlay = new PhongMaterial();
+		overlay.setSelfIlluminationMap(new Image(fileName));
 		this.shape.setMaterial(overlay);
 	}
 
