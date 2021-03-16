@@ -1,4 +1,7 @@
-import titan.*;
+package MAIN.Body;
+
+import MAIN.Interfaces.RateInterface;
+import MAIN.Interfaces.Vector3dInterface;
 
 public class Rate implements RateInterface {
 

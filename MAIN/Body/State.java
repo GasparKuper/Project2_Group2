@@ -1,4 +1,8 @@
-import titan.*;
+package MAIN.Body;
+
+import MAIN.Interfaces.RateInterface;
+import MAIN.Interfaces.StateInterface;
+import MAIN.Interfaces.Vector3dInterface;
 
 public class State implements StateInterface {
 

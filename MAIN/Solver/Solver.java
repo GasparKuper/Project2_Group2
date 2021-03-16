@@ -4,13 +4,11 @@ import MAIN.Body.Data;
 import MAIN.Body.PlanetBody;
 import MAIN.Body.SpaceShip;
 import MAIN.Body.Vector3d;
-import MAIN.Interfaces.FunctionInterface;
-import MAIN.Interfaces.SolverInterface;
 import MAIN.Interfaces.Vector3dInterface;
 
 import java.util.ArrayList;
 
-public class Solver implements SolverInterface {
+public class Solver {
 
     public final static double G = 6.67408e-11;
 
@@ -44,7 +42,7 @@ public class Solver implements SolverInterface {
 
         this.planets = data.SolarSystem();
 
-        FunctionInterface f = new Function();
+        Function f = new Function();
 
         this.spaceShip = new SpaceShip(100,
                 new Vector3d(0, 0, 0), //Position
@@ -66,8 +64,8 @@ public class Solver implements SolverInterface {
      * @return  an array of size nSteps with all intermediate locations along the path
      *
      */
-    @Override
-    public Vector3dInterface[] solve(FunctionInterface f, Vector3dInterface x0, double h, int nSteps) {
+
+    public Vector3dInterface[] solve(Function f, Vector3dInterface x0, double h, int nSteps) {
 
         ArrayList<Vector3dInterface> array = new ArrayList<>();
 
@@ -98,8 +96,7 @@ public class Solver implements SolverInterface {
      * @return  the new location after taking one step
      *
      */
-    @Override
-    public Vector3dInterface step(FunctionInterface f, double t, Vector3dInterface x, double h) {
+    public Vector3dInterface step(Function f, double t, Vector3dInterface x, double h) {
 
 
         return null;

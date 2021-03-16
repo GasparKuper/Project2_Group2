@@ -1,9 +1,8 @@
 package MAIN.Solver;
 
-import MAIN.Interfaces.FunctionInterface;
 import MAIN.Interfaces.Vector3dInterface;
 
-public class Function implements FunctionInterface {
+public class Function {
 
     /*
      * This is the function that represents the first derivative
@@ -20,7 +19,7 @@ public class Function implements FunctionInterface {
      * @param   t   the time at which to evaluate the function
      * @param   s   the location at which to evaluate the function
      */
-    @Override
+
     public Vector3dInterface call(double t, Vector3dInterface s) {
         return null;
     }
