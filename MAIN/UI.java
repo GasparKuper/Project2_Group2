@@ -2,29 +2,14 @@ package MAIN;
 // Scale x,y,z  - 1:1*10^(-9)
 // Scale volume - 1:1*10^(-6)
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.geometry.Point3D;
+import javafx.scene.*;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Cylinder;
-import javafx.scene.shape.Line;
 import javafx.scene.shape.Sphere;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
-import javafx.scene.*;
-import javafx.scene.image.*;
-import javafx.util.Duration;
-
-import javax.xml.crypto.dsig.keyinfo.KeyValue;
-import java.security.KeyException;
-import java.security.PublicKey;
 
 public class UI extends Application{
 
@@ -44,7 +29,7 @@ public class UI extends Application{
 
 
 		Orbit sun = new Orbit(-0.6806783239281648, 1.080005533878725, 0.006564012751690170, 695.508);
-		sun.setLight("textures\\Sun.JPG");
+		sun.setLight("/Image/TexturSun.JPG");
 		solarSystem.getChildren().add(sun.getShape());
 
 		Orbit mercury = new Orbit(0.006047855986424127, -68.01800047868888, -5.702742359714534, 2.4397);
