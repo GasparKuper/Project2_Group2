@@ -26,6 +26,7 @@ public class ODESolver implements ODESolverInterface {
 
         StateInterface[] result = new State[ts.length+1];
 
+        //Launching position
         result[0] = y0;
 
         for (int i = 0; i < ts.length; i++)
