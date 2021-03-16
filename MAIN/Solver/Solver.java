@@ -71,7 +71,7 @@ public class Solver implements SolverInterface {
 
         ArrayList<Vector3dInterface> array = new ArrayList<>();
 
-        initialMomenta();
+//        initialMomenta();
 
         for (int i = 0; i < nSteps; i++) {
 
@@ -126,16 +126,25 @@ public class Solver implements SolverInterface {
          vq=[vq,q];
          vp=[vp,q];
 
-         TODO VERSION3 below
          */
+        int count = 0;
         for(PlanetBody planet : planets) {
 
+            //TODO check Version 1
+            /*
             double[] motion = motion_X_Y_Z(planet);
             double[] force = forceMotion_X_Y_Z(planet);
 
             positions.add(new Vector3d(h * motion[0], h * motion[1], h * motion[2]));
 
             velocity.add(new Vector3d(h * force[0], h * force[1], h * force[2]));
+            */
+            //TODO check Version 2
+            double[] force = forceMotion_X_Y_Z(planet);
+
+            velocity.add(new Vector3d(h * (force[0]/planet.getM()), h * (force[1]/planet.getM()), h * (force[2]/planet.getM())));
+            positions.add(new Vector3d(h * planet.getVelocity().getX(), h * planet.getVelocity().getY(), h * planet.getVelocity().getZ()));
+            count++;
         }
 
 
@@ -188,12 +197,14 @@ public class Solver implements SolverInterface {
         return motion;
     }
 
+    /* Use with Version 1
     //Initial momenta
     private void initialMomenta(){
         for (PlanetBody planet : planets) {
             planet.getPosition().mul(planet.getM());
         }
     }
+     */
 
     public static void main(String[] args) {
         new Solver();
