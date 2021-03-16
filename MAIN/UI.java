@@ -44,7 +44,7 @@ public class UI extends Application{
 
 
 		Orbit sun = new Orbit(-0.6806783239281648, 1.080005533878725, 0.006564012751690170, 695.508);
-		sun.setImage("/Image/Textures/Sun.JPG");
+		sun.setLight("textures\\Sun.JPG");
 		solarSystem.getChildren().add(sun.getShape());
 
 		Orbit mercury = new Orbit(0.006047855986424127, -68.01800047868888, -5.702742359714534, 2.4397);
@@ -94,6 +94,9 @@ public class UI extends Application{
 		solarSystem.getChildren().add(background);*/
 
 		scene.setFill(Color.BLACK);
+		
+		PointLight lighting = new PointLight();
+		solarSystem.getChildren().add(lighting);
 
 		PerspectiveCamera camera = new PerspectiveCamera(true);
 		camera.setFieldOfView(25); // setting the camera to be telephoto
