@@ -78,9 +78,10 @@ public class Solver implements SolverInterface {
             array.add(step(f, i, x0, h));
 
             orbit(h); //Should be run at the same time with SpaceShip (Not Final Version)
-
         }
 
+        if(array.get(0) == null)
+            return null;
 
         return (Vector3dInterface[]) array.toArray();
     }
@@ -149,9 +150,9 @@ public class Solver implements SolverInterface {
 
 
         int point = 0;
-        for(PlanetBody planetNextStep : planets){
-            planetNextStep.getPosition().add(positions.get(point));
-            planetNextStep.getVelocity().add(velocity.get(point));
+        for(int i = 0; i < planets.length; i++){
+            planets[i].setPosition((Vector3d) planets[i].getPosition().add(positions.get(point)));
+            planets[i].setVelocity((Vector3d) planets[i].getVelocity().add(velocity.get(point)));
             point++;
         }
     }
@@ -172,17 +173,17 @@ public class Solver implements SolverInterface {
 
     public static double ForceX_Between(PlanetBody one, PlanetBody other) {
         return -(G * one.getM() * other.getM() *(one.getPosition().getX() - other.getPosition().getX())
-                / Math.pow(Math.pow(one.getPosition().getX() - other.getPosition().getX(), 2), 3));
+                / Math.pow(Math.pow(one.getPosition().getX() - other.getPosition().getX(), 2), 2));
     }
 
     public static double ForceY_Between(PlanetBody one, PlanetBody other) {
         return -(G * one.getM() * other.getM() * (one.getPosition().getY() - other.getPosition().getY())
-                / Math.pow(Math.pow(one.getPosition().getY() - other.getPosition().getY(), 2), 3));
+                / Math.pow(Math.pow(one.getPosition().getY() - other.getPosition().getY(), 2), 2));
     }
 
     public static double ForceZ_Between(PlanetBody one, PlanetBody other) {
         return -(G * one.getM() * other.getM() * (one.getPosition().getZ() - other.getPosition().getZ())
-                / Math.pow(Math.pow(one.getPosition().getZ() - other.getPosition().getZ(), 2), 3));
+                / Math.pow(Math.pow(one.getPosition().getZ() - other.getPosition().getZ(), 2), 2));
     }
 
     //Newton's second law of motion
