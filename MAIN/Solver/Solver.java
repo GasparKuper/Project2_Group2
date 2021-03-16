@@ -2,7 +2,6 @@ package MAIN.Solver;
 
 import MAIN.Body.Data;
 import MAIN.Body.PlanetBody;
-import MAIN.Body.SpaceShip;
 import MAIN.Body.Vector3d;
 import MAIN.Interfaces.Vector3dInterface;
 
@@ -34,7 +33,6 @@ public class Solver {
 
     public PlanetBody[] planets;
 
-    public SpaceShip spaceShip;
 
 
     public Solver(){
@@ -44,12 +42,9 @@ public class Solver {
 
         Function f = new Function();
 
-        this.spaceShip = new SpaceShip(100,
-                new Vector3d(0, 0, 0), //Position
-                new Vector3d(0, 0, 0)); //Velocity
+        Vector3dInterface x = null;
 
-
-        solve(f, spaceShip.getPosition(), 0.1, 366*10 );
+        solve(f, x, 0.1, 366*10 );
     }
 
     /*
