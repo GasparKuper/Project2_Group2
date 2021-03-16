@@ -51,6 +51,8 @@ public class ODESolver implements ODESolverInterface {
 
         double[] ts = new double[(int) (tf/h)];
 
+        ts[1] = h;
+
         return solve(f, y0, ts );
     }
 
