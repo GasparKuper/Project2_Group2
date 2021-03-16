@@ -14,10 +14,7 @@ public class ProbeSimulator implements ProbeSimulatorInterface  {
         Vector3dInterface [] position = new Vector3dInterface[ts.length];
         position [0] = p0;
 
-        for(int x = 1; x < ts.length; x++){
-            double time = ts[x];
-            position [x] = null; //still need to figure out
-        }
+        
 
         return position;
     }
