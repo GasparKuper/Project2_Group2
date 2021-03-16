@@ -75,8 +75,7 @@ public class Vector3d implements Vector3dInterface{
      * @return the result of the addition
      */
     public Vector3dInterface add(Vector3dInterface other) {
-        Vector3dInterface vector = new Vector3d(this.x + other.getX(), this.y + other.getY(), this.z + other.getZ());
-        return vector;
+        return new Vector3d(this.x + other.getX(), this.y + other.getY(), this.z + other.getZ());
     }
 
     /**
@@ -85,8 +84,7 @@ public class Vector3d implements Vector3dInterface{
      * @return the result of the substraction
      */
     public Vector3dInterface sub(Vector3dInterface other) {
-        Vector3dInterface vector = new Vector3d(this.x - other.getX(), this.y - other.getY(), this.z - other.getZ());
-        return vector;
+        return new Vector3d(this.x - other.getX(), this.y - other.getY(), this.z - other.getZ());
     }
 
     /**
@@ -95,8 +93,7 @@ public class Vector3d implements Vector3dInterface{
      * @return the result of the multiplication
      */
     public Vector3dInterface mul(double scalar) {
-        Vector3dInterface vector = new Vector3d(this.x*scalar,this.y*scalar,this.z*scalar);
-        return vector;
+        return new Vector3d(this.x*scalar, this.y*scalar, this.z*scalar);
     }
 
     /**
@@ -106,8 +103,7 @@ public class Vector3d implements Vector3dInterface{
      * @return the result of the operation
      */
     public Vector3dInterface addMul(double scalar, Vector3dInterface other) {
-        Vector3dInterface vector = this.add(other.mul(scalar));
-        return vector;
+        return this.add(other.mul(scalar));
     }
 
     /**
