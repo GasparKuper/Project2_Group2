@@ -195,7 +195,7 @@ public class UI extends Application{
 
 
 		scene.setCamera(camera);  // Setting the camera into the scene
-		primaryStage.setTitle("Flight to Titan - Group 20");
+		primaryStage.setTitle("Flight to Titan - Group 10");
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
