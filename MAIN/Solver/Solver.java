@@ -118,7 +118,7 @@ public class Solver implements SolverInterface {
          p = velocity                                      TODO VERSION 2
          fun_u = Newtons second law of motion              //New velocity of the object
          fun_v = Newtons laws of gravitation               v := v + T * a
-                                                           //New position of the object x := x + T * v
+                                                           //New position of the object
          SCILAB**                                          x := x + T * v
 
          q=q+h*fun_u(p);
