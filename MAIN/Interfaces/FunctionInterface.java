@@ -1,5 +1,4 @@
 package MAIN.Interfaces;
-
 /*
  * @author Pieter Collins, Christof Seiler, Katerina Stankova, Nico Roos, Katharina Schueller
  * @version 0.99.0
