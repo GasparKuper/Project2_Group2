@@ -2,8 +2,6 @@ package MAIN.NWGravitation;
 
 import MAIN.Body.Data;
 import MAIN.Body.PlanetBody;
-import MAIN.Body.SpaceShip;
-import MAIN.Body.Vector3d;
 import MAIN.Interfaces.Vector3dInterface;
 
 
@@ -41,11 +39,14 @@ public class Force {
         return (G * one.getM() * other.getM() / Math.pow(position1.dist(position2), 2));
     }
 
+    /*
     public static double ForceBetween(PlanetBody planet, SpaceShip probe){
         Vector3dInterface position1 =  planet.getPosition();
         Vector3dInterface position2 =  probe.getPosition();
         return (G * planet.getM() * probe.getM() / Math.pow(position1.dist(position2), 2));
     }
+
+     */
 
       /*
             Finding force in 3d
@@ -62,6 +63,7 @@ public class Force {
             |x,y,z| + |i,j,k| = |x+i, y+j, z+k|
      */
 
+    /*
     public Vector3d forceVectorOnProbe(SpaceShip probe){
 
         Vector3d force = new Vector3d(0,0,0);
@@ -88,4 +90,7 @@ public class Force {
 
         return force;
     }
+
+     */
+
 }

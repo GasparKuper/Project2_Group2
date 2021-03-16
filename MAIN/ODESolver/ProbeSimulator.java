@@ -1,4 +1,9 @@
-public class ProbeSimulator implements ProbeSimulatorInterface  {
+package MAIN.ODESolver;
+
+import MAIN.Interfaces.ProbeSimulatorInterface;
+import MAIN.Interfaces.Vector3dInterface;
+
+public class ProbeSimulator implements ProbeSimulatorInterface {
 
     /*
      * Simulate the solar system, including a probe fired from Earth at 00:00h on 1 April 2020.
