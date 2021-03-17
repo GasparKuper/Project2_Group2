@@ -5,6 +5,10 @@ import MAIN.Interfaces.Vector3dInterface;
 
 public class ProbeSimulator implements ProbeSimulatorInterface {
 
+     public PlanetBody[] planets;
+
+    public final static double G = 6.67408e-11;
+
     /*
      * Simulate the solar system, including a probe fired from Earth at 00:00h on 1 April 2020.
      *
@@ -19,7 +23,20 @@ public class ProbeSimulator implements ProbeSimulatorInterface {
         Vector3dInterface [] position = new Vector3dInterface[ts.length];
         position [0] = p0;
 
-        
+        Data data = new Data();
+        this.planets = data.SolarSystem();
+
+        //compute the full motion of the solar system to find the effects of the various planets on the probe
+
+
+        StateInterface [] state = new StateInterface[ts.length];
+        state [0] = new State(p0, v0);
+
+
+        //x(n+1) = an*t + vn*t + xn
+        for(int x = 1; x < ts.length; x++){
+
+        }
 
         return position;
     }
@@ -44,4 +61,63 @@ public class ProbeSimulator implements ProbeSimulatorInterface {
         return trajectory(p0, v0, ts);
     }
 
+    public void orbit(double h){
+        ArrayList<Vector3d> positions = new ArrayList<>();
+
+        ArrayList<Vector3d> velocity = new ArrayList<>();
+        
+        int count = 0;
+        for(PlanetBody planet : planets) {
+
+            //TODO check Version 1
+            /*
+            double[] motion = motion_X_Y_Z(planet);
+            double[] force = forceMotion_X_Y_Z(planet);
+            positions.add(new Vector3d(h * motion[0], h * motion[1], h * motion[2]));
+            velocity.add(new Vector3d(h * force[0], h * force[1], h * force[2]));
+            */
+            //TODO check Version 2
+            double[] force = forceMotion_X_Y_Z(planet);
+
+            velocity.add(new Vector3d(h * (force[0]/planet.getM()), h * (force[1]/planet.getM()), h * (force[2]/planet.getM())));
+            positions.add(new Vector3d(h * planet.getVelocity().getX(), h * planet.getVelocity().getY(), h * planet.getVelocity().getZ()));
+            count++;
+        }
+
+
+        int point = 0;
+        for(int i = 0; i < planets.length; i++){
+            planets[i].setPosition((Vector3d) planets[i].getPosition().add(positions.get(point)));
+            planets[i].setVelocity((Vector3d) planets[i].getVelocity().add(velocity.get(point)));
+            point++;
+        }
+    }
+
+    // (g*m1*m2)/r^2=f
+    private Vector3dInterface forceMotion_X_Y_Z(PlanetBody planet){
+
+        double [] force = new double[3];
+        for (PlanetBody planetBody : planets) {
+            if (planet != planetBody) {
+                force[0] += ForceX_Between(planet, planetBody);
+                force[1] += ForceY_Between(planet, planetBody);
+                force[2] += ForceZ_Between(planet, planetBody););
+            }
+        }
+        Vector3dInterface forces = new Vector3d(force[1],force[2],force[3]);
+        return forces;
+    }
+
+    public static double ForceX_Between(PlanetBody one, PlanetBody other) {
+        return -(G * one.getM() * other.getM() *(one.getPosition().getX() - other.getPosition().getX())
+                / Math.pow(Math.pow(one.getPosition().getX() - other.getPosition().getX(), 2), 2));
+    }
+    public static double ForceY_Between(PlanetBody one, PlanetBody other) {
+        return -(G * one.getM() * other.getM() * (one.getPosition().getY() - other.getPosition().getY())
+                / Math.pow(Math.pow(one.getPosition().getY() - other.getPosition().getY(), 2), 2));
+    }
+    public static double ForceZ_Between(PlanetBody one, PlanetBody other) {
+        return -(G * one.getM() * other.getM() * (one.getPosition().getZ() - other.getPosition().getZ())
+                / Math.pow(Math.pow(one.getPosition().getZ() - other.getPosition().getZ(), 2), 2));
+    }
 }
