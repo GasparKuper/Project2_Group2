@@ -8,7 +8,7 @@ public class Mathmodel {
         //get the coord of titan at t time
         //find angles of direction vector
         //find location in earth to match the direction vector
-        //iterate around the direction vector with a range of one degree higher or lower
+        //iterate around the direction vector with a range of one unit degree higher or lower
         //fire rocket with x speed from location
         //get last position in trajectory
         //evaluate position in relation to the position of titan
