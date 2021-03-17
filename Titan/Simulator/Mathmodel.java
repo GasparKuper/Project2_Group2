@@ -17,9 +17,9 @@ public class Mathmodel {
     }
 
     public Vector3dInterface CoordInEarth(Vector3dInterface origin, double radius, double angleX, double angleY){
-        double x = origin.getX()+radius*Math.cos(angleY)*Math.cos(angleX);
-        double y = origin.getY()+radius*Math.sin(angleX);
-        double z = origin.getZ()+radius*Math.sin(angleY)*Math.cos(angleX);
+        double x = origin.getX()+radius*Math.sin(angleY)*Math.cos(angleX);
+        double y = origin.getY()+radius*Math.sin(angleX)*Math.sin(angleY);
+        double z = origin.getZ()+radius*Math.cos(angleX);
         return new Vector3d(x,y,z);
     }
 
