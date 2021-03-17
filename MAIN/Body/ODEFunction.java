@@ -1,6 +1,6 @@
 import java.lang.Math;
 import java.util.LinkedList;
-public class ODEFunction{
+public class ODEFunction implements ODEFunctionInterface{
 	public State previousState;
 	public Vector3dInterface velocity;
 	public Vector3dInterface position;
