@@ -83,7 +83,7 @@ public class ODESolver implements ODESolverInterface {
     public StateInterface step(ODEFunctionInterface f, double t, StateInterface y, double h) {
         StateInterface tmp = orb.function(h, y);
 
-        RateInterface velocity_acceleration = f.call(t, y);
+        RateInterface velocity_acceleration = f.call(t, tmp);
 
         return y.addMul(h, velocity_acceleration);
     }
