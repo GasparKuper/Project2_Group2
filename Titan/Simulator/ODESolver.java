@@ -1,6 +1,7 @@
 package Titan.Simulator;
 
 
+import Titan.Function.ODEFunction;
 import Titan.Function.Orbits;
 import Titan.Function.State;
 import Titan.Interfaces.*;
@@ -31,12 +32,14 @@ public class ODESolver implements ODESolverInterface {
 
         StateInterface[] result = new State[ts.length+1];
 
+        ODEFunction function = (ODEFunction) f;
+
         //Launching position
         result[0] = y0;
 
         for (int i = 0; i < ts.length; i++)
             if(i == ts.length-1) {
-                result[i + 1] = step(f, ts[i], result[i], ts[i] - ts[i-1]);
+                result[i + 1] = step(f, ts[i], function.getPreviousState(), ts[i] - ts[i-1]);
             }else{
                 result[i + 1] = step(f, ts[i], result[i], ts[1]);
             }

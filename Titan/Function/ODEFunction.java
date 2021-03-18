@@ -1,14 +1,10 @@
 package Titan.Function;
 
 
-import Titan.Body.PlanetBody;
-import Titan.Body.Vector3d;
 import Titan.Interfaces.ODEFunctionInterface;
 import Titan.Interfaces.RateInterface;
 import Titan.Interfaces.StateInterface;
 import Titan.Interfaces.Vector3dInterface;
-
-import java.util.LinkedList;
 
 public class ODEFunction implements ODEFunctionInterface {
 
@@ -48,5 +44,9 @@ public class ODEFunction implements ODEFunctionInterface {
 		this.t = t;
 
 		return rate;
+	}
+
+	public State getPreviousState() {
+		return previousState;
 	}
 }
