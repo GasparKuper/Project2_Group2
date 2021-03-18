@@ -34,11 +34,12 @@ public class Mathmodel {
             Vector3dInterface v0 = VelocityVector(velocity, tip, p0);
             trajectory = p.trajectory(p0, v0, maxtime, stepsize);
             solution = Score(trajectory, trajectoryTitan);
-        }
+        };
         trajectorySolution = trajectory;
     }
 
         // angleX = [0,2pie) angleY = [0,pie)
+        // could be wrong about my ranges
     public Vector3dInterface CoordInEarth(Vector3dInterface origin, double radius, double angleX, double angleY){
         double x = origin.getX()+radius*Math.sin(angleX)*Math.cos(angleY);
         double y = origin.getY()+radius*Math.sin(angleX)*Math.sin(angleY);
@@ -46,14 +47,12 @@ public class Mathmodel {
         return new Vector3d(x,y,z);
     }
 
-    //tip is one meter above of tail so we know in which direction your vector will need to go
+    //tip is one meter above of tail so we know in which direction the velocity vector will need to go
     public Vector3dInterface VelocityVector(double speed, Vector3dInterface tip, Vector3dInterface tail){
         Vector3dInterface temp = tip.sub(tail);
         temp.mul(speed);
         return temp;
     }
-
-
 
 
     public Boolean Score(Vector3dInterface [] trajectory, Vector3dInterface finalpositionTitan){
