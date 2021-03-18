@@ -1,14 +1,15 @@
 package MAIN.ODESolver;
 
+import MAIN.Body.Data;
+import MAIN.Body.State;
+import MAIN.Body.Vector3d;
 import MAIN.Interfaces.ProbeSimulatorInterface;
+import MAIN.Interfaces.StateInterface;
 import MAIN.Interfaces.Vector3dInterface;
 
 public class ProbeSimulator implements ProbeSimulatorInterface {
 
-      public PlanetBody[] planets;
-
-    public final static double G = 6.67408e-11;
-
+    private boolean flag = false;
 
     /*
      * Simulate the solar system, including a probe fired from Earth at 00:00h on 1 April 2020.
@@ -21,24 +22,34 @@ public class ProbeSimulator implements ProbeSimulatorInterface {
      */
     @Override
     public Vector3dInterface[] trajectory(Vector3dInterface p0, Vector3dInterface v0, double[] ts) {
-        Vector3dInterface [] position = new Vector3dInterface[ts.length];
-        position [0] = p0;
 
-        PlanetBody probe = new PlanetBody(15000, p0, v0);
+        Vector3d[] probeTraj = new Vector3d[ts.length + 1];
 
         Data data = new Data();
-        this.planets = data.SolarSystem();
 
-        //compute the full motion of the solar system to find the effects of the various planets on the probe
+        Orbits orbits = new Orbits(data.getPlanets(), 15000, false);
+        ODESolver odeSolver = new ODESolver(orbits);
 
-        for(int x = 1; x < ts.length; x++){
-            orbit(ts[x]);
-            double[] force = forceMotion_X_Y_Z(probe);
-            probe.setVelocity(probe.getVelocity().add(new Vector3d(ts[x] * (force[0]/probe.getM()), ts[x] * (force[1]/probe.getM()), ts[x] * (force[2]/probe.getM()))));
-            probe.setPosition(probe.getPosition().add(new Vector3d(ts[x] * probe.getVelocity().getX(), ts[x] * probe.getVelocity().getY(), ts[x] * probe.getVelocity().getZ())));
-            position[x] = probe.getPosition();
+        ODEFunction odeFunction = new ODEFunction(v0, p0);
+
+        StateInterface launchPosition = new State(p0, v0);
+
+        State[] trajectory = (State[]) odeSolver.solve(odeFunction, launchPosition, ts[ts.length-1], ts[1]);
+
+        flag = odeSolver.isCollision();
+
+        for (int i = 0; i < ts.length; i++) {
+            if(probeTraj[i] != null) {
+
+                probeTraj[i + 1] = (Vector3d) trajectory[i].position;
+//                System.out.println("PROBE: Time = " + ts[i]);
+//                System.out.println("Coordinate: " + trajectory[i].position.toString());
+//                System.out.println("Velocity: " + trajectory[i].velocity.toString());
+            } else break;
         }
-        return position;
+
+
+        return probeTraj;
     }
 
     /*
@@ -52,66 +63,25 @@ public class ProbeSimulator implements ProbeSimulatorInterface {
      */
     @Override
     public Vector3dInterface[] trajectory(Vector3dInterface p0, Vector3dInterface v0, double tf, double h) {
-        double [] ts = new double[(int) (tf/h)];
+        double tsLength = tf/h;
+        double [] ts = new double[(int) (tsLength)];
 
         for(int x = 0; x < ts.length; x++){
-            ts[x] = h*x;
+                ts[x] = h * x;
         }
+
+        ts[ts.length-1] = tf;
 
         return trajectory(p0, v0, ts);
     }
 
-    public void orbit(double h){
-        ArrayList<Vector3d> positions = new ArrayList<>();
+   public boolean isCollision(){
+        return flag;
+   }
 
-        ArrayList<Vector3d> velocity = new ArrayList<>();
+    public static void main(String[] args) {
+        ProbeSimulator simulator = new ProbeSimulator();
 
-        int count = 0;
-        for(PlanetBody planet : planets) {
-
-            double[] force = forceMotion_X_Y_Z(planet);
-
-            velocity.add(new Vector3d(h * (force[0]/planet.getM()), h * (force[1]/planet.getM()), h * (force[2]/planet.getM())));
-            positions.add(new Vector3d(h * planet.getVelocity().getX(), h * planet.getVelocity().getY(), h * planet.getVelocity().getZ()));
-            count++;
-        }
-
-
-        int point = 0;
-        for(int i = 0; i < planets.length; i++){
-            planets[i].setPosition((Vector3d) planets[i].getPosition().add(positions.get(point)));
-            planets[i].setVelocity((Vector3d) planets[i].getVelocity().add(velocity.get(point)));
-            point++;
-        }
+        simulator.trajectory(new Vector3d(-1.471922101663588e+11,  -2.860995816266412e+10, 8.278183193596080e+06), new Vector3d(0, 0, 0), 3.162e+7, 863.93442623);
     }
-
-    // (g*m1*m2)/r^2=f
-    private double[] forceMotion_X_Y_Z(PlanetBody planet){
-
-        double [] force = new double[3];
-        for (PlanetBody planetBody : planets) {
-            if (planet != planetBody) {
-                force[0] += ForceX_Between(planet, planetBody);
-                force[1] += ForceY_Between(planet, planetBody);
-                force[2] += ForceZ_Between(planet, planetBody);
-            }
-        }
-        return force;
-    }
-
-    public static double ForceX_Between(PlanetBody one, PlanetBody other) {
-        return -(G * one.getM() * other.getM() *(one.getPosition().getX() - other.getPosition().getX())
-                / Math.pow(Math.pow(one.getPosition().getX() - other.getPosition().getX(), 2), 2));
-    }
-
-    public static double ForceY_Between(PlanetBody one, PlanetBody other) {
-        return -(G * one.getM() * other.getM() * (one.getPosition().getY() - other.getPosition().getY())
-                / Math.pow(Math.pow(one.getPosition().getY() - other.getPosition().getY(), 2), 2));
-    }
-
-    public static double ForceZ_Between(PlanetBody one, PlanetBody other) {
-        return -(G * one.getM() * other.getM() * (one.getPosition().getZ() - other.getPosition().getZ())
-                / Math.pow(Math.pow(one.getPosition().getZ() - other.getPosition().getZ(), 2), 2));
-    }
-
 }
