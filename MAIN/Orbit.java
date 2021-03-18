@@ -8,6 +8,8 @@ import javafx.scene.image.Image;
 
 public class Orbit {
 
+	private StateInterface state;
+	private ODEFunctionInterface function;
 	public final Vector3dInterface solarSystemBarycenter = new Vector3d(1500/2.0, 0.0, -750/2.0); // position of the SSB on the screen
 
 	private Vector3dInterface position; // position of the planet compared to the SSB
@@ -24,9 +26,7 @@ public class Orbit {
 		this.position = new Vector3d(x, y, z).add(solarSystemBarycenter);
 		this.shape = new Sphere(radius);
 
-		this.shape.translateXProperty().set(position.getX());
-		this.shape.translateYProperty().set(-position.getZ());
-		this.shape.translateZProperty().set(position.getY());
+		this.updatePosition();		
 	}
 	/**
 	@return the component modelling the orbit
@@ -60,6 +60,28 @@ public class Orbit {
 		PhongMaterial overlay = new PhongMaterial();
 		overlay.setSelfIlluminationMap(new Image(fileName));
 		this.shape.setMaterial(overlay);
+	}
+	
+	public void setState(Vector3dInterface initialPos,Vector3dInterface initialVel){
+		this.state = new State(initialPos,initialVel);
+		this.position = this.state.getPosition();
+		this.updatePosition();
+
+		this.function = new ODEFunction(this.state.getVelocity(), this.state.getPosition());
+	}
+
+	public void updatePosition() {
+		this.shape.translateXProperty().set(position.getX());
+		this.shape.translateYProperty().set(-position.getZ());
+		this.shape.translateZProperty().set(position.getY());
+	}
+
+	public StateInterface getState() {
+		return this.state;
+	}
+
+	public ODEFunctionInterface getFunction() {
+		return this.function;
 	}
 
 }
