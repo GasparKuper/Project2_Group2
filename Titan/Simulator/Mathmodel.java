@@ -6,19 +6,20 @@ import Titan.Interfaces.Vector3dInterface;
 public class Mathmodel {
 
    
-    private static double stepsize = 863;
+     private static double stepsize = 863;
     private static double maxtime = 3.154e+7;
     private static double radiusEarth = 6378000;
     private static double radiusTitan = 2574700;
     private static Vector3dInterface earthposition = new Vector3d(-1.471922101663588e+11,  -2.860995816266412e+10, 8.278183193596080e+06);
-    public Vector3dInterface [] trajectoryTitan; //figure out how to get every position of titan
-    public Vector3dInterface [] trajectorySolution;
+    public Vector3dInterface [] trajectoryTitan = new Vector3dInterface[(int) (maxtime/stepsize)+1]; //figure out how to get every position of titan
+    public Vector3dInterface [] trajectorySolution = new Vector3dInterface[(int) (maxtime/stepsize)+1];
     public double stepsToSolution;
 
 
     public void bruteforce(){
         Boolean solution = false;
-        Vector3dInterface[] trajectory = new Vector3dInterface[0];
+        Vector3dInterface[] trajectory = new Vector3dInterface[(int) (maxtime/stepsize)+1];
+
         while(solution != true){
             double angleX = Math.random() * 2*Math.PI;
             double angleY = Math.random() * Math.PI;
@@ -32,9 +33,10 @@ public class Mathmodel {
                 velocity = Math.random()*60000;
             }
 
+            Vector3dInterface v0 = VelocityVector(velocity, tip, p0);
+
             ProbeSimulator p = new ProbeSimulator();
 
-            Vector3dInterface v0 = VelocityVector(velocity, tip, p0);
             trajectory = p.trajectory(p0, v0, maxtime, stepsize);
             solution = Score(trajectory, trajectoryTitan);
         };
@@ -58,7 +60,7 @@ public class Mathmodel {
     }
 
 
-     public Boolean Score(Vector3dInterface [] trajectory, Vector3dInterface [] trajectoryTitan){
+    public Boolean Score(Vector3dInterface [] trajectory, Vector3dInterface [] trajectoryTitan){
         for(int x = 1; x< trajectory.length; x++){
             Vector3dInterface temp =trajectory[x].sub(trajectoryTitan[x]);
             double temp1 = temp.norm();
