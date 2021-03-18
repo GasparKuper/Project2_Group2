@@ -55,7 +55,7 @@ public class ODESolver implements ODESolverInterface {
             if (i == ts.length - 1) {
                 result[i + 1] = step(f, ts[i], function.getPreviousState(), ts[i] - ts[i - 1]);
             } else {
-                result[i + 1] = step(f, ts[i], result[i], ts[1]);
+                result[i + 1] = step(f, ts[i], function.getPreviousState(), ts[1]);
             }
         }
 
