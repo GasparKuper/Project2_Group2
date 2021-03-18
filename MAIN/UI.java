@@ -1,9 +1,8 @@
+package MAIN;
 // Scale x,y,z  - 1:1*10^(-9)
 // Scale volume - 1:1*10^(-6)
 
-import MAIN.*;
-import MAIN.Body.*;
-import MAIN.Interfaces.*;
+import MAIN.Interfaces.Vector3dInterface;
 import javafx.application.Application;
 import javafx.scene.*;
 import javafx.scene.input.KeyEvent;

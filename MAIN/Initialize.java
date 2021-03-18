@@ -2,8 +2,9 @@
  * Scale: 1 = 1e+09
 **/
 
-package MAIN.Body;
+package MAIN;
 
+import MAIN.Body.Vector3d;
 import MAIN.Interfaces.Vector3dInterface;
 
 public class Initialize{

@@ -1,6 +1,6 @@
 package MAIN.ODESolver;
 
-import MAIN.Body.*;
+import MAIN.Body.State;
 import MAIN.Interfaces.ODEFunctionInterface;
 import MAIN.Interfaces.ODESolverInterface;
 import MAIN.Interfaces.RateInterface;
@@ -12,6 +12,17 @@ import MAIN.Interfaces.StateInterface;
  *     f(t,y(t)) defines the derivative of y(t) with respect to time t
  */
 public class ODESolver implements ODESolverInterface {
+
+
+    Orbits orb;
+
+    private boolean flag = false;
+
+    public ODESolver(Orbits f){
+        this.orb = f;
+    }
+
+    public ODESolver(){}
 
     /*
      * Solve the differential equation by taking multiple steps.
@@ -29,9 +40,24 @@ public class ODESolver implements ODESolverInterface {
         //Launching position
         result[0] = y0;
 
-        for (int i = 0; i < ts.length; i++)
-            result[i+1] = step(f, ts[i+1], result[i], ts[1]);
+        ODEFunction function = (ODEFunction) f;
 
+        for (int i = 0; i < ts.length; i++) {
+
+            if (orb.isCollisionTitan()) {
+                flag = true;
+                break;
+            }
+
+            if(orb.isCollisionOthers())
+                break;
+
+            if (i == ts.length - 1) {
+                result[i + 1] = step(f, ts[i], function.getPreviousState(), ts[i] - ts[i - 1]);
+            } else {
+                result[i + 1] = step(f, ts[i], function.getPreviousState(), ts[1]);
+            }
+        }
 
         return result;
     }
@@ -49,12 +75,16 @@ public class ODESolver implements ODESolverInterface {
     @Override
     public StateInterface[] solve(ODEFunctionInterface f, StateInterface y0, double tf, double h) {
 
-        double [] ts = new double[(int) (tf/h)];
+        double tsLength = tf/h;
+        double [] ts = new double[(int) tsLength];
 
         for(int x = 0; x < ts.length; x++){
-            ts[x] = h*x;
+            if(x == ts.length-1) {
+                ts[x] = tf;
+            }else{
+                ts[x] = h * x;
+            }
         }
-
         return solve(f, y0, ts );
     }
 
@@ -70,8 +100,14 @@ public class ODESolver implements ODESolverInterface {
     @Override
     public StateInterface step(ODEFunctionInterface f, double t, StateInterface y, double h) {
 
-        RateInterface velocity_acceleration = f.call(t, y);
+        StateInterface tmp = orb.function(h, y);
+
+        RateInterface velocity_acceleration = f.call(t, tmp);
 
         return y.addMul(h, velocity_acceleration);
+    }
+
+    public boolean isCollision(){
+        return flag;
     }
 }

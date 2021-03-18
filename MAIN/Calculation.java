@@ -1,3 +1,8 @@
+package MAIN;
+
+import MAIN.Interfaces.ODESolverInterface;
+import MAIN.ODESolver.ODESolver;
+
 public class Calculation extends Thread {
 
 	private final double stepSize = 1.0;
@@ -29,7 +34,7 @@ public class Calculation extends Thread {
 		this.uranus = ur;
 		this.neptune = nept;
 
-		this.solver = new Solver();
+		this.solver = new ODESolver();
 	}
 
 	public void run() {

@@ -2,8 +2,10 @@ package MAIN.Body;
 
 public class Data {
 
-    public PlanetBody[] SolarSystem(){
-        PlanetBody[] planets = new PlanetBody[11];
+    PlanetBody[] planets;
+
+    public Data(){
+        planets = new PlanetBody[12];
 
         //Sun
         planets[0] = new PlanetBody(
@@ -50,7 +52,9 @@ public class Data {
         planets[10] = new PlanetBody(1.02413e26,
                 new Vector3d(4.382692942729203e+12, -9.093501655486243e+11, -8.227728929479486e+10),
                 new Vector3d(1.068410720964204e+03, 5.354959501569486e+03, -1.343918199987533e+02));
+    }
 
+    public PlanetBody[] getPlanets() {
         return planets;
     }
 }
