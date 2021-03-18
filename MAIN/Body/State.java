@@ -31,4 +31,12 @@ public class State implements StateInterface {
     public String toString() {
     	return ("Position: " + this.position.toString() + "\nVelocity: " + this.velocity.toString());
     }
+	
+    public Vector3dInterface getPosition() {
+    	return this.position;
+    }
+
+    public Vector3dInterface getVelocity() {
+    	return this.velocity;
+    }
 }
