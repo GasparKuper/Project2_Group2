@@ -3,6 +3,7 @@ package Titan.Simulator;
 import Titan.Body.Data;
 import Titan.Body.Vector3d;
 import Titan.Function.ODEFunction;
+import Titan.Function.Orbits;
 import Titan.Function.State;
 import Titan.Interfaces.ProbeSimulatorInterface;
 import Titan.Interfaces.StateInterface;
@@ -26,9 +27,10 @@ public class ProbeSimulator implements ProbeSimulatorInterface {
 
         Data data = new Data();
 
-        ODESolver odeSolver = new ODESolver();
+        Orbits orbits = new Orbits(data.getPlanets(), 15000);
+        ODESolver odeSolver = new ODESolver(orbits);
 
-        ODEFunction odeFunction = new ODEFunction(data.getPlanets(), 15.0);
+        ODEFunction odeFunction = new ODEFunction(v0, p0);
 
         StateInterface launchPosition = new State(p0, v0);
 

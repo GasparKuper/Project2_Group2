@@ -1,6 +1,7 @@
 package Titan.Simulator;
 
 
+import Titan.Function.Orbits;
 import Titan.Function.State;
 import Titan.Interfaces.*;
 
@@ -10,6 +11,12 @@ import Titan.Interfaces.*;
  *     f(t,y(t)) defines the derivative of y(t) with respect to time t
  */
 public class ODESolver implements ODESolverInterface {
+
+
+    Orbits orb;
+    public ODESolver(Orbits f){
+        this.orb = f;
+    }
 
     /*
      * Solve the differential equation by taking multiple steps.
@@ -74,6 +81,8 @@ public class ODESolver implements ODESolverInterface {
      */
     @Override
     public StateInterface step(ODEFunctionInterface f, double t, StateInterface y, double h) {
+
+        orb.function(t);
 
         RateInterface velocity_acceleration = f.call(h, y);
 
