@@ -15,14 +15,19 @@ public class Orbits {
 
     private final boolean flag;
 
-    private final PlanetBody[] planets;
+    public final PlanetBody[] planets;
 
-    private final double mass;
+    private double mass;
 
     public Orbits(PlanetBody[] planets, double mass, boolean flag){
         this.planets = planets;
         this.mass = mass;
         this.flag = flag;
+    }
+
+    public Orbits(PlanetBody[] planets, boolean flag){
+        this.flag = flag;
+        this.planets = planets;
     }
 
     public StateInterface function(double h, StateInterface y){
@@ -56,7 +61,6 @@ public class Orbits {
             planets[i].setVelocity((Vector3d) planets[i].getVelocity().add(velocity.get(i)));
         }
 
-        System.out.println(planets[8].getPosition().toString());
 
         if(planets[11] == null) {
             Vector3d a = new Vector3d(0, 0, 0);

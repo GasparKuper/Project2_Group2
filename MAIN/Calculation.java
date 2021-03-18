@@ -1,11 +1,13 @@
 package MAIN;
 
-import MAIN.Interfaces.ODESolverInterface;
-import MAIN.ODESolver.ODESolver;
+import MAIN.Body.Data;
+import MAIN.Body.Vector3d;
+import MAIN.Interfaces.StateInterface;
+import MAIN.ODESolver.Orbits;
 
 public class Calculation extends Thread {
 
-	private final double stepSize = 1.0;
+	private final double stepSize = 863.93442623;
 	private double time = 1.0;
 
 	private Orbit sun;
@@ -19,7 +21,8 @@ public class Calculation extends Thread {
 	private Orbit titan;
 	private Orbit uranus;
 	private Orbit neptune;
-	private ODESolverInterface solver;
+	private Orbits solver;
+	private StateInterface empty = new MAIN.Body.State(new Vector3d(0,0,0), new Vector3d(0,0,0));
 
 	public Calculation(Orbit sun, Orbit merc, Orbit venus, Orbit earth, Orbit moon, Orbit mars, Orbit jupit, Orbit sat, Orbit titan, Orbit ur, Orbit nept) {
 		this.sun = sun;
@@ -34,29 +37,34 @@ public class Calculation extends Thread {
 		this.uranus = ur;
 		this.neptune = nept;
 
-		this.solver = new ODESolver();
+		Data data = new Data();
+
+		this.solver = new Orbits(data.getPlanets(), false);
 	}
 
 	public void run() {
 
-		while (time < 366) {
-			this.sun.setState(this.solver.step(sun.getFunction(), time, sun.getState(), stepSize));
-			this.mercury.setState(this.solver.step(mercury.getFunction(), time, mercury.getState(), stepSize));
-			this.venus.setState(this.solver.step(venus.getFunction(), time, venus.getState(), stepSize));
-			this.earth.setState(this.solver.step(earth.getFunction(), time, earth.getState(), stepSize));
-			this.moon.setState(this.solver.step(moon.getFunction(), time, moon.getState(), stepSize));
-			this.mars.setState(this.solver.step(mars.getFunction(), time, mars.getState(), stepSize));
-			this.jupiter.setState(this.solver.step(jupiter.getFunction(), time, jupiter.getState(), stepSize));
-			this.saturn.setState(this.solver.step(saturn.getFunction(), time, saturn.getState(), stepSize));
-			this.titan.setState(this.solver.step(titan.getFunction(), time, titan.getState(), stepSize));
-			this.uranus.setState(this.solver.step(uranus.getFunction(), time, uranus.getState(), stepSize));
-			this.neptune.setState(this.solver.step(neptune.getFunction(), time, neptune.getState(), stepSize));
+		while (time < 36600) {
+
+			solver.function(stepSize, empty);
+
+			this.sun.setState(solver.planets[0].getPosition(), solver.planets[0].getVelocity());
+			this.mercury.setState(solver.planets[1].getPosition(), solver.planets[1].getVelocity());
+			this.venus.setState(solver.planets[2].getPosition(), solver.planets[2].getVelocity());
+			this.earth.setState(solver.planets[3].getPosition(), solver.planets[3].getVelocity());
+			this.moon.setState(solver.planets[4].getPosition(), solver.planets[4].getVelocity());
+			this.mars.setState(solver.planets[5].getPosition(), solver.planets[5].getVelocity());
+			this.jupiter.setState(solver.planets[6].getPosition(), solver.planets[6].getVelocity());
+			this.saturn.setState(solver.planets[7].getPosition(), solver.planets[7].getVelocity());
+			this.titan.setState(solver.planets[8].getPosition(), solver.planets[8].getVelocity());
+			this.uranus.setState(solver.planets[9].getPosition(), solver.planets[9].getVelocity());
+			this.neptune.setState(solver.planets[10].getPosition(), solver.planets[10].getVelocity());
 
 			/*
 			reset the scene to update their positions
 			*/
 
-			time = time + stepSize;
+			time++;
 		}
 	}
 }

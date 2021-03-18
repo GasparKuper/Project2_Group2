@@ -65,13 +65,18 @@ public class Orbit {
 		overlay.setSelfIlluminationMap(new Image(fileName));
 		this.shape.setMaterial(overlay);
 	}
-	
+
 	public void setState(Vector3dInterface initialPos,Vector3dInterface initialVel){
 		this.state = new State(initialPos,initialVel);
-		this.position = this.state.getPosition();
+		this.position = initialPos;
 		this.updatePosition();
 
-		this.function = new ODEFunction(this.state.getVelocity(), this.state.getPosition());
+		this.function = new ODEFunction(initialVel, initialPos);
+	}
+
+	public void setState(StateInterface newState) {
+		this.state = newState;
+		this.updatePosition();
 	}
 
 	public void updatePosition() {
