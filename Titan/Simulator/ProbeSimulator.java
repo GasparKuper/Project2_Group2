@@ -36,9 +36,9 @@ public class ProbeSimulator implements ProbeSimulatorInterface {
 
         for (int i = 0; i < ts.length; i++) {
             probeTraj[i+1] = (Vector3d) trajectory[i].position;
-            System.out.println("PROBE: Time = " + ts[i]);
-            System.out.println("Coordinate: " + trajectory[i].position.toString());
-            System.out.println("Velocity: " + trajectory[i].velocity.toString());
+//            System.out.println("PROBE: Time = " + ts[i]);
+//            System.out.println("Coordinate: " + trajectory[i].position.toString());
+//            System.out.println("Velocity: " + trajectory[i].velocity.toString());
         }
 
 
@@ -56,15 +56,14 @@ public class ProbeSimulator implements ProbeSimulatorInterface {
      */
     @Override
     public Vector3dInterface[] trajectory(Vector3dInterface p0, Vector3dInterface v0, double tf, double h) {
-        double [] ts = new double[(int) (tf/h)];
+        double tsLength = tf/h;
+        double [] ts = new double[(int) (tsLength)];
 
         for(int x = 0; x < ts.length; x++){
-            if(x == ts.length-1) {
-                ts[x] = tf;
-            }else{
                 ts[x] = h * x;
-            }
         }
+
+        ts[ts.length-1] = tf;
 
         return trajectory(p0, v0, ts);
     }
@@ -73,6 +72,6 @@ public class ProbeSimulator implements ProbeSimulatorInterface {
         ProbeSimulator simulator = new ProbeSimulator();
 
         simulator.trajectory(new Vector3d(-1.471922101663588e+11,  -2.860995816266412e+10, 8.278183193596080e+06),
-                new Vector3d(0, 0, 0), 3.162e+7, 8639.3442623);
+                new Vector3d(0, 0, 0), 3.162e+7, 863.93442623);
     }
 }

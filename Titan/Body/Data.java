@@ -5,7 +5,7 @@ public class Data {
     PlanetBody[] planets;
 
     public Data(){
-        planets = new PlanetBody[12];
+        planets = new PlanetBody[11];
 
         //Sun
         planets[0] = new PlanetBody(

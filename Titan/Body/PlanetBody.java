@@ -6,25 +6,25 @@ public class PlanetBody {
 
     private double m;
 
-    private Vector3dInterface position;
+    private Vector3d position;
 
-    private Vector3dInterface velocity;
+    private Vector3d velocity;
 
     public PlanetBody(double m, Vector3dInterface position, Vector3dInterface velocity){
         this.m = m;
-        this.position = position;
-        this.velocity = velocity;
+        this.position = (Vector3d) position;
+        this.velocity = (Vector3d) velocity;
     }
 
     public double getM() {
         return m;
     }
 
-    public Vector3dInterface getPosition() {
+    public Vector3d getPosition() {
         return position;
     }
 
-    public Vector3dInterface getVelocity() {
+    public Vector3d getVelocity() {
         return velocity;
     }
 

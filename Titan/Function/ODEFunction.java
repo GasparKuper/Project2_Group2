@@ -44,40 +44,24 @@ public class ODEFunction implements ODEFunctionInterface {
 
 	public RateInterface function(double h, State y){
 
-		planets[11] = new PlanetBody(massProbe, y.position, y.velocity);
-
-		if(flag) {
-			flag = false;
-			initialMomenta();
-		}
 
 		LinkedList<Vector3d> positions = new LinkedList<>();
 
 		LinkedList<Vector3d> velocity = new LinkedList<>();
 
 		for(int i = 0; i < planets.length; i++) {
-
-			//TODO check Version 1
-
-            double[] motion = motion_X_Y_Z(planets[i]);
-            double[] force = forceMotion_X_Y_Z(planets[i]);
-            positions.add(new Vector3d(h * motion[0], h * motion[1], h * motion[2]));
-            velocity.add(new Vector3d(h * force[0], h * force[1], h * force[2]));
-
-			//TODO check Version 2
-//			double[] force = forceMotion_X_Y_Z(planets[i]);
-//
-//			velocity.add(new Vector3d(h * (force[0]/planets[i].getM()), h * (force[1]/planets[i].getM()), h * (force[2]/planets[i].getM())));
-//			positions.add(new Vector3d(h * planets[i].getVelocity().getX(), h * planets[i].getVelocity().getY(), h * planets[i].getVelocity().getZ()));
+			double[] force = forceMotion_X_Y_Z(planets[i]);
+			positions.add(new Vector3d(h * planets[i].getVelocity().getX(), h * planets[i].getVelocity().getY(), h * planets[i].getVelocity().getZ()));
+			velocity.add(new Vector3d(h * (force[0]), h * (force[1]), h * (force[2])));
 		}
 
-
-		int point = 0;
-		for(int i = 0; i < planets.length-1; i++){
-			planets[i].setPosition((Vector3d) planets[i].getPosition().add(positions.get(point)));
-			planets[i].setVelocity((Vector3d) planets[i].getVelocity().add(velocity.get(point)));
+		for(int i = 0; i < planets.length; i++){
+			planets[i].setPosition((Vector3d) planets[i].getPosition().add(positions.get(i)));
+			planets[i].setVelocity((Vector3d) planets[i].getVelocity().add(velocity.get(i)));
 		}
-		return new Rate(positions.getLast(), velocity.getLast());
+
+		System.out.println(planets[3].getPosition().toString());
+		return new Rate(positions.getLast(), positions.getLast());
 	}
 
 	// (g*m1*m2)/r^2=f
@@ -96,25 +80,19 @@ public class ODEFunction implements ODEFunctionInterface {
 	}
 
 	public static double ForceX_Between(PlanetBody one, PlanetBody other) {
-		double tempPow = Math.pow(one.getPosition().getX() - other.getPosition().getX(), 2);
-		double temp = Math.sqrt(tempPow);
-		double r = Math.pow(temp, 3);
-		return -(G * one.getM() * other.getM() *(one.getPosition().getX() - other.getPosition().getX())
-				/ r);
+		double r = one.getPosition().dist(other.getPosition());
+		return -(G * other.getM() * (one.getPosition().getX()- other.getPosition().getX())
+				/ Math.pow(r, 3));
 	}
 	public static double ForceY_Between(PlanetBody one, PlanetBody other) {
-		double tempPow = Math.pow(one.getPosition().getY() - other.getPosition().getY(), 2);
-		double temp = Math.sqrt(tempPow);
-		double r = Math.pow(temp, 3);
-		return -(G * one.getM() * other.getM() * (one.getPosition().getY() - other.getPosition().getY())
-				/ r);
+		double r = one.getPosition().dist(other.getPosition());
+		return -(G * other.getM() * (one.getPosition().getY()- other.getPosition().getY())
+				/ Math.pow(r, 3));
 	}
 	public static double ForceZ_Between(PlanetBody one, PlanetBody other) {
-		double tempPow = Math.pow(one.getPosition().getZ() - other.getPosition().getZ(), 2);
-		double temp = Math.sqrt(tempPow);
-		double r = Math.pow(temp, 3);
-		return -(G * one.getM() * other.getM() * (one.getPosition().getZ() - other.getPosition().getZ())
-				/ r);
+		double r = one.getPosition().dist(other.getPosition());
+		return -(G * other.getM() * (one.getPosition().getZ() - other.getPosition().getZ())
+				/ Math.pow(r, 3));
 	}
 
 	//Newton's second law of motion
@@ -129,12 +107,4 @@ public class ODEFunction implements ODEFunctionInterface {
 		return motion;
 	}
 
-	//Initial momenta
-	private void initialMomenta(){
-		for (int i = 0; i < planets.length; i++) {
-			System.out.println(planets[i].getPosition().toString());
-			planets[i].getPosition().mul(planets[i].getM());
-			System.out.println(planets[i].getPosition().toString());
-		}
-	}
 }
