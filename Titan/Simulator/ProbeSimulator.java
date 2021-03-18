@@ -73,7 +73,7 @@ public class ProbeSimulator implements ProbeSimulatorInterface {
     public static void main(String[] args) {
         ProbeSimulator simulator = new ProbeSimulator();
 
-        simulator.trajectory(new Vector3d(-1.471922101663588e+11,  -2.860995816266412e+10, 8.278183193596080e+06),
+        simulator.trajectory(new Vector3d(0,  0, 0),
                 new Vector3d(0, 0, 0), 3.162e+7, 863.93442623);
     }
 }

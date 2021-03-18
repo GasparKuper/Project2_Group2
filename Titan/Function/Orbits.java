@@ -2,6 +2,7 @@ package Titan.Function;
 
 import Titan.Body.PlanetBody;
 import Titan.Body.Vector3d;
+import Titan.Interfaces.StateInterface;
 
 import java.util.LinkedList;
 
@@ -11,15 +12,17 @@ public class Orbits {
 
     private final PlanetBody[] planets;
 
-    private final double massProbe;
-
-    public Orbits(PlanetBody[] planets, double massProbe){
+    private final double mass;
+    public Orbits(PlanetBody[] planets, double mass){
         this.planets = planets;
-        this.massProbe = massProbe;
+        this.mass = mass;
     }
 
-    public void function(double h){
+    public StateInterface function(double h, StateInterface y){
 
+        State tmp = (State) y;
+
+        planets[11] = new PlanetBody(mass, tmp.position, tmp.velocity);
 
         LinkedList<Vector3d> positions = new LinkedList<>();
 
@@ -27,8 +30,8 @@ public class Orbits {
 
         for(int i = 0; i < planets.length; i++) {
             double[] force = forceMotion_X_Y_Z(planets[i]);
-            positions.add(new Vector3d(h * planets[i].getVelocity().getX(), h * planets[i].getVelocity().getY(), h * planets[i].getVelocity().getZ()));
-            velocity.add(new Vector3d(h * (force[0]), h * (force[1]), h * (force[2])));
+                positions.add(new Vector3d(h * planets[i].getVelocity().getX(), h * planets[i].getVelocity().getY(), h * planets[i].getVelocity().getZ()));
+                velocity.add(new Vector3d(h * (force[0]), h * (force[1]), h * (force[2])));
         }
 
         for(int i = 0; i < planets.length; i++){
@@ -37,6 +40,8 @@ public class Orbits {
         }
 
         System.out.println(planets[3].getPosition().toString());
+
+        return new State(planets[11].getPosition(), planets[11].getPosition());
     }
 
     // (g*m1*m2)/r^2=f
@@ -56,17 +61,17 @@ public class Orbits {
 
     public static double ForceX_Between(PlanetBody one, PlanetBody other) {
         double r = one.getPosition().dist(other.getPosition());
-        return -(G * other.getM() * (one.getPosition().getX()- other.getPosition().getX())
+        return -(G * other.getM() * (one.getPosition().getX())
                 / Math.pow(r, 3));
     }
     public static double ForceY_Between(PlanetBody one, PlanetBody other) {
         double r = one.getPosition().dist(other.getPosition());
-        return -(G * other.getM() * (one.getPosition().getY()- other.getPosition().getY())
+        return -(G * other.getM() * (one.getPosition().getY())
                 / Math.pow(r, 3));
     }
     public static double ForceZ_Between(PlanetBody one, PlanetBody other) {
         double r = one.getPosition().dist(other.getPosition());
-        return -(G * other.getM() * (one.getPosition().getZ() - other.getPosition().getZ())
+        return -(G * other.getM() * (one.getPosition().getZ())
                 / Math.pow(r, 3));
     }
 }
