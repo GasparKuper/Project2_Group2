@@ -41,6 +41,9 @@ public class ODESolver implements ODESolverInterface {
         ODEFunction function = (ODEFunction) f;
 
         for (int i = 0; i < ts.length; i++) {
+            if(orb.isINFINITY())
+                break;
+
             if (orb.isCollisionTitan()) {
                 flag = true;
                 break;

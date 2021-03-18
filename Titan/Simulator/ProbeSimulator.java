@@ -41,10 +41,12 @@ public class ProbeSimulator implements ProbeSimulatorInterface {
         flag = odeSolver.isCollision();
 
         for (int i = 0; i < ts.length; i++) {
-            probeTraj[i+1] = (Vector3d) trajectory[i].position;
+            if(probeTraj[i] != null) {
+                probeTraj[i + 1] = (Vector3d) trajectory[i].position;
 //            System.out.println("PROBE: Time = " + ts[i]);
 //            System.out.println("Coordinate: " + trajectory[i].position.toString());
 //            System.out.println("Velocity: " + trajectory[i].velocity.toString());
+            } else break;
         }
 
 
@@ -77,4 +79,10 @@ public class ProbeSimulator implements ProbeSimulatorInterface {
    public boolean isCollision(){
         return flag;
    }
+
+    public static void main(String[] args) {
+        ProbeSimulator simulator = new ProbeSimulator();
+
+        simulator.trajectory(new Vector3d(-1.471922101663588e+11,  -2.860995816266412e+10, 8.278183193596080e+06), new Vector3d(0, 0, 0), 3.162e+7, 863.93442623);
+    }
 }

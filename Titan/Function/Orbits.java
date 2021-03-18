@@ -99,6 +99,10 @@ public class Orbits {
                 / Math.pow(r, 3));
     }
 
+    public boolean isINFINITY(){
+        return planets[11] == null;
+    }
+
     public boolean isCollisionTitan(){
             double dist = planets[11].getPosition().dist(planets[8].getPosition());
         return dist <= radiusTitan;
