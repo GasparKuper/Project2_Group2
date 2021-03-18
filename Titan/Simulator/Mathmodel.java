@@ -17,28 +17,31 @@ public class Mathmodel {
 
 
     public void bruteforce(){
-        Boolean solution = false;
+        boolean solution = false;
         Vector3dInterface[] trajectory = new Vector3dInterface[(int) (maxtime/stepsize)+1];
 
         while(solution != true){
-            double angleX = Math.random() * 2*Math.PI;
-            double angleY = Math.random() * Math.PI;
+            double angleX;
+            double angleY;
+            for(double x = 0.0; x< 2; x+= 0.01){
+                for(double y = 0.0; y<1; y+=0.01){
+                    angleX = x*Math.PI;
+                    angleY = y*Math.PI;
+                    Vector3dInterface p0 = CoordInEarth(earthposition, radiusEarth, angleX, angleY);
+                    Vector3dInterface tip = CoordInEarth(earthposition, radiusEarth+1, angleX, angleY);
 
-            Vector3dInterface p0 = CoordInEarth(earthposition, radiusEarth, angleX, angleY);
-            Vector3dInterface tip = CoordInEarth(earthposition, radiusEarth+1, angleX, angleY);
+                    double velocity = 60000;
 
-            double velocity = 0;
-            //minimum velocity to leave earth
-            while(velocity <= 17000){
-                velocity = Math.random()*60000;
+                    Vector3dInterface v0 = VelocityVector(velocity, tip, p0);
+
+                    ProbeSimulator p = new ProbeSimulator();
+
+                    trajectory = p.trajectory(p0, v0, maxtime, stepsize);
+                    solution = p.isCollision();
+                    System.out.println("the solution is "+ solution);
+                    System.out.println("for position "+ trajectory[trajectory.length-1].toString());
+                }
             }
-
-            Vector3dInterface v0 = VelocityVector(velocity, tip, p0);
-
-            ProbeSimulator p = new ProbeSimulator();
-
-            trajectory = p.trajectory(p0, v0, maxtime, stepsize);
-            solution = Score(trajectory, trajectoryTitan);
         };
         trajectorySolution = trajectory;
     }
@@ -60,11 +63,10 @@ public class Mathmodel {
     }
 
 
-    public Boolean Score(Vector3dInterface [] trajectory, Vector3dInterface [] trajectoryTitan){
+    public boolean Score(Vector3dInterface [] trajectory, Vector3dInterface [] trajectoryTitan){
         for(int x = 1; x< trajectory.length; x++){
-            Vector3dInterface temp =trajectory[x].sub(trajectoryTitan[x]);
-            double temp1 = temp.norm();
-            if(temp1 <= radiusTitan){
+            double temp =trajectory[x].dist(trajectoryTitan[x]);
+            if(temp <= radiusTitan){
                 stepsToSolution = x;
                 return true;
             }
