@@ -29,7 +29,7 @@ public class ProbeSimulator implements ProbeSimulatorInterface {
 
         Data data = new Data();
 
-        Orbits orbits = new Orbits(data.getPlanets(), 15000, false);
+        Orbits orbits = new Orbits(data.getPlanets(), 15000, true);
         ODESolver odeSolver = new ODESolver(orbits);
 
         ODEFunction odeFunction = new ODEFunction(v0, p0);
@@ -42,10 +42,11 @@ public class ProbeSimulator implements ProbeSimulatorInterface {
 
         for (int i = 0; i < ts.length; i++) {
             if(probeTraj[i] != null) {
+
                 probeTraj[i + 1] = (Vector3d) trajectory[i].position;
-//            System.out.println("PROBE: Time = " + ts[i]);
-//            System.out.println("Coordinate: " + trajectory[i].position.toString());
-//            System.out.println("Velocity: " + trajectory[i].velocity.toString());
+                System.out.println("PROBE: Time = " + ts[i]);
+                System.out.println("Coordinate: " + trajectory[i].position.toString());
+                System.out.println("Velocity: " + trajectory[i].velocity.toString());
             } else break;
         }
 

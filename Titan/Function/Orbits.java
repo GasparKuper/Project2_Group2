@@ -104,12 +104,16 @@ public class Orbits {
     }
 
     public boolean isCollisionTitan(){
+        if(planets[11] == null)
+            return false;
             double dist = planets[11].getPosition().dist(planets[8].getPosition());
         return dist <= radiusTitan;
     }
 
     public boolean isCollisionOthers(){
         for (int i = 0; i < planets.length-1; i++) {
+            if(planets[11] == null)
+                return false;
             double dist = planets[11].getPosition().dist(planets[i].getPosition());
 
         }
