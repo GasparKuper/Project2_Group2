@@ -10,9 +10,11 @@ public class Orbits {
 
     private final static double G = 6.67408e-11;
 
-    private final PlanetBody[] planets;
+    private final double radiusTitan = 2575.5e3;
 
     private final boolean flag;
+
+    private final PlanetBody[] planets;
 
     private final double mass;
 
@@ -97,7 +99,16 @@ public class Orbits {
                 / Math.pow(r, 3));
     }
 
-    public Vector3d getTitanPosition(){
-        return planets[8].getPosition();
+    public boolean isCollisionTitan(){
+            double dist = planets[11].getPosition().dist(planets[8].getPosition());
+        return dist <= radiusTitan;
+    }
+
+    public boolean isCollisionOthers(){
+        for (int i = 0; i < planets.length-1; i++) {
+            double dist = planets[11].getPosition().dist(planets[i].getPosition());
+
+        }
+        return false;
     }
 }

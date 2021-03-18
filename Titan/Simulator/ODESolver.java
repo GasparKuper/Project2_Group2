@@ -15,6 +15,9 @@ public class ODESolver implements ODESolverInterface {
 
 
     Orbits orb;
+
+    private boolean flag = false;
+
     public ODESolver(Orbits f){
         this.orb = f;
     }
@@ -32,17 +35,26 @@ public class ODESolver implements ODESolverInterface {
 
         StateInterface[] result = new State[ts.length+1];
 
-        ODEFunction function = (ODEFunction) f;
-
         //Launching position
         result[0] = y0;
 
-        for (int i = 0; i < ts.length; i++)
-            if(i == ts.length-1) {
-                result[i + 1] = step(f, ts[i], function.getPreviousState(), ts[i] - ts[i-1]);
-            }else{
+        ODEFunction function = (ODEFunction) f;
+
+        for (int i = 0; i < ts.length; i++) {
+            if (orb.isCollisionTitan()) {
+                flag = true;
+                break;
+            }
+
+            if(orb.isCollisionOthers())
+                break;
+
+            if (i == ts.length - 1) {
+                result[i + 1] = step(f, ts[i], function.getPreviousState(), ts[i] - ts[i - 1]);
+            } else {
                 result[i + 1] = step(f, ts[i], result[i], ts[1]);
             }
+        }
 
         return result;
     }
@@ -84,10 +96,15 @@ public class ODESolver implements ODESolverInterface {
      */
     @Override
     public StateInterface step(ODEFunctionInterface f, double t, StateInterface y, double h) {
+
         StateInterface tmp = orb.function(h, y);
 
         RateInterface velocity_acceleration = f.call(t, tmp);
 
         return y.addMul(h, velocity_acceleration);
+    }
+
+    public boolean isCollision(){
+        return flag;
     }
 }

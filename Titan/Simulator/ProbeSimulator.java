@@ -11,6 +11,8 @@ import Titan.Interfaces.Vector3dInterface;
 
 public class ProbeSimulator implements ProbeSimulatorInterface {
 
+    private boolean flag = false;
+
     /*
      * Simulate the solar system, including a probe fired from Earth at 00:00h on 1 April 2020.
      *
@@ -35,6 +37,8 @@ public class ProbeSimulator implements ProbeSimulatorInterface {
         StateInterface launchPosition = new State(p0, v0);
 
         State[] trajectory = (State[]) odeSolver.solve(odeFunction, launchPosition, ts[ts.length-1], ts[1]);
+
+        flag = odeSolver.isCollision();
 
         for (int i = 0; i < ts.length; i++) {
             probeTraj[i+1] = (Vector3d) trajectory[i].position;
@@ -70,10 +74,7 @@ public class ProbeSimulator implements ProbeSimulatorInterface {
         return trajectory(p0, v0, ts);
     }
 
-    public static void main(String[] args) {
-        ProbeSimulator simulator = new ProbeSimulator();
-
-        simulator.trajectory(new Vector3d(-1.471922101663588e+11,  -2.860995816266412e+10, 8.278183193596080e+06),
-                new Vector3d(0, 0, 0), 3.162e+7, 863.93442623);
-    }
+   public boolean isCollision(){
+        return flag;
+   }
 }
