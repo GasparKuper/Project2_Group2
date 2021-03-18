@@ -55,9 +55,9 @@ public class Mathmodel {
     }
 
 
-    public Boolean Score(Vector3dInterface [] trajectory, Vector3dInterface finalpositionTitan){
+     public Boolean Score(Vector3dInterface [] trajectory, Vector3dInterface [] trajectoryTitan){
         for(int x = 1; x< trajectory.length; x++){
-            Vector3dInterface temp =trajectory[trajectory.length-1].sub(finalpositionTitan);
+            Vector3dInterface temp =trajectory[x].sub(trajectoryTitan[x]);
             double temp1 = temp.norm();
             if(temp1 <= radiusTitan){
                 stepsToSolution = x;
