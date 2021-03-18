@@ -7,7 +7,6 @@ import Titan.Interfaces.ODEFunctionInterface;
 import Titan.Interfaces.RateInterface;
 import Titan.Interfaces.StateInterface;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class ODEFunction implements ODEFunctionInterface {
@@ -94,17 +93,4 @@ public class ODEFunction implements ODEFunctionInterface {
 		return -(G * other.getM() * (one.getPosition().getZ() - other.getPosition().getZ())
 				/ Math.pow(r, 3));
 	}
-
-	//Newton's second law of motion
-	private double[] motion_X_Y_Z(PlanetBody planet){
-
-		double[] motion = new double[3];
-
-		motion[0] = planet.getVelocity().getX()/planet.getM();
-		motion[1] = planet.getVelocity().getY()/planet.getM();
-		motion[2] = planet.getVelocity().getZ()/planet.getM();
-
-		return motion;
-	}
-
 }

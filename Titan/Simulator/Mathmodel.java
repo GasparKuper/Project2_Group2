@@ -1,4 +1,7 @@
-package Titan;
+package Titan.Simulator;
+
+import Titan.Body.Vector3d;
+import Titan.Interfaces.Vector3dInterface;
 
 public class Mathmodel {
 
@@ -15,7 +18,7 @@ public class Mathmodel {
 
     public void bruteforce(){
         Boolean solution = false;
-        Vector3dInterface[] trajectory;
+        Vector3dInterface[] trajectory = new Vector3dInterface[0];
         while(solution != true){
             double angleX = Math.random() * 2*Math.PI;
             double angleY = Math.random() * Math.PI;
