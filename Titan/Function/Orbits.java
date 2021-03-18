@@ -96,4 +96,8 @@ public class Orbits {
         return (G * other.getM() * (one.getPosition().getZ() - other.getPosition().getZ())
                 / Math.pow(r, 3));
     }
+
+    public Vector3d getTitanPosition(){
+        return planets[8].getPosition();
+    }
 }
