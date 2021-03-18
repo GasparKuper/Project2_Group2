@@ -1,7 +1,8 @@
-package Titan.Simulator;
+package MAIN.ODESolver;
 
-import Titan.Body.Vector3d;
-import Titan.Interfaces.Vector3dInterface;
+
+import MAIN.Body.Vector3d;
+import MAIN.Interfaces.Vector3dInterface;
 
 public class Mathmodel {
 
