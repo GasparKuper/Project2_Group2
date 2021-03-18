@@ -2,7 +2,6 @@ package Titan.Function;
 
 import Titan.Body.PlanetBody;
 import Titan.Body.Vector3d;
-import Titan.Interfaces.RateInterface;
 
 import java.util.LinkedList;
 
@@ -19,7 +18,7 @@ public class Orbits {
         this.massProbe = massProbe;
     }
 
-    public RateInterface function(double h){
+    public void function(double h){
 
 
         LinkedList<Vector3d> positions = new LinkedList<>();
@@ -38,7 +37,6 @@ public class Orbits {
         }
 
         System.out.println(planets[3].getPosition().toString());
-        return new Rate(positions.getLast(), positions.getLast());
     }
 
     // (g*m1*m2)/r^2=f
