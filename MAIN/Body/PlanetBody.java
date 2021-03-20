@@ -6,9 +6,9 @@ public class PlanetBody {
 
     private double m;
 
-    private Vector3d position;
+    public Vector3d position;
 
-    private Vector3d velocity;
+    public Vector3d velocity;
 
     public PlanetBody(double m, Vector3dInterface position, Vector3dInterface velocity){
         this.m = m;

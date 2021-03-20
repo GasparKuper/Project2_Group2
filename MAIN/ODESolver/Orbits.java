@@ -4,14 +4,14 @@ import MAIN.Body.PlanetBody;
 import MAIN.Body.State;
 import MAIN.Body.Vector3d;
 import MAIN.Interfaces.StateInterface;
+import MAIN.Orbit;
+import MAIN.UI;
 
 import java.util.LinkedList;
 
 public class Orbits {
 
     private final static double G = 6.67408e-11;
-
-    private final double radiusTitan = 2575.5e3;
 
     private final boolean flag;
 
@@ -37,7 +37,7 @@ public class Orbits {
         if((!Double.isNaN(tmp.velocity.getY()) || !Double.isNaN(tmp.velocity.getZ()) || !Double.isNaN(tmp.velocity.getZ())) && flag) {
             planets[11] = new PlanetBody(mass, tmp.position, tmp.velocity);
         }else {
-            planets[11] = null;
+        //    planets[11] = null;
         }
 
         LinkedList<Vector3d> positions = new LinkedList<>();
@@ -61,7 +61,13 @@ public class Orbits {
             planets[i].setVelocity((Vector3d) planets[i].getVelocity().add(velocity.get(i)));
         }
 
+       // System.out.println(planets[8].getPosition().toString());
+        long ml = (long) 1.0;
+        try{
+            Thread.sleep(ml);
+        }catch(InterruptedException e){}
 
+        this.updatePosition();
         if(planets[11] == null) {
             Vector3d a = new Vector3d(0, 0, 0);
             return new State(a, a);
@@ -70,6 +76,16 @@ public class Orbits {
         return new State(planets[11].getPosition(), planets[11].getPosition());
     }
 
+    public void updatePosition() {
+        UI f = new UI();
+        System.out.println("Probe position : " +planets[11].getPosition().toString());
+        System.out.println("Probe velocity : " +planets[11].getVelocity().toString());
+        for(int i =0;i<f.getOrbit().length;i++) {
+            f.getOrbit()[i].getShape().translateXProperty().set(planets[i].getPosition().getX() / 100000000);
+            f.getOrbit()[i].getShape().translateYProperty().set(-planets[i].getPosition().getZ() / 100000000);
+            f.getOrbit()[i].getShape().translateZProperty().set(planets[i].getPosition().getY() / 100000000);
+        }
+    }
     // (g*m1*m2)/r^2=f
     private double[] forceMotion_X_Y_Z(PlanetBody planet){
 
@@ -102,26 +118,5 @@ public class Orbits {
         double r = one.getPosition().dist(other.getPosition());
         return -(G * other.getM() * (one.getPosition().getZ() - other.getPosition().getZ())
                 / Math.pow(r, 3));
-    }
-
-    public boolean isINFINITY(){
-        return planets[11] == null;
-    }
-
-    public boolean isCollisionTitan(){
-        if(planets[11] == null)
-            return false;
-            double dist = planets[11].getPosition().dist(planets[8].getPosition());
-        return dist <= radiusTitan;
-    }
-
-    public boolean isCollisionOthers(){
-        for (int i = 0; i < planets.length-1; i++) {
-            if(planets[11] == null)
-                return false;
-            double dist = planets[11].getPosition().dist(planets[i].getPosition());
-
-        }
-        return false;
     }
 }

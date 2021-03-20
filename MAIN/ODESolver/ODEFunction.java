@@ -1,26 +1,22 @@
 package MAIN.ODESolver;
 
+import MAIN.Body.PlanetBody;
 import MAIN.Body.Rate;
 import MAIN.Body.State;
+import MAIN.Body.Vector3d;
 import MAIN.Interfaces.ODEFunctionInterface;
 import MAIN.Interfaces.RateInterface;
 import MAIN.Interfaces.StateInterface;
-import MAIN.Interfaces.Vector3dInterface;
+import MAIN.UI;
+
+import java.util.LinkedList;
 
 public class ODEFunction implements ODEFunctionInterface {
 
-	public State previousState;
-	public Vector3dInterface velocity;
-	public Vector3dInterface position;
-	public double t;
-	public RateInterface rate;
+	private final static double G = 6.67408e-11;
 
-	public ODEFunction(Vector3dInterface velocity,Vector3dInterface position){
-		this.velocity = velocity;
-		this.position = position;
-		this.previousState = new State(this.velocity,this.position);
-		this.t = 0;
-	}
+	private LinkedList<PlanetBody> solarSystem;
+
 	/*
 	 * This is an interface for the function f that represents the
 	 * differential equation dy/dt = f(t,y).
@@ -35,19 +31,31 @@ public class ODEFunction implements ODEFunctionInterface {
 	 * @param   y   the state at which to evaluate the function
 	 * @return  The average rate-of-change over the time-step. Has dimensions of [state]/[time].
 	 */
-	public RateInterface call(double t, StateInterface y){
+	public RateInterface call(double t, StateInterface y) {
+		LinkedList<Vector3d> accelerationBodies = new LinkedList<>();
 
-		State yState = (State) y;
-		Vector3dInterface vRate =(yState.velocity.add(previousState.velocity)).mul((1/(t-this.t)));
-		Vector3dInterface pRate =(yState.position.add(previousState.position)).mul((1/(t-this.t)));
-		rate = new Rate(pRate,vRate);
-		previousState = yState;
-		this.t = t;
+		this.solarSystem = ((State) y).celestialBody;
 
-		return rate;
+		for (int i = 0; i < solarSystem.size(); i++) {
+			Vector3d accel = new Vector3d(0, 0, 0);
+			for (int j = 0; j < solarSystem.size(); j++) {
+				if(i != j) {
+					Vector3d body1 = new Vector3d(0, 0, 0);
+					Vector3d body2 = new Vector3d(0, 0, 0);
+					body1 = (Vector3d) body1.add(solarSystem.get(i).getPosition());
+					body2 = (Vector3d) body2.add(solarSystem.get(j).getPosition());
+					double distance = body1.dist(body2);
+					Vector3d b1b2 = (Vector3d) body1.sub(body2);
+					Vector3d acc = (Vector3d) b1b2.mul(-G * solarSystem.get(j).getM() / Math.pow(distance, 3));
+					accel = (Vector3d) accel.add(acc);
+				}
+			}
+			accelerationBodies.add(accel);
+		}
+
+		// System.out.println(planets[8].getPosition().toString());
+
+		return new Rate(accelerationBodies);
 	}
 
-	public State getPreviousState() {
-		return previousState;
-	}
 }

@@ -16,18 +16,24 @@ public class UI extends Application{
 
 	public static final int WIDTH = 1500;
 	public static final int HEIGHT = 750;
+	public static Orbit[] orbitArr = new Orbit[12];
+	public UI(){
 
+	}
+	public Orbit[] getOrbit(){
+		return orbitArr;
+	}
 	public void start(Stage primaryStage) throws Exception {
 		Initialize planets = new Initialize();
 		Vector3dInterface[][] init = planets.getPlanets();
 		Group solarSystem = new Group();
-		Scene scene = new Scene(solarSystem, WIDTH, HEIGHT);
+		Scene scene = new Scene(solarSystem, WIDTH, HEIGHT,true);
+
 
 		Sphere sunPivot = new Sphere(50);
 		sunPivot.setTranslateX(-0.6806783239281648);
 		sunPivot.setTranslateY(-0.006564012751690170);
 		sunPivot.setTranslateZ(-1.080005533878725);
-
 
 
 		Orbit sun = new Orbit(-0.6806783239281648, 1.080005533878725, 0.006564012751690170, 695.508);
@@ -67,7 +73,7 @@ public class UI extends Application{
 		solarSystem.getChildren().add(jupiter.getShape());
 
 		Orbit saturn = new Orbit(632.8646641500651, -1358.172804527507, -1.578520137930810, 58.232);
-		saturn.setImage("/Image/Textures/Jupiter.JPG");
+		saturn.setImage("/Image/Textures/Saturn.JPG");
 		saturn.setState(init[7][0],init[7][1]);
 		solarSystem.getChildren().add(saturn.getShape());
 
@@ -86,17 +92,33 @@ public class UI extends Application{
 		neptune.setState(init[10][0],init[10][1]);
 		solarSystem.getChildren().add(neptune.getShape());
 
+		Orbit probe = new Orbit(-1.4718861838613153E2, -2.8615219147677864 ,8174296.311571818E-9, 24.622);
+		probe.setImage("/Image/Textures/probe.JPG");
+		probe.setState(init[11][0],init[11][1]);
+		solarSystem.getChildren().add(probe.getShape());
+
 		/*ImageView background = new ImageView("/Image/Textures/Space.JPG");
 		background.setPreserveRatio(true);
 		background.setFitWidth(WIDTH*1.3);
 		background.setFitHeight(HEIGHT*1.2);
 		solarSystem.getChildren().add(background);*/
+		orbitArr[0] = sun;
+		orbitArr[1] = mercury;
+		orbitArr[2] = venus;
+		orbitArr[3] = earth;
+		orbitArr[4] = moon;
+		orbitArr[5] = mars;
+		orbitArr[6] = jupiter;
+		orbitArr[7] = saturn;
+		orbitArr[8] = titan;
+		orbitArr[9] = uranus;
+		orbitArr[10] = neptune;
+		orbitArr[11] = probe;
 
 		scene.setFill(Color.BLACK);
 		
-		PointLight lighting = new PointLight();
-		solarSystem.getChildren().add(lighting);
-
+		//PointLight lighting = new PointLight();
+		//solarSystem.getChildren().add(lighting);
 		Thread animation = new Calculation(sun, mercury, venus, earth, moon, mars, jupiter, saturn, titan, uranus, neptune);
 		animation.start();
 
@@ -110,8 +132,6 @@ public class UI extends Application{
 		camera.setNearClip(1);
 		camera.setFarClip(100000);
 
-
-		//Point3D pivot3D = new Point3D(sunPivot.getTranslateX(),sunPivot.getTranslateY(),sunPivot.getTranslateZ());
 		Rotate yRotate = new Rotate(0, Rotate.Y_AXIS); // Lets the camera rotate around the Y Axis
 		yRotate.pivotXProperty().bind(sunPivot.translateXProperty());
 		yRotate.pivotZProperty().bind(sunPivot.translateZProperty());
@@ -134,8 +154,6 @@ public class UI extends Application{
 				case V:
 					yRotate.angleProperty().set(yRotate.getAngle() + 10);
 					//cameraRotate.angleProperty().set(cameraRotate.getAngle() -10);
-					System.out.println("cameraRotate" + cameraRotate.getAngle());
-					System.out.println("yRotate" + yRotate.getAngle());
 					break;
 			}
 
@@ -143,8 +161,6 @@ public class UI extends Application{
 				case B:
 					yRotate.setAngle(yRotate.getAngle() - 10);
 					//cameraRotate.angleProperty().set(cameraRotate.getAngle() + 10);
-					System.out.println("cameraRotate" + cameraRotate.getAngle());
-					System.out.println("yRotate" + yRotate.getAngle());
 					break;
 			}
 		});
@@ -174,23 +190,18 @@ public class UI extends Application{
 				}
 				case R -> {
 					camera.translateYProperty().set(camera.getTranslateY() - 100);
-					System.out.println("X Position: " + camera.getTranslateX() + "  Y Position: " + camera.getTranslateY() + "  Z Position: " + camera.getTranslateZ());
 				}
 				case A -> {
 					camera.translateXProperty().set(camera.getTranslateX() - 100);
-					System.out.println("X Position: " + camera.getTranslateX() + "  Y Position: " + camera.getTranslateY() + "  Z Position: " + camera.getTranslateZ());
 				}
 				case D -> {
 					camera.translateXProperty().set(camera.getTranslateX() + 100);
-					System.out.println("X Position: " + camera.getTranslateX() + "  Y Position: " + camera.getTranslateY() + "  Z Position: " + camera.getTranslateZ());
 				}
 				case W -> {
 					camera.translateZProperty().set(camera.getTranslateZ() + 100);
-					System.out.println("X Position: " + camera.getTranslateX() + "  Y Position: " + camera.getTranslateY() + "  Z Position: " + camera.getTranslateZ());
 				}
 				case S -> {
 					camera.translateZProperty().set(camera.getTranslateZ() - 100);
-					System.out.println("X Position: " + camera.getTranslateX() + "  Y Position: " + camera.getTranslateY() + "  Z Position: " + camera.getTranslateZ());
 				}
 			}
 		});
@@ -207,4 +218,5 @@ public class UI extends Application{
 	public static void main(String args[]) {
 		launch(args);
 	}
+
 }

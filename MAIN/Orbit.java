@@ -5,7 +5,6 @@ import MAIN.Body.Vector3d;
 import MAIN.Interfaces.ODEFunctionInterface;
 import MAIN.Interfaces.StateInterface;
 import MAIN.Interfaces.Vector3dInterface;
-import MAIN.ODESolver.ODEFunction;
 import javafx.scene.image.Image;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
@@ -71,7 +70,7 @@ public class Orbit {
 		this.position = initialPos;
 		this.updatePosition();
 
-		this.function = new ODEFunction(initialVel, initialPos);
+		//this.function = new ODEFunction(initialVel, initialPos);
 	}
 
 	public void setState(StateInterface newState) {

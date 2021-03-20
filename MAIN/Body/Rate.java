@@ -3,22 +3,17 @@ package MAIN.Body;
 import MAIN.Interfaces.RateInterface;
 import MAIN.Interfaces.Vector3dInterface;
 
+import java.util.LinkedList;
+
 public class Rate implements RateInterface {
 
-	private Vector3dInterface vRate;
-	private Vector3dInterface pRate;
+	private LinkedList<Vector3d> acceleration;
 
-	public Rate(Vector3dInterface velocity, Vector3dInterface acceleration) {
-		this.vRate = acceleration;
-		this.pRate = velocity;
+	public Rate(LinkedList<Vector3d> acceleration) {
+		this.acceleration = acceleration;
 	}
 
-	public Vector3dInterface getPRate() {
-		return this.pRate;
+	public LinkedList<Vector3d> getAcceleration() {
+		return acceleration;
 	}
-
-	public Vector3dInterface getVRate() {
-		return this.vRate;
-	}
-
 }

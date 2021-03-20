@@ -1,11 +1,14 @@
 package MAIN.ODESolver;
 
 import MAIN.Body.Data;
+import MAIN.Body.PlanetBody;
 import MAIN.Body.State;
 import MAIN.Body.Vector3d;
 import MAIN.Interfaces.ProbeSimulatorInterface;
 import MAIN.Interfaces.StateInterface;
 import MAIN.Interfaces.Vector3dInterface;
+
+import java.util.LinkedList;
 
 public class ProbeSimulator implements ProbeSimulatorInterface {
 
@@ -27,27 +30,18 @@ public class ProbeSimulator implements ProbeSimulatorInterface {
 
         Data data = new Data();
 
-        Orbits orbits = new Orbits(data.getPlanets(), 15000, false);
-        ODESolver odeSolver = new ODESolver(orbits);
+        ODESolver odeSolver = new ODESolver();
 
-        ODEFunction odeFunction = new ODEFunction(v0, p0);
+        ODEFunction odeFunction = new ODEFunction();
 
-        StateInterface launchPosition = new State(p0, v0);
+        LinkedList<PlanetBody> solarSystem = data.getPlanets();
+
+        State launchPosition = new State(15000, p0, v0, solarSystem);
 
         State[] trajectory = (State[]) odeSolver.solve(odeFunction, launchPosition, ts[ts.length-1], ts[1]);
 
-        flag = odeSolver.isCollision();
-
-        for (int i = 0; i < ts.length; i++) {
-            if(probeTraj[i] != null) {
-
-                probeTraj[i + 1] = (Vector3d) trajectory[i].position;
-//                System.out.println("PROBE: Time = " + ts[i]);
-//                System.out.println("Coordinate: " + trajectory[i].position.toString());
-//                System.out.println("Velocity: " + trajectory[i].velocity.toString());
-            } else break;
-        }
-
+        for (int i = 0; i < ts.length; i++)
+            probeTraj[i + 1] = (Vector3d) trajectory[i].position;
 
         return probeTraj;
     }
@@ -81,7 +75,7 @@ public class ProbeSimulator implements ProbeSimulatorInterface {
 
     public static void main(String[] args) {
         ProbeSimulator simulator = new ProbeSimulator();
-
-        simulator.trajectory(new Vector3d(-1.471922101663588e+11,  -2.860995816266412e+10, 8.278183193596080e+06), new Vector3d(0, 0, 0), 3.162e+7, 863.93442623);
+        simulator.trajectory(new Vector3d(-1.4718861838613153E11, -2.8615219147677864E10 ,8174296.311571818),
+                new Vector3d(27978.003182957942, -62341.39349461967 ,-651.590970913659), 3.162e+7, 863.93442623);
     }
 }

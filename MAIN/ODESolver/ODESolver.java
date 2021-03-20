@@ -1,10 +1,14 @@
 package MAIN.ODESolver;
 
+import MAIN.Body.PlanetBody;
 import MAIN.Body.State;
 import MAIN.Interfaces.ODEFunctionInterface;
 import MAIN.Interfaces.ODESolverInterface;
 import MAIN.Interfaces.RateInterface;
 import MAIN.Interfaces.StateInterface;
+import MAIN.UI;
+
+import java.util.LinkedList;
 
 /*
  * A class for solving a general differential equation dy/dt = f(t,y)
@@ -14,15 +18,8 @@ import MAIN.Interfaces.StateInterface;
 public class ODESolver implements ODESolverInterface {
 
 
-    Orbits orb;
+    LinkedList<PlanetBody> solarSystem;
 
-    private boolean flag = false;
-
-    public ODESolver(Orbits f){
-        this.orb = f;
-    }
-
-    public ODESolver(){}
 
     /*
      * Solve the differential equation by taking multiple steps.
@@ -40,22 +37,21 @@ public class ODESolver implements ODESolverInterface {
         //Launching position
         result[0] = y0;
 
-        ODEFunction function = (ODEFunction) f;
-
         for (int i = 0; i < ts.length; i++) {
 
-            if (orb.isCollisionTitan()) {
-                flag = true;
-                break;
-            }
+            solarSystem = ((State) y0).celestialBody;
 
-            if(orb.isCollisionOthers())
-                break;
+            long ml = (long) 1.0;
+            try{
+                Thread.sleep(ml);
+            }catch(InterruptedException e){}
+
+            this.updatePosition();
 
             if (i == ts.length - 1) {
-                result[i + 1] = step(f, ts[i], function.getPreviousState(), ts[i] - ts[i - 1]);
+                result[i + 1] = step(f, ts[i], result[i], ts[i] - ts[i - 1]);
             } else {
-                result[i + 1] = step(f, ts[i], function.getPreviousState(), ts[1]);
+                result[i + 1] = step(f, ts[i], result[i], ts[1]);
             }
         }
 
@@ -85,7 +81,7 @@ public class ODESolver implements ODESolverInterface {
                 ts[x] = h * x;
             }
         }
-        return solve(f, y0, ts );
+        return solve(f, y0, ts);
     }
 
     /*
@@ -100,14 +96,19 @@ public class ODESolver implements ODESolverInterface {
     @Override
     public StateInterface step(ODEFunctionInterface f, double t, StateInterface y, double h) {
 
-        StateInterface tmp = orb.function(h, y);
-
-        RateInterface velocity_acceleration = f.call(t, tmp);
+        RateInterface velocity_acceleration = f.call(h, y);
 
         return y.addMul(h, velocity_acceleration);
     }
 
-    public boolean isCollision(){
-        return flag;
+    public void updatePosition() {
+        UI f = new UI();
+        System.out.println("Probe position : " + solarSystem.getLast().getPosition().toString());
+        System.out.println("Probe velocity : " + solarSystem.getLast().getVelocity().toString());
+        for(int i =0;i<f.getOrbit().length;i++) {
+            f.getOrbit()[i].getShape().translateXProperty().set(solarSystem.get(i).getPosition().getX() / 100000000);
+            f.getOrbit()[i].getShape().translateYProperty().set(-solarSystem.get(i).getPosition().getZ() / 100000000);
+            f.getOrbit()[i].getShape().translateZProperty().set(solarSystem.get(i).getPosition().getY() / 100000000);
+        }
     }
 }
