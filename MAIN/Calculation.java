@@ -1,10 +1,6 @@
 package MAIN;
 
-import MAIN.Body.Data;
-import MAIN.Body.PlanetBody;
 import MAIN.Body.Vector3d;
-import MAIN.Interfaces.StateInterface;
-import MAIN.ODESolver.Orbits;
 import MAIN.ODESolver.ProbeSimulator;
 
 public class Calculation extends Thread {
