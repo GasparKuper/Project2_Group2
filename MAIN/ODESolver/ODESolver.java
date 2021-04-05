@@ -101,7 +101,11 @@ public class ODESolver implements ODESolverInterface {
 
         RateInterface velocity_acceleration = f.call(h, y);
 
-        return y.addMul(h, velocity_acceleration);
+        State x = (State) y;
+
+        State clone = x.clone(y);
+
+        return clone.addMul(h, velocity_acceleration);
     }
 
     //GUI INTERFACE CHANGE!!!!!!!!!!!!!!!!!!!!!!!

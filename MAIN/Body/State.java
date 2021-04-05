@@ -10,14 +10,16 @@ public class State implements StateInterface {
 
 	public Vector3dInterface position;
 	public Vector3dInterface velocity;
+	public double mass;
 
 	public LinkedList<PlanetBody> celestialBody;
 
-	public State(double mass, Vector3dInterface position, Vector3dInterface velocity, LinkedList<PlanetBody> celestialBody) {
+	public State(double mass, Vector3dInterface position, Vector3dInterface velocity, LinkedList<PlanetBody> celestialBody, boolean flag) {
 		this.position = position;
 		this.velocity = velocity;
 		this.celestialBody = celestialBody;
-		celestialBody.add(new PlanetBody(mass, position, velocity));
+		this.mass = mass;
+		if(flag) celestialBody.add(new PlanetBody(mass, position, velocity));
 	}
 
 	public State(Vector3dInterface position, Vector3dInterface velocity) {
@@ -50,5 +52,10 @@ public class State implements StateInterface {
 
 	public String toString() {
 		return ("Position: " + this.position.toString() + "\nVelocity: " + this.velocity.toString());
+	}
+
+	public State clone(StateInterface x){
+		State z = (State) x;
+		return new State(z.mass, z.position, z.velocity, z.celestialBody, false);
 	}
 }
