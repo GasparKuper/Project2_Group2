@@ -74,10 +74,4 @@ public class Mathmodel {
         }
         return false;
     }
-
-    public static void main(String[] args) {
-        Mathmodel mathmodel = new Mathmodel();
-
-        mathmodel.bruteforce();
-    }
 }

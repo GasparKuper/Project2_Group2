@@ -41,12 +41,15 @@ public class ODESolver implements ODESolverInterface {
 
             solarSystem = ((State) y0).celestialBody;
 
+
+            //GUI Interface      CHANGE!!!!!
             long ml = (long) 1.0;
             try{
                 Thread.sleep(ml);
             }catch(InterruptedException e){}
 
             this.updatePosition();
+            ///////////////////////////////////
 
             if (i == ts.length - 1) {
                 result[i + 1] = step(f, ts[i], result[i], ts[i] - ts[i - 1]);
@@ -101,6 +104,7 @@ public class ODESolver implements ODESolverInterface {
         return y.addMul(h, velocity_acceleration);
     }
 
+    //GUI INTERFACE CHANGE!!!!!!!!!!!!!!!!!!!!!!!
     public void updatePosition() {
         UI f = new UI();
         System.out.println("Probe position : " + solarSystem.getLast().getPosition().toString());
@@ -111,4 +115,5 @@ public class ODESolver implements ODESolverInterface {
             f.getOrbit()[i].getShape().translateZProperty().set(solarSystem.get(i).getPosition().getY() / 100000000);
         }
     }
+    //////////////////////////////////////////////
 }

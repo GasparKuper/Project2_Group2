@@ -5,7 +5,6 @@ import MAIN.Body.PlanetBody;
 import MAIN.Body.State;
 import MAIN.Body.Vector3d;
 import MAIN.Interfaces.ProbeSimulatorInterface;
-import MAIN.Interfaces.StateInterface;
 import MAIN.Interfaces.Vector3dInterface;
 
 import java.util.LinkedList;
@@ -72,10 +71,4 @@ public class ProbeSimulator implements ProbeSimulatorInterface {
    public boolean isCollision(){
         return flag;
    }
-
-    public static void main(String[] args) {
-        ProbeSimulator simulator = new ProbeSimulator();
-        simulator.trajectory(new Vector3d(-1.4718861838613153E11, -2.8615219147677864E10 ,8174296.311571818),
-                new Vector3d(27978.003182957942, -62341.39349461967 ,-651.590970913659), 3.162e+7, 863.93442623);
-    }
 }
