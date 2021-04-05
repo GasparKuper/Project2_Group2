@@ -1,7 +1,6 @@
 package MAIN.Body;
 
 import MAIN.Interfaces.RateInterface;
-import MAIN.Interfaces.Vector3dInterface;
 
 import java.util.LinkedList;
 

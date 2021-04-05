@@ -7,7 +7,6 @@ import MAIN.Body.Vector3d;
 import MAIN.Interfaces.ODEFunctionInterface;
 import MAIN.Interfaces.RateInterface;
 import MAIN.Interfaces.StateInterface;
-import MAIN.UI;
 
 import java.util.LinkedList;
 
@@ -36,6 +35,11 @@ public class ODEFunction implements ODEFunctionInterface {
 
 		this.solarSystem = ((State) y).celestialBody;
 
+
+		//Calculating the first function
+		// -G * Mass of other object * (position of the object - position of other objects)
+		// --------------------------------------------------------------------------------  DIVIDE
+		//  The vector distance between an object and another object in the third degree
 		for (int i = 0; i < solarSystem.size(); i++) {
 			Vector3d accel = new Vector3d(0, 0, 0);
 			for (int j = 0; j < solarSystem.size(); j++) {
@@ -52,8 +56,6 @@ public class ODEFunction implements ODEFunctionInterface {
 			}
 			accelerationBodies.add(accel);
 		}
-
-		// System.out.println(planets[8].getPosition().toString());
 
 		return new Rate(accelerationBodies);
 	}

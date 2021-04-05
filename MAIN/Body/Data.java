@@ -55,9 +55,6 @@ public class Data {
                 new Vector3d(1.068410720964204e+03, 5.354959501569486e+03, -1.343918199987533e+02)));
     }
     public LinkedList<PlanetBody> getPlanets(){
-        int length = planets.size()-1;
-        System.out.println("Pos "+ planets.get(length).getPosition().toString());
-        System.out.println("Vel " +planets.get(length).getVelocity().toString());
         return planets;
     }
 }

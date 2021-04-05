@@ -103,16 +103,16 @@ public class ODESolver implements ODESolverInterface {
 
         State x = (State) y;
 
+        //Create a clone of the State object
         State clone = x.clone(y);
 
+        //Return a new state with a new position and velocity
         return clone.addMul(h, velocity_acceleration);
     }
 
     //GUI INTERFACE CHANGE!!!!!!!!!!!!!!!!!!!!!!!
     public void updatePosition() {
         UI f = new UI();
-        System.out.println("Probe position : " + solarSystem.getLast().getPosition().toString());
-        System.out.println("Probe velocity : " + solarSystem.getLast().getVelocity().toString());
         for(int i =0;i<f.getOrbit().length;i++) {
             f.getOrbit()[i].getShape().translateXProperty().set(solarSystem.get(i).getPosition().getX() / 100000000);
             f.getOrbit()[i].getShape().translateYProperty().set(-solarSystem.get(i).getPosition().getZ() / 100000000);

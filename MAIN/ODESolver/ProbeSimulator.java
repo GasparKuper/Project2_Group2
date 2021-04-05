@@ -37,6 +37,7 @@ public class ProbeSimulator implements ProbeSimulatorInterface {
 
         State launchPosition = new State(15000, p0, v0, solarSystem, true);
 
+        //Array with positions and velocities of the probe and planets.
         State[] trajectory = (State[]) odeSolver.solve(odeFunction, launchPosition, ts[ts.length-1], ts[1]);
 
         for (int i = 0; i < ts.length; i++)
@@ -59,6 +60,7 @@ public class ProbeSimulator implements ProbeSimulatorInterface {
         double tsLength = tf/h;
         double [] ts = new double[(int) (tsLength)];
 
+        //Calculate How many steps we have
         for(int x = 0; x < ts.length; x++){
                 ts[x] = h * x;
         }

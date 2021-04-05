@@ -38,6 +38,9 @@ public class State implements StateInterface {
 
 		LinkedList<Vector3d> acceleration = ((Rate) rate).getAcceleration();
 
+		//Calculate two function
+		//New position = old Position + stepSize * Velocity
+		//New Velocity = old Velocity + stepSize * Rate (Acceleration)
 		for (int i = 0; i < celestialBody.size(); i++) {
 			celestialBody.get(i).setPosition((Vector3d) celestialBody.get(i).getPosition().addMul(step, celestialBody.get(i).getVelocity()));
 			celestialBody.get(i).setVelocity((Vector3d) celestialBody.get(i).getVelocity().addMul(step, acceleration.get(i)));
@@ -46,7 +49,6 @@ public class State implements StateInterface {
 				this.velocity = celestialBody.get(i).getVelocity();
 			}
 		}
-//		System.out.println(celestialBody.get(3).getPosition().toString());
 		return this;
 	}
 
