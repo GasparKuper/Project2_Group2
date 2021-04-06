@@ -6,7 +6,6 @@ import MAIN.Interfaces.ODEFunctionInterface;
 import MAIN.Interfaces.ODESolverInterface;
 import MAIN.Interfaces.RateInterface;
 import MAIN.Interfaces.StateInterface;
-import MAIN.UI;
 
 import java.util.LinkedList;
 
@@ -41,15 +40,6 @@ public class ODESolver implements ODESolverInterface {
 
             solarSystem = ((State) y0).celestialBody;
 
-
-            //GUI Interface      CHANGE!!!!!
-            long ml = (long) 1.0;
-            try{
-                Thread.sleep(ml);
-            }catch(InterruptedException e){}
-
-            this.updatePosition();
-            ///////////////////////////////////
 
             if (i == ts.length - 1) {
                 result[i + 1] = step(f, ts[i], result[i], ts[i] - ts[i - 1]);
@@ -109,15 +99,4 @@ public class ODESolver implements ODESolverInterface {
         //Return a new state with a new position and velocity
         return clone.addMul(h, velocity_acceleration);
     }
-
-    //GUI INTERFACE CHANGE!!!!!!!!!!!!!!!!!!!!!!!
-    public void updatePosition() {
-        UI f = new UI();
-        for(int i =0;i<f.getOrbit().length;i++) {
-            f.getOrbit()[i].getShape().translateXProperty().set(solarSystem.get(i).getPosition().getX() / 100000000);
-            f.getOrbit()[i].getShape().translateYProperty().set(-solarSystem.get(i).getPosition().getZ() / 100000000);
-            f.getOrbit()[i].getShape().translateZProperty().set(solarSystem.get(i).getPosition().getY() / 100000000);
-        }
-    }
-    //////////////////////////////////////////////
 }

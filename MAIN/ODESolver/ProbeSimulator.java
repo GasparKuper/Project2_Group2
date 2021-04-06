@@ -11,7 +11,7 @@ import java.util.LinkedList;
 
 public class ProbeSimulator implements ProbeSimulatorInterface {
 
-    private boolean flag = false;
+    private State[] trajectory;
 
     /*
      * Simulate the solar system, including a probe fired from Earth at 00:00h on 1 April 2020.
@@ -38,7 +38,9 @@ public class ProbeSimulator implements ProbeSimulatorInterface {
         State launchPosition = new State(15000, p0, v0, solarSystem, true);
 
         //Array with positions and velocities of the probe and planets.
-        State[] trajectory = (State[]) odeSolver.solve(odeFunction, launchPosition, ts[ts.length-1], ts[1]);
+        trajectory = (State[]) odeSolver.solve(odeFunction, launchPosition, ts[ts.length-1], ts[1]);
+
+        System.out.println("DONE");
 
         for (int i = 0; i < ts.length; i++)
             probeTraj[i + 1] = (Vector3d) trajectory[i].position;
@@ -70,7 +72,8 @@ public class ProbeSimulator implements ProbeSimulatorInterface {
         return trajectory(p0, v0, ts);
     }
 
-   public boolean isCollision(){
-        return flag;
-   }
+    public State[] getTrajectory() {
+        return trajectory;
+    }
+
 }

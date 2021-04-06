@@ -22,11 +22,6 @@ public class State implements StateInterface {
 		if(flag) celestialBody.add(new PlanetBody(mass, position, velocity));
 	}
 
-	public State(Vector3dInterface position, Vector3dInterface velocity) {
-		this.position = position;
-		this.velocity = velocity;
-	}
-
 	/**
 	 * Update a state to a new state computed by: this + step * rate
 	 *
@@ -49,6 +44,7 @@ public class State implements StateInterface {
 				this.velocity = celestialBody.get(i).getVelocity();
 			}
 		}
+
 		return this;
 	}
 
@@ -58,6 +54,14 @@ public class State implements StateInterface {
 
 	public State clone(StateInterface x){
 		State z = (State) x;
-		return new State(z.mass, z.position, z.velocity, z.celestialBody, false);
+		LinkedList<PlanetBody> cloneplanets = new LinkedList<>();
+		for (int i = 0; i < z.celestialBody.size(); i++) {
+			PlanetBody object = z.celestialBody.get(i);
+			Vector3d pos = object.getPosition();
+			Vector3d vel = object.getVelocity();
+			double mass = object.getM();
+			cloneplanets.add(new PlanetBody(mass, pos, vel));
+		}
+		return new State(z.mass, z.position, z.velocity, cloneplanets, false);
 	}
 }

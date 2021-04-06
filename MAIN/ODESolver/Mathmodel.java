@@ -38,7 +38,6 @@ public class Mathmodel {
                     ProbeSimulator p = new ProbeSimulator();
 
                     trajectory = p.trajectory(p0, v0, maxtime, stepsize);
-                    solution = p.isCollision();
                     System.out.println("the solution is "+ solution);
                     System.out.println("for position "+ trajectory[trajectory.length-1].toString());
                 }
