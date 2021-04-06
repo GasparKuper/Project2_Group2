@@ -11,11 +11,13 @@ public class CalculationOutput extends Thread{
         //Array the trajectory of the probe
         Vector3d[] trajectoryOfProbe = (Vector3d[]) simulator.trajectory(
                 new Vector3d(-1.4718861838613153E11, -2.8615219147677864E10 ,8174296.311571818),
-                new Vector3d(27978.003182957942, -62341.39349461967 ,-651.590970913659), 3.162e+7, 863.93442623);
+                new Vector3d(27978.003182957942, -62341.39349461967 ,-651.590970913659), 31556952, 360);
 
 
         MAIN.Body.State[] trajectoryOfAll = simulator.getTrajectory();
 
+
+        System.out.println(trajectoryOfAll[trajectoryOfAll.length-1].celestialBody.get(3).position);
     }
 
     public void run() {
@@ -25,7 +27,7 @@ public class CalculationOutput extends Thread{
         simulator.trajectory(
                 new Vector3d(-1.4718861838613153E11, -2.8615219147677864E10 ,8174296.311571818),
                 new Vector3d(27978.003182957942, -62341.39349461967 ,-651.590970913659),
-                3.162e+7, 863.93442623);
+                31556952, 360);
 
         MAIN.Body.State[] trajectoryOfAll = simulator.getTrajectory();
 

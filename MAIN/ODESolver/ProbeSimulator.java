@@ -38,12 +38,12 @@ public class ProbeSimulator implements ProbeSimulatorInterface {
         State launchPosition = new State(15000, p0, v0, solarSystem, true);
 
         //Array with positions and velocities of the probe and planets.
-        trajectory = (State[]) odeSolver.solve(odeFunction, launchPosition, ts[ts.length-1], ts[1]);
+        trajectory = (State[]) odeSolver.solve(odeFunction, launchPosition, ts[ts.length-1], ts[0]);
 
         System.out.println("DONE");
 
-        for (int i = 0; i < ts.length; i++)
-            probeTraj[i + 1] = (Vector3d) trajectory[i].position;
+        for (int i = 0; i < trajectory.length; i++)
+            probeTraj[i] = (Vector3d) trajectory[i].position;
 
         return probeTraj;
     }
@@ -60,11 +60,13 @@ public class ProbeSimulator implements ProbeSimulatorInterface {
     @Override
     public Vector3dInterface[] trajectory(Vector3dInterface p0, Vector3dInterface v0, double tf, double h) {
         double tsLength = tf/h;
+        if(tf % h > 0.0)
+            tsLength++;
         double [] ts = new double[(int) (tsLength)];
 
         //Calculate How many steps we have
-        for(int x = 0; x < ts.length; x++){
-                ts[x] = h * x;
+        for(int x = 1; x < ts.length; x++){
+                ts[x-1] = h * x;
         }
 
         ts[ts.length-1] = tf;

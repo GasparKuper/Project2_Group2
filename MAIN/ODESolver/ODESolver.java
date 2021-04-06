@@ -42,9 +42,9 @@ public class ODESolver implements ODESolverInterface {
 
 
             if (i == ts.length - 1) {
-                result[i + 1] = step(f, ts[i], result[i], ts[i] - ts[i - 1]);
+                result[i + 1] = step(f, ts[i], result[i], ts[i] - ts[i-1]);
             } else {
-                result[i + 1] = step(f, ts[i], result[i], ts[1]);
+                result[i + 1] = step(f, ts[i], result[i], ts[0]);
             }
         }
 
@@ -65,15 +65,16 @@ public class ODESolver implements ODESolverInterface {
     public StateInterface[] solve(ODEFunctionInterface f, StateInterface y0, double tf, double h) {
 
         double tsLength = tf/h;
+        if(tf % h > 0.0)
+            tsLength++;
         double [] ts = new double[(int) tsLength];
 
-        for(int x = 0; x < ts.length; x++){
-            if(x == ts.length-1) {
-                ts[x] = tf;
-            }else{
-                ts[x] = h * x;
-            }
+        for(int x = 1; x < ts.length; x++){
+            ts[x-1] = h * x;
         }
+
+        ts[ts.length-1] = tf;
+
         return solve(f, y0, ts);
     }
 
