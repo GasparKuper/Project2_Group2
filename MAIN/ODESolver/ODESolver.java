@@ -41,7 +41,7 @@ public class ODESolver implements ODESolverInterface {
             solarSystem = ((State) y0).celestialBody;
 
 
-            if (i == ts.length - 1) {
+            if (i == ts.length - 1 && i != 0) {
                 result[i + 1] = step(f, ts[i], result[i], ts[i] - ts[i-1]);
             } else {
                 result[i + 1] = step(f, ts[i], result[i], ts[0]);
