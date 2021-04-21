@@ -39,7 +39,7 @@ public class CalculationOutput extends Thread{
                 e.printStackTrace();
             }
 
-            System.out.println(trajectoryOfAll[i].celestialBody.get(11).getPosition());
+            System.out.println(trajectoryOfAll[i].celestialBody.get(3).getPosition());
             this.updatePosition(trajectoryOfAll[i]);
         }
     }
