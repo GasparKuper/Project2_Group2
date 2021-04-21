@@ -2,7 +2,10 @@ package MAIN;
 // Scale x,y,z  - 1:1*10^(-9)
 // Scale volume - 1:1*10^(-6)
 
+import MAIN.Body.Vector3d;
 import MAIN.GUI.Orbit;
+import MAIN.ODESolver.ProbeSimulator;
+import javafx.animation.PathTransition;
 import javafx.application.Application;
 import javafx.scene.Camera;
 import javafx.scene.Group;
@@ -10,9 +13,13 @@ import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Polyline;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+
+import java.util.ArrayList;
 
 public class UI extends Application{
 
@@ -210,6 +217,53 @@ public class UI extends Application{
 		primaryStage.setTitle("Flight to Titan - Group 10");
 		primaryStage.setScene(scene);
 		primaryStage.show();
+		path();
+	}
+
+	private void path(){
+		ProbeSimulator simulator = new ProbeSimulator();
+
+		//Array the trajectory of the probe
+		simulator.trajectory(
+				new Vector3d(-1.4718861838613153E11, -2.8615219147677864E10 ,8174296.311571818),
+				new Vector3d(27978.003182957942, -62341.39349461967 ,-651.590970913659),
+				31556952, 360);
+
+		MAIN.Body.State[] trajectoryOfAll = simulator.getTrajectory();
+
+		this.smoothUpdate(trajectoryOfAll);
+	}
+
+	private void smoothUpdate(MAIN.Body.State[] state){
+		UI f = new UI();
+		for(int i =0;i<f.getOrbit().length;i++) {
+			f.getOrbit()[i].getShape().translateZProperty().set(0);
+		}
+
+		for (int i = 0; i < state[0].celestialBody.size(); i++) {
+			Polyline polyline = new Polyline();
+			ArrayList<Double> path = new ArrayList<>();
+			for (int j = 0; j < state.length; j++) {
+				double y = (state[j].celestialBody.get(0).getPosition().getX() - state[j].celestialBody.get(i).getPosition().getX());
+				double x = (state[j].celestialBody.get(0).getPosition().getY() - state[j].celestialBody.get(i).getPosition().getY());
+				if(i == 4 || i == 8) {
+					double yS = (state[j].celestialBody.get(0).getPosition().getX() - state[j].celestialBody.get(i-1).getPosition().getX());
+					double xS = (state[j].celestialBody.get(0).getPosition().getY() - state[j].celestialBody.get(i-1).getPosition().getY());
+					path.add((xS + 25.0*(x - xS)) / 600000000);
+					path.add((yS + 25.0*(y - yS)) / 600000000);
+				} else {
+					path.add(x / 600000000);
+					path.add(y / 600000000);
+				}
+			}
+			polyline.getPoints().addAll(path);
+			PathTransition transition = new PathTransition();
+			transition.setNode(f.getOrbit()[i].getShape());
+			transition.setDuration(Duration.seconds(60));
+			transition.setPath(polyline);
+			transition.setCycleCount(PathTransition.INDEFINITE);
+			transition.play();
+		}
 	}
 
 
