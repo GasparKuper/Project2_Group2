@@ -14,7 +14,6 @@ public class State implements StateInterface {
 	public double mass;
 
 	public LinkedList<PlanetBody> celestialBody;
-	private LinkedList<Vector3d> prevAcceleration;
 
 	public State(double mass, Vector3dInterface position, Vector3dInterface velocity, LinkedList<PlanetBody> celestialBody, boolean flag) {
 		this.position = position;
