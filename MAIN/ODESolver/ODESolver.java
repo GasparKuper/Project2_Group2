@@ -97,7 +97,14 @@ public class ODESolver implements ODESolverInterface {
         //Create a clone of the State object
         State clone = x.clone(y);
 
+        //Verlet Solver
+        clone = (State) clone.addMulVerlet(h, velocity_acceleration, f);
+
+        //Euler Method
+//        clone = (State) clone.addMul(h, velocity_acceleration);
+
+
         //Return a new state with a new position and velocity
-        return clone.addMul(h, velocity_acceleration);
+        return clone;
     }
 }
