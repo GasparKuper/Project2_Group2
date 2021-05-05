@@ -3,8 +3,8 @@ package MAIN.GUI.SolarSystem;
 // Scale volume - 1:1*10^(-6)
 
 import MAIN.Body.Vector3d;
-import MAIN.CalculationOutput;
 import MAIN.ODESolver.ProbeSimulator;
+import javafx.animation.ParallelTransition;
 import javafx.animation.PathTransition;
 import javafx.application.Application;
 import javafx.scene.Camera;
@@ -13,7 +13,6 @@ import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Polyline;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
@@ -113,13 +112,10 @@ public class UI extends Application{
 		orbitArr[10] = neptune;
 		orbitArr[11] = probe;
 
-		scene.setFill(Color.BLACK);
+//		scene.setFill(Color.BLACK);
 		
 		//PointLight lighting = new PointLight();
 		//solarSystem.getChildren().add(lighting);
-		//Changed
-		Thread animation = new CalculationOutput();
-		animation.start();
 
 		PerspectiveCamera camera = new PerspectiveCamera(true);
 		camera.setFieldOfView(25); // setting the camera to be telephoto
@@ -145,23 +141,6 @@ public class UI extends Application{
 		);
 
 
-		primaryStage.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
-			switch (event.getCode()) {
-				case V:
-					yRotate.angleProperty().set(yRotate.getAngle() + 10);
-					//cameraRotate.angleProperty().set(cameraRotate.getAngle() -10);
-					break;
-			}
-
-			switch (event.getCode()) {
-				case B:
-					yRotate.setAngle(yRotate.getAngle() - 10);
-					//cameraRotate.angleProperty().set(cameraRotate.getAngle() + 10);
-					break;
-			}
-		});
-
-
 		// set the pivot for the camera position animation base upon mouse clicks on objects
 		solarSystem.getChildren().stream()
 				.filter(node -> !(node instanceof Camera))
@@ -180,6 +159,10 @@ public class UI extends Application{
 			//					System.out.println("yRotate" + yRotate.getAngle());
 			//					break;
 			switch (event.getCode()) {
+				case V -> yRotate.angleProperty().set(yRotate.getAngle() + 10);
+				//cameraRotate.angleProperty().set(cameraRotate.getAngle() -10);
+				case B -> yRotate.setAngle(yRotate.getAngle() - 10);
+
 				case F -> {
 					camera.translateYProperty().set(camera.getTranslateY() + 500);
 					System.out.println("X Position: " + camera.getTranslateX() + "  Y Position: " + camera.getTranslateY() + "  Z Position: " + camera.getTranslateZ());
@@ -250,6 +233,7 @@ public class UI extends Application{
 			f.getOrbit()[i].getShape().translateZProperty().set(0);
 		}
 
+		ParallelTransition ptr = new ParallelTransition();
 		for (int i = 0; i < state[0].celestialBody.size(); i++) {
 			Polyline polyline = new Polyline();
 			ArrayList<Double> path = new ArrayList<>();
@@ -272,7 +256,8 @@ public class UI extends Application{
 			transition.setDuration(Duration.seconds(60));
 			transition.setPath(polyline);
 			transition.setCycleCount(PathTransition.INDEFINITE);
-			transition.play();
+			ptr.getChildren().add(transition);
 		}
+		ptr.play();
 	}
 }
