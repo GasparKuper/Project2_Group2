@@ -9,6 +9,8 @@ import MAIN.Interfaces.StateInterface;
 
 import java.util.LinkedList;
 
+import static MAIN.Constant.Constant.SOLVER;
+
 /*
  * A class for solving a general differential equation dy/dt = f(t,y)
  *     y(t) describes the state of the system at time t
@@ -97,12 +99,10 @@ public class ODESolver implements ODESolverInterface {
         //Create a clone of the State object
         State clone = x.clone(y);
 
-        //Verlet Solver
-        clone = (State) clone.addMulVerlet(h, velocity_acceleration, f);
-
-        //Euler Method
-//        clone = (State) clone.addMul(h, velocity_acceleration);
-
+        if(SOLVER == 1) //Euler Method
+            clone = (State) clone.addMul(h, velocity_acceleration);
+        else if(SOLVER == 2) //Verlet Solver
+            clone = (State) clone.addMulVerlet(h, velocity_acceleration, f);
 
         //Return a new state with a new position and velocity
         return clone;

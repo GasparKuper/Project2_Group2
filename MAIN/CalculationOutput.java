@@ -3,9 +3,11 @@ package MAIN;
 import MAIN.Body.Vector3d;
 import MAIN.ODESolver.ProbeSimulator;
 
+import static MAIN.Constant.Constant.SOLVER;
+
 public class CalculationOutput extends Thread{
 
-    public static void main(String[] args) {
+    public void Solver() {
         ProbeSimulator simulator = new ProbeSimulator();
 
         //Array the trajectory of the probe
@@ -16,7 +18,13 @@ public class CalculationOutput extends Thread{
 
         MAIN.Body.State[] trajectoryOfAll = simulator.getTrajectory();
 
-
-        System.out.println(trajectoryOfAll[trajectoryOfAll.length-1].celestialBody.get(3).position);
+        if(SOLVER == 1)
+            System.out.println("EULER SOLVER");
+        else if(SOLVER == 2)
+            System.out.println("VERLET SOLVER");
+        //Probe
+        System.out.println("Probe = " + trajectoryOfProbe[trajectoryOfProbe.length-1].toString());
+        //Titan
+        System.out.println("Titan = " + trajectoryOfAll[trajectoryOfAll.length-1].celestialBody.get(8).position);
     }
 }
