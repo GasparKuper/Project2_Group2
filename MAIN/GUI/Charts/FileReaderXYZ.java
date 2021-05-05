@@ -1,4 +1,4 @@
-package MAIN.Charts;
+package MAIN.GUI.Charts;
 
 import java.io.*;
 import java.util.Scanner;

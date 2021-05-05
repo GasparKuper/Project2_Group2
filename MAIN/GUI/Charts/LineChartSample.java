@@ -1,4 +1,4 @@
-package MAIN.Charts;
+package MAIN.GUI.Charts;
 
 import MAIN.Body.Data;
 import MAIN.Body.PlanetBody;
@@ -8,6 +8,7 @@ import MAIN.Interfaces.ODESolverInterface;
 import MAIN.Interfaces.Vector3dInterface;
 import MAIN.ODESolver.ODEFunction;
 import MAIN.ODESolver.ODESolver;
+import MAIN.Run;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
@@ -16,6 +17,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -30,6 +32,8 @@ public class LineChartSample extends Application {
 
     @Override public void start(Stage stage) {
         stage.setTitle("Line Chart of Vector");
+        //Icon
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/Image/Logo.jpg")));
         final NumberAxis xAxis = new NumberAxis();
         final NumberAxis yAxis = new NumberAxis();
         xAxis.setLabel("Days");
@@ -40,17 +44,28 @@ public class LineChartSample extends Application {
 
         lineChart.setTitle("Vector 3D");
 
-        VBox vbox = new VBox(createMenuBar(trajectory()), lineChart);
+        VBox vbox = new VBox(createMenuBar(trajectory(), stage), lineChart);
         VBox.setVgrow(lineChart, Priority.ALWAYS);
         Scene scene  = new Scene(vbox,800,600);
         stage.setScene(scene);
         stage.show();
     }
 
-    private MenuBar createMenuBar(State[] trajectory){
+    private MenuBar createMenuBar(State[] trajectory, Stage stage){
         MenuBar menuBar = new MenuBar();
 
-
+        Menu exit = new Menu("EXIT");
+        MenuItem exit1 = new MenuItem("EXIT");
+        exit1.setOnAction(e -> {
+            Run run = new Run();
+            try {
+                stage.close();
+                run.start(stage);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        });
+        exit.getItems().add(exit1);
         Menu sun = new Menu("Sun");
         Menu mercury = new Menu("Mercury");
         Menu venus = new Menu("Venus");
@@ -221,6 +236,7 @@ public class LineChartSample extends Application {
         menuBar.getMenus().add(uranus);
         menuBar.getMenus().add(neptune);
         menuBar.getMenus().add(probe);
+        menuBar.getMenus().add(exit);
 
         return menuBar;
     }

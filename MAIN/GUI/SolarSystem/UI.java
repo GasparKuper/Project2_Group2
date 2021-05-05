@@ -1,9 +1,9 @@
-package MAIN;
+package MAIN.GUI.SolarSystem;
 // Scale x,y,z  - 1:1*10^(-9)
 // Scale volume - 1:1*10^(-6)
 
 import MAIN.Body.Vector3d;
-import MAIN.GUI.Orbit;
+import MAIN.CalculationOutput;
 import MAIN.ODESolver.ProbeSimulator;
 import javafx.animation.PathTransition;
 import javafx.application.Application;
@@ -11,6 +11,7 @@ import javafx.scene.Camera;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polyline;
@@ -19,6 +20,7 @@ import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class UI extends Application{
@@ -32,9 +34,17 @@ public class UI extends Application{
 	public Orbit[] getOrbit(){
 		return orbitArr;
 	}
-	public void start(Stage primaryStage){
+	public void start(Stage primaryStage) throws FileNotFoundException {
+
+		primaryStage.setMaximized(true);
+		primaryStage.setResizable(false);
+		//Icon
+		primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/Image/Logo.jpg")));
+
 		Group solarSystem = new Group();
-		Scene scene = new Scene(solarSystem, WIDTH, HEIGHT,true);
+
+		Scene scene = new Scene(solarSystem, WIDTH, HEIGHT, true);
+
 
 		Orbit sun = new Orbit((double) 69634 / 1000);
 		sun.setLight("/Image/Textures/Sun.JPG");
@@ -265,11 +275,4 @@ public class UI extends Application{
 			transition.play();
 		}
 	}
-
-
-
-	public static void main(String args[]) {
-		launch(args);
-	}
-
 }
