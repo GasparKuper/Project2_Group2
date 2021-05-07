@@ -44,13 +44,12 @@ public class ODEFunction implements ODEFunctionInterface {
 			Vector3d accel = new Vector3d(0, 0, 0);
 			for (int j = 0; j < solarSystem.size(); j++) {
 				if(i != j) {
-					Vector3d body1 = new Vector3d(0, 0, 0);
-					Vector3d body2 = new Vector3d(0, 0, 0);
-					body1 = (Vector3d) body1.add(solarSystem.get(i).getPosition());
-					body2 = (Vector3d) body2.add(solarSystem.get(j).getPosition());
-					double distance = body1.dist(body2);
+					Vector3d body1 = solarSystem.get(i).getPosition();
+					Vector3d body2 = solarSystem.get(j).getPosition();
 					Vector3d b1b2 = (Vector3d) body1.sub(body2);
-					Vector3d acc = (Vector3d) b1b2.mul(-G * solarSystem.get(j).getM() / Math.pow(distance, 3));
+					double tmp = b1b2.norm();
+					double force = -G * solarSystem.get(j).getM()/ Math.pow(tmp, 3);
+					Vector3d acc = (Vector3d) b1b2.mul(force);
 					accel = (Vector3d) accel.add(acc);
 				}
 			}
