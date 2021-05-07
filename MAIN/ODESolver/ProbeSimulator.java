@@ -35,7 +35,7 @@ public class ProbeSimulator implements ProbeSimulatorInterface {
 
         LinkedList<PlanetBody> solarSystem = data.getPlanets();
 
-        State launchPosition = new State(15000, p0, v0, solarSystem, true);
+        State launchPosition = new State(15000, p0.add(solarSystem.get(3).getPosition()), v0.add(solarSystem.get(3).getVelocity()), solarSystem, true);
 
         //Array with positions and velocities of the probe and planets.
         trajectory = (State[]) odeSolver.solve(odeFunction, launchPosition, ts[ts.length-1], ts[0]);
