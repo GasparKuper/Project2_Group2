@@ -39,8 +39,8 @@ public class State implements StateInterface {
 		//New Velocity = old Velocity + stepSize * Rate (Acceleration)
 		for (int i = 0; i < celestialBody.size(); i++) {
 			PlanetBody planet = celestialBody.get(i);
-			planet.setVelocity((Vector3d) celestialBody.get(i).getVelocity().addMul(step, acceleration.get(i)));
-			planet.setPosition((Vector3d) celestialBody.get(i).getPosition().addMul(step, planet.getVelocity()));
+			planet.setPosition((Vector3d) planet.getPosition().addMul(step, planet.getVelocity()));
+			planet.setVelocity((Vector3d) planet.getVelocity().addMul(step, acceleration.get(i)));
 
 			if(i == celestialBody.size()-1){
 				this.position = planet.getPosition();
@@ -77,10 +77,10 @@ public class State implements StateInterface {
 
 //			The synchronised form can be re-arranged to the 'kick-drift-kick' form;
 			//New_HALF_Velocity(i + 1/2) = old_velocity(i) + a(i) * step/2
-			planet.setVelocity((Vector3d) celestialBody.get(i).getVelocity().addMul(step/2.0, accelerationVector.get(i)));
+			planet.setVelocity((Vector3d) planet.getVelocity().addMul(step/2.0, accelerationVector.get(i)));
 
 			//New_Position(i+1) = old_position(i) + New_HALF_Velocity(i + 1/2) * step
-			planet.setPosition((Vector3d) celestialBody.get(i).getPosition().addMul(step, planet.getVelocity()));
+			planet.setPosition((Vector3d) planet.getPosition().addMul(step, planet.getVelocity()));
 
 
 			if(i == celestialBody.size()-1){
@@ -96,7 +96,7 @@ public class State implements StateInterface {
 			PlanetBody planet = celestialBody.get(i);
 
 			//New_Velocity = New_HALF_Velocity(i + 1/2) + a(i+1) * step/2
-			planet.setVelocity((Vector3d) celestialBody.get(i).getVelocity().addMul(step/2.0, accelerationVector.get(i)));
+			planet.setVelocity((Vector3d) planet.getVelocity().addMul(step/2.0, accelerationVector.get(i)));
 
 			if(i == celestialBody.size()-1){
 				this.velocity = planet.getVelocity();
