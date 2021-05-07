@@ -39,8 +39,8 @@ public class State implements StateInterface {
 		//New Velocity = old Velocity + stepSize * Rate (Acceleration)
 		for (int i = 0; i < celestialBody.size(); i++) {
 			PlanetBody planet = celestialBody.get(i);
-			planet.setPosition((Vector3d) planet.getPosition().addMul(step, planet.getVelocity()));
 			planet.setVelocity((Vector3d) planet.getVelocity().addMul(step, acceleration.get(i)));
+			planet.setPosition((Vector3d) planet.getPosition().addMul(step, planet.getVelocity()));
 
 			if(i == celestialBody.size()-1){
 				this.position = planet.getPosition();
