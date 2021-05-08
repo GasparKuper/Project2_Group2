@@ -40,4 +40,9 @@ public class PlanetBody {
         this.velocity = velocity;
     }
 
+    @Override
+    public PlanetBody clone(){
+        return new PlanetBody(m, position, velocity);
+    }
+
 }

@@ -35,8 +35,8 @@ public class State implements StateInterface {
 		LinkedList<Vector3d> acceleration = ((Rate) rate).getAcceleration();
 
 		//Calculate two function
-		//New position = old Position + stepSize * Velocity
 		//New Velocity = old Velocity + stepSize * Rate (Acceleration)
+		//New position = old Position + stepSize * Velocity
 		for (int i = 0; i < celestialBody.size(); i++) {
 			PlanetBody planet = celestialBody.get(i);
 			planet.setVelocity((Vector3d) planet.getVelocity().addMul(step, acceleration.get(i)));
@@ -51,7 +51,28 @@ public class State implements StateInterface {
 		return this;
 	}
 
-	public StateInterface addMulVerlet(double step, RateInterface rate, ODEFunctionInterface f) {
+	public StateInterface addMulImplicit(double step, RateInterface rate) {
+
+		LinkedList<Vector3d> acceleration = ((Rate) rate).getAcceleration();
+
+		//Calculate two function
+		//New position = old Position + stepSize * Velocity
+		//New Velocity = old Velocity + stepSize * Rate (Acceleration)
+		for (int i = 0; i < celestialBody.size(); i++) {
+			PlanetBody planet = celestialBody.get(i);
+			planet.setPosition((Vector3d) planet.getPosition().addMul(step, planet.getVelocity()));
+			planet.setVelocity((Vector3d) planet.getVelocity().addMul(step, acceleration.get(i)));
+
+			if(i == celestialBody.size()-1){
+				this.position = planet.getPosition();
+				this.velocity = planet.getVelocity();
+			}
+		}
+
+		return this;
+	}
+
+	public StateInterface addMulVerletVelocity(double step, RateInterface rate, ODEFunctionInterface f) {
 
 		LinkedList<Vector3d> accelerationVector = ((Rate) rate).getAcceleration();
 
@@ -106,21 +127,65 @@ public class State implements StateInterface {
 		return this;
 	}
 
+	private boolean stormerFlag = true;
+	private LinkedList<PlanetBody> prevCelestialBody;
+
+	public StateInterface addMulVerletStormer(double step, RateInterface rate, ODEFunctionInterface f) {
+		if(stormerFlag){
+			prevCelestialBody = new LinkedList<>();
+
+			for (int i = 0; i < celestialBody.size(); i++)
+				prevCelestialBody.add(celestialBody.get(i).clone());
+
+			addMulVerletVelocity(step, rate, f);
+
+			stormerFlag = false;
+		} else {
+
+			LinkedList<Vector3d> accelerationVector = ((Rate) rate).getAcceleration();
+
+			LinkedList<PlanetBody> tmp_prevCelestialBody = new LinkedList<>();
+
+			for (int i = 0; i < celestialBody.size(); i++)
+				tmp_prevCelestialBody.add(celestialBody.get(i).clone());
+
+			for (int i = 0; i < celestialBody.size(); i++) {
+				PlanetBody planet = celestialBody.get(i);
+
+				Vector3d acceleration = accelerationVector.get(i);
+
+				Vector3d tmp_pos = (Vector3d) planet.getPosition().mul(2);
+				tmp_pos = (Vector3d) tmp_pos.sub(prevCelestialBody.get(i).getPosition());
+				Vector3d tmp_acc = (Vector3d) acceleration.mul(step*step);
+				tmp_pos = (Vector3d) tmp_pos.add(tmp_acc);
+
+
+				planet.setPosition(tmp_pos);
+
+				planet.setVelocity((Vector3d) planet.getVelocity().addMul(step, acceleration));
+
+				if(i == celestialBody.size()-1){
+					this.position = planet.getPosition();
+				}
+			}
+
+			prevCelestialBody = tmp_prevCelestialBody;
+		}
+
+		return this;
+	}
+
 
 	public String toString() {
 		return ("Position: " + this.position.toString() + "\nVelocity: " + this.velocity.toString());
 	}
 
 	public State clone(StateInterface x){
-		State z = (State) x;
-		LinkedList<PlanetBody> cloneplanets = new LinkedList<>();
-		for (int i = 0; i < z.celestialBody.size(); i++) {
-			PlanetBody object = z.celestialBody.get(i);
-			Vector3d pos = object.getPosition();
-			Vector3d vel = object.getVelocity();
-			double mass = object.getM();
-			cloneplanets.add(new PlanetBody(mass, pos, vel));
-		}
-		return new State(z.mass, z.position, z.velocity, cloneplanets, false);
+		LinkedList<PlanetBody> cloneplanets = new LinkedList<>()
+				;
+		for (int i = 0; i < celestialBody.size(); i++)
+			cloneplanets.add(celestialBody.get(i).clone());
+
+		return new State(mass, position, velocity, cloneplanets, false);
 	}
 }

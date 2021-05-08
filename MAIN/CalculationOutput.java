@@ -19,9 +19,13 @@ public class CalculationOutput extends Thread{
         MAIN.Body.State[] trajectoryOfAll = simulator.getTrajectory();
 
         if(SOLVER == 1)
-            System.out.println("EULER SOLVER");
+            System.out.println("SYMPLECTIC EULER SOLVER");
         else if(SOLVER == 2)
-            System.out.println("VERLET SOLVER");
+            System.out.println("IMPLICIT EULER SOLVER");
+        else if(SOLVER == 3)
+            System.out.println("VELOCITY-VERLET SOLVER");
+        else if(SOLVER == 4)
+            System.out.println("STORMER-VERLET SOLVER");
         //Probe
         System.out.println("Probe = " + trajectoryOfProbe[trajectoryOfProbe.length-1].toString());
         //Titan

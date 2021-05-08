@@ -80,6 +80,8 @@ public class ODESolver implements ODESolverInterface {
         return solve(f, y0, ts);
     }
 
+
+    private boolean stormerFlag = true;
     /*
      * Update rule for one step.
      *
@@ -99,10 +101,15 @@ public class ODESolver implements ODESolverInterface {
         //Create a clone of the State object
         State clone = x.clone(y);
 
-        if(SOLVER == 1) //Euler Method
+        if(SOLVER == 1) //Symplectic Euler Method
             clone = (State) clone.addMul(h, velocity_acceleration);
-        else if(SOLVER == 2) //Verlet Solver
-            clone = (State) clone.addMulVerlet(h, velocity_acceleration, f);
+        else if(SOLVER == 2) //Implicit Euler Solver
+            clone = (State) clone.addMulImplicit(h, velocity_acceleration);
+        else if(SOLVER == 3) //Velocity-Verlet Solver
+            clone = (State) clone.addMulVerletVelocity(h, velocity_acceleration, f);
+        else if(SOLVER == 4) { //Stormer-Verlet Solver
+            clone = (State) clone.addMulVerletStormer(h, velocity_acceleration, f);
+        }
 
         //Return a new state with a new position and velocity
         return clone;
