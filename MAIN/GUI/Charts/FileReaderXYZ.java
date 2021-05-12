@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class FileReaderXYZ {
 
     public double[] getCord(String cord) {
-        double[] x = new double[366];
+        double[] x = new double[367];
         try {
             //scanner.next() is Input of our user
             File starting = new File(System.getProperty("user.dir"));
