@@ -13,6 +13,7 @@ import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Polyline;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
@@ -112,7 +113,7 @@ public class UI extends Application{
 		orbitArr[10] = neptune;
 		orbitArr[11] = probe;
 
-//		scene.setFill(Color.BLACK);
+		scene.setFill(Color.BLACK);
 		
 		//PointLight lighting = new PointLight();
 		//solarSystem.getChildren().add(lighting);
