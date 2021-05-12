@@ -11,7 +11,7 @@ import java.util.LinkedList;
 
 import static MAIN.Constant.Constant.SOLVER;
 
-/*
+/**
  * A class for solving a general differential equation dy/dt = f(t,y)
  *     y(t) describes the state of the system at time t
  *     f(t,y(t)) defines the derivative of y(t) with respect to time t
@@ -22,7 +22,7 @@ public class ODESolver implements ODESolverInterface {
     LinkedList<PlanetBody> solarSystem;
 
 
-    /*
+    /**
      * Solve the differential equation by taking multiple steps.
      *
      * @param   f       the function defining the differential equation dy/dt=f(t,y)
@@ -53,7 +53,7 @@ public class ODESolver implements ODESolverInterface {
         return result;
     }
 
-    /*
+    /**
      * Solve the differential equation by taking multiple steps of equal size, starting at time 0.
      * The final step may have a smaller size, if the step-size does not exactly divide the solution time range
      *
@@ -82,7 +82,8 @@ public class ODESolver implements ODESolverInterface {
 
 
     private boolean stormerFlag = true;
-    /*
+
+    /**
      * Update rule for one step.
      *
      * @param   f   the function defining the differential equation dy/dt=f(t,y)
@@ -99,7 +100,7 @@ public class ODESolver implements ODESolverInterface {
         State x = (State) y;
 
         //Create a clone of the State object
-        State clone = x.clone(y);
+        State clone = x.clone();
 
         if(SOLVER == 1) //Symplectic Euler Method
             clone = (State) clone.addMul(h, velocity_acceleration);

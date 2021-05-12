@@ -25,25 +25,29 @@ import java.util.ArrayList;
 
 public class UI extends Application{
 
-	public static final int WIDTH = 1500;
-	public static final int HEIGHT = 750;
-	public static Orbit[] orbitArr = new Orbit[12];
-	public UI(){
+	//Array of sphere for the GUI
+	private static Orbit[] orbitArr = new Orbit[12];
 
-	}
+	/**
+	 * Gets array of spheres for the GUI
+	 * @return Array of spheres
+	 */
 	public Orbit[] getOrbit(){
 		return orbitArr;
 	}
+
 	public void start(Stage primaryStage) throws FileNotFoundException {
+
 
 		primaryStage.setMaximized(true);
 		primaryStage.setResizable(false);
+
 		//Icon
 		primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/Image/Logo.jpg")));
 
 		Group solarSystem = new Group();
 
-		Scene scene = new Scene(solarSystem, WIDTH, HEIGHT, true);
+		Scene scene = new Scene(solarSystem,0, 0, true);
 
 
 		Orbit sun = new Orbit((double) 69634 / 1000);
@@ -214,6 +218,9 @@ public class UI extends Application{
 		path();
 	}
 
+	/**
+	 * Calculate a path for every planet
+	 */
 	private void path(){
 		ProbeSimulator simulator = new ProbeSimulator();
 
@@ -225,9 +232,14 @@ public class UI extends Application{
 
 		MAIN.Body.State[] trajectoryOfAll = simulator.getTrajectory();
 
+		//start animation
 		this.smoothUpdate(trajectoryOfAll);
 	}
 
+	/**
+	 * Create a path for the planet, also scale coordinates
+	 * @param state Trajectories of the planets and the probe
+	 */
 	private void smoothUpdate(MAIN.Body.State[] state){
 		UI f = new UI();
 		for(int i =0;i<f.getOrbit().length;i++) {
@@ -235,6 +247,7 @@ public class UI extends Application{
 		}
 
 		ParallelTransition ptr = new ParallelTransition();
+		//Create a path for the planet (also here we scale coordinates)
 		for (int i = 0; i < state[0].celestialBody.size(); i++) {
 			Polyline polyline = new Polyline();
 			ArrayList<Double> path = new ArrayList<>();
@@ -251,6 +264,8 @@ public class UI extends Application{
 					path.add(y / 600000000);
 				}
 			}
+
+			//Insert a path and start animation
 			polyline.getPoints().addAll(path);
 			PathTransition transition = new PathTransition();
 			transition.setNode(f.getOrbit()[i].getShape());

@@ -5,6 +5,11 @@ import java.util.Scanner;
 
 public class FileReaderXYZ {
 
+    /**
+     * Gets coordinates from the txt file
+     * @param cord Name of the file
+     * @return array of coordinates
+     */
     public double[] getCord(String cord) {
         double[] x = new double[367];
         try {

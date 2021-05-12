@@ -16,19 +16,15 @@ public class ODEFunction implements ODEFunctionInterface {
 
 	private LinkedList<PlanetBody> solarSystem;
 
-	/*
-	 * This is an interface for the function f that represents the
-	 * differential equation dy/dt = f(t,y).
-	 * You need to implement this function to represent to the laws of physics.
-	 *
-	 * For example, consider the differential equation
-	 *   dy[0]/dt = y[1];  dy[1]/dt=cos(t)-sin(y[0])
-	 * Then this function would be
-	 *   f(t,y) = (y[1],cos(t)-sin(y[0])).
+	/**
+	 * Calculating acceleration
+	 * -G * Mass of other object * (position of the object - position of other objects)
+	 * --------------------------------------------------------------------------------  DIVIDE
+	 *  The vector distance between an object and another object in the third degree
 	 *
 	 * @param   t   the time at which to evaluate the function
 	 * @param   y   the state at which to evaluate the function
-	 * @return  The average rate-of-change over the time-step. Has dimensions of [state]/[time].
+	 * @return  The rate with the acceleration of each planets and probe.
 	 */
 	public RateInterface call(double t, StateInterface y) {
 		LinkedList<Vector3d> accelerationBodies = new LinkedList<>();
@@ -36,7 +32,7 @@ public class ODEFunction implements ODEFunctionInterface {
 		this.solarSystem = ((State) y).celestialBody;
 
 
-		//Calculating the first function
+		//Calculating acceleration
 		// -G * Mass of other object * (position of the object - position of other objects)
 		// --------------------------------------------------------------------------------  DIVIDE
 		//  The vector distance between an object and another object in the third degree

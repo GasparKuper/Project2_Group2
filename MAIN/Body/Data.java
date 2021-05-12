@@ -5,6 +5,10 @@ import java.util.LinkedList;
 
 public class Data {
     public LinkedList<PlanetBody> planets;
+
+    /**
+     * Create a data of the solar system
+     */
     public Data(){
 
         planets = new LinkedList<>();
@@ -54,6 +58,11 @@ public class Data {
                 new Vector3d(4.382692942729912E+12, -9.093501655460005E+11, -8.227728929321569E+10),
                 new Vector3d(1.068410753078312E+03, 5.354959504463812E+03, -1.343918419749561E+02)));
     }
+
+    /**
+     * Gets planets
+     * @return Planets of the solar system
+     */
     public LinkedList<PlanetBody> getPlanets(){
         return planets;
     }

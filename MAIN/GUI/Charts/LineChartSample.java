@@ -30,7 +30,12 @@ public class LineChartSample extends Application {
 
     private LineChart<Number,Number> lineChart;
 
-    @Override public void start(Stage stage) {
+    /**
+     * LINE CHART, we can compare coordinates from Nasa with our coordinates
+     * @param stage GUI
+     */
+    @Override
+    public void start(Stage stage) {
         stage.setTitle("Line Chart of Vector");
         //Icon
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/Image/Logo.jpg")));
@@ -51,9 +56,16 @@ public class LineChartSample extends Application {
         stage.show();
     }
 
+    /**
+     * Create MenuBar in the GUI
+     * @param trajectory Data of the trajectories of the all planets and the probe
+     * @param stage GUI
+     * @return MenuBars
+     */
     private MenuBar createMenuBar(State[] trajectory, Stage stage){
         MenuBar menuBar = new MenuBar();
 
+        //EXIT BUTTON
         Menu exit = new Menu("EXIT");
         MenuItem exit1 = new MenuItem("EXIT");
         exit1.setOnAction(e -> {
@@ -66,6 +78,8 @@ public class LineChartSample extends Application {
             }
         });
         exit.getItems().add(exit1);
+
+        //LIST of the planets
         Menu sun = new Menu("Sun");
         Menu mercury = new Menu("Mercury");
         Menu venus = new Menu("Venus");
@@ -79,6 +93,7 @@ public class LineChartSample extends Application {
         Menu neptune = new Menu("Neptune");
         Menu probe = new Menu("Probe");
 
+        //SUN BAR
         MenuItem sunV = new MenuItem("Sun Velocity");
         MenuItem sunP = new MenuItem("Sun Position");
         sunV.setOnAction(e -> {
@@ -91,6 +106,8 @@ public class LineChartSample extends Application {
         });
         sun.getItems().add(sunP);
         sun.getItems().add(sunV);
+
+        //MERCURY BAR
         MenuItem mercuryV = new MenuItem("Mercury Velocity");
         MenuItem mercuryP = new MenuItem("Mercury Position");
         mercuryV.setOnAction(e -> {
@@ -103,6 +120,8 @@ public class LineChartSample extends Application {
         });
         mercury.getItems().add(mercuryP);
         mercury.getItems().add(mercuryV);
+
+        //VENUS BAR
         MenuItem venusV = new MenuItem("Venus Velocity");
         MenuItem venusP = new MenuItem("Venus Position");
         venusV.setOnAction(e -> {
@@ -115,6 +134,8 @@ public class LineChartSample extends Application {
         });
         venus.getItems().add(venusP);
         venus.getItems().add(venusV);
+
+        //EARTH BAR
         MenuItem earthV = new MenuItem("Earth Velocity");
         MenuItem earthP = new MenuItem("Earth Position");
         earthV.setOnAction(e -> {
@@ -127,6 +148,8 @@ public class LineChartSample extends Application {
         });
         earth.getItems().add(earthP);
         earth.getItems().add(earthV);
+
+        //MOON BAR
         MenuItem moonV = new MenuItem("Moon Velocity");
         MenuItem moonP = new MenuItem("Moon Position");
         moonV.setOnAction(e -> {
@@ -139,6 +162,8 @@ public class LineChartSample extends Application {
         });
         moon.getItems().add(moonP);
         moon.getItems().add(moonV);
+
+        //MARS BAR
         MenuItem marsV = new MenuItem("Mars Velocity");
         MenuItem marsP = new MenuItem("Mars Position");
         marsV.setOnAction(e -> {
@@ -151,6 +176,8 @@ public class LineChartSample extends Application {
         });
         mars.getItems().add(marsP);
         mars.getItems().add(marsV);
+
+        //JUPITER BAR
         MenuItem jupiterV = new MenuItem("Jupiter Velocity");
         MenuItem jupiterP = new MenuItem("Jupiter Position");
         jupiterV.setOnAction(e -> {
@@ -163,6 +190,8 @@ public class LineChartSample extends Application {
         });
         jupiter.getItems().add(jupiterP);
         jupiter.getItems().add(jupiterV);
+
+        //SATURN BAR
         MenuItem saturnV = new MenuItem("Saturn Velocity");
         MenuItem saturnP = new MenuItem("Saturn Position");
         saturnV.setOnAction(e -> {
@@ -175,6 +204,8 @@ public class LineChartSample extends Application {
         });
         saturn.getItems().add(saturnP);
         saturn.getItems().add(saturnV);
+
+        //TITAN BAR
         MenuItem titanV = new MenuItem("Titan Velocity");
         MenuItem titanP = new MenuItem("Titan Position");
         titanV.setOnAction(e -> {
@@ -187,6 +218,8 @@ public class LineChartSample extends Application {
         });
         titan.getItems().add(titanP);
         titan.getItems().add(titanV);
+
+        //URANUS BAR
         MenuItem uranusV = new MenuItem("Uranus Velocity");
         MenuItem uranusP = new MenuItem("Uranus Position");
         uranusV.setOnAction(e -> {
@@ -199,6 +232,8 @@ public class LineChartSample extends Application {
         });
         uranus.getItems().add(uranusP);
         uranus.getItems().add(uranusV);
+
+        //NEPTUNE BAR
         MenuItem neptuneV = new MenuItem("Neptune Velocity");
         MenuItem neptuneP = new MenuItem("Neptune Position");
         neptuneV.setOnAction(e -> {
@@ -211,6 +246,8 @@ public class LineChartSample extends Application {
         });
         neptune.getItems().add(neptuneP);
         neptune.getItems().add(neptuneV);
+
+        //PROBE BAR
         MenuItem probeV = new MenuItem("Probe Velocity");
         MenuItem probeP = new MenuItem("Probe Position");
         probeV.setOnAction(e -> {
@@ -224,6 +261,7 @@ public class LineChartSample extends Application {
         probe.getItems().add(probeP);
         probe.getItems().add(probeV);
 
+        //Adds of bars into a MenuBar
         menuBar.getMenus().add(sun);
         menuBar.getMenus().add(mercury);
         menuBar.getMenus().add(venus);
@@ -241,6 +279,14 @@ public class LineChartSample extends Application {
         return menuBar;
     }
 
+    /**
+     *
+     * @param planet Name of the planet
+     * @param numberPlanet index of the planet
+     * @param trajectory Data of trajectories
+     * @param flag TRUE = Position, FALSE = VEloicty
+     * @return array of the series for the line chart
+     */
     private ArrayList<XYChart.Series<Number, Number>> createSeries(String planet, int numberPlanet, State[] trajectory, boolean flag){
         ArrayList<XYChart.Series<Number, Number>> arrayList = new ArrayList<>();
 
@@ -298,6 +344,10 @@ public class LineChartSample extends Application {
         return arrayList;
     }
 
+    /**
+     * Calculate Trajectories
+     * @return Trajectories of all planets and the probe
+     */
     private State[] trajectory(){
         double day = 24*60*60;
         double year = 365.25*day;
@@ -314,10 +364,5 @@ public class LineChartSample extends Application {
         ODESolverInterface simulator = new ODESolver();
 
         return  (State[]) simulator.solve(odeFunction, launchPosition, year, day);
-    }
-
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }

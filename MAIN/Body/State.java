@@ -9,15 +9,29 @@ import java.util.LinkedList;
 
 public class State implements StateInterface {
 
+	//Position of the Probe
 	public Vector3dInterface position;
+
+	//Velocity of the Probe
 	public Vector3dInterface velocity;
+
+	//Mass of the probe
 	public double mass;
 
+	//Planets data of the solar system, also here a data of the probe index=11
 	public LinkedList<PlanetBody> celestialBody;
 
+	/**
+	 * Constructor for the simulation of the solar system and the probe
+	 * @param mass Initial Mass of the probe
+	 * @param position Initial position of the probe
+	 * @param velocity Initial velocity of the probe
+	 * @param celestialBody Data of the planets in the solar system
+	 * @param flag for cloning the object
+	 */
 	public State(double mass, Vector3dInterface position, Vector3dInterface velocity, LinkedList<PlanetBody> celestialBody, boolean flag) {
 		if(celestialBody == null)
-			celestialBody = new LinkedList<>();
+			throw new RuntimeException("Data of the solar system is empty");
 
 		this.position = position;
 		this.velocity = velocity;
@@ -27,22 +41,37 @@ public class State implements StateInterface {
 	}
 
 	/**
-	 * Update a state to a new state computed by: this + step * rate
-	 *
+	 * Constructor for the solver only without planets of the solar system
+	 *  @param mass Initial Mass of the probe
+	 * 	@param position Initial position of the probe
+	 *  @param velocity Initial velocity of the probe
+	 */
+	public State(double mass, Vector3dInterface position, Vector3dInterface velocity) {
+		this.celestialBody = new LinkedList<>();
+		this.position = position;
+		this.velocity = velocity;
+		this.mass = mass;
+		celestialBody.add(new PlanetBody(mass, position, velocity));
+	}
+
+	/**
+	 * SYMPLECTIC EULER
+	 * Updates position and velocity of each planets
 	 * @param step   The time-step of the update
-	 * @param rate   The average rate-of-change over the time-step. Has dimensions of [state]/[time].
+	 * @param rate   Acceleration array.
 	 * @return The new state after the update. Required to have the same class as 'this'.
 	 */
 	public StateInterface addMul(double step, RateInterface rate) {
 
 		LinkedList<Vector3d> acceleration = ((Rate) rate).getAcceleration();
 
-		//Calculate two function
-		//New Velocity = old Velocity + stepSize * Rate (Acceleration)
-		//New position = old Position + stepSize * Velocity
 		for (int i = 0; i < celestialBody.size(); i++) {
 			PlanetBody planet = celestialBody.get(i);
+
+			//New Velocity = old Velocity + stepSize * Rate (Acceleration)
 			planet.setVelocity((Vector3d) planet.getVelocity().addMul(step, acceleration.get(i)));
+
+			//New position = old Position + stepSize * Velocity
 			planet.setPosition((Vector3d) planet.getPosition().addMul(step, planet.getVelocity()));
 
 			if(i == celestialBody.size()-1){
@@ -54,16 +83,24 @@ public class State implements StateInterface {
 		return this;
 	}
 
+	/**
+	 * IMPLICIT EULER
+	 * Updates position and velocity of each planets
+	 * @param step   The time-step of the update
+	 * @param rate   Acceleration array.
+	 * @return The new state after the update. Required to have the same class as 'this'.
+	 */
 	public StateInterface addMulImplicit(double step, RateInterface rate) {
 
 		LinkedList<Vector3d> acceleration = ((Rate) rate).getAcceleration();
 
-		//Calculate two function
-		//New position = old Position + stepSize * Velocity
-		//New Velocity = old Velocity + stepSize * Rate (Acceleration)
 		for (int i = 0; i < celestialBody.size(); i++) {
 			PlanetBody planet = celestialBody.get(i);
+
+			//New position = old Position + stepSize * Velocity
 			planet.setPosition((Vector3d) planet.getPosition().addMul(step, planet.getVelocity()));
+
+			//New Velocity = old Velocity + stepSize * Rate (Acceleration)
 			planet.setVelocity((Vector3d) planet.getVelocity().addMul(step, acceleration.get(i)));
 
 			if(i == celestialBody.size()-1){
@@ -75,6 +112,13 @@ public class State implements StateInterface {
 		return this;
 	}
 
+	/**
+	 * VELOCITY-VERLET (LEAPFROG INTEGRATION)
+	 * Updates position and velocity of each planets
+	 * @param step   The time-step of the update
+	 * @param rate   Acceleration array.
+	 * @return The new state after the update. Required to have the same class as 'this'.
+	 */
 	public StateInterface addMulVerletVelocity(double step, RateInterface rate, ODEFunctionInterface f) {
 
 		LinkedList<Vector3d> accelerationVector = ((Rate) rate).getAcceleration();
@@ -130,45 +174,62 @@ public class State implements StateInterface {
 		return this;
 	}
 
+
+	//Flag for the first step for Stormer-Verlet
 	private boolean stormerFlag = true;
+	//Previous data of the solar system (Step before)
 	private LinkedList<PlanetBody> prevCelestialBody;
 
+	/**
+	 * STORMER-VERLET
+	 * Updates position and velocity of each planets
+	 * @param step   The time-step of the update
+	 * @param rate   Acceleration array.
+	 * @return The new state after the update. Required to have the same class as 'this'.
+	 */
 	public StateInterface addMulVerletStormer(double step, RateInterface rate, ODEFunctionInterface f) {
+		//if flag=true, it means that we have first step of the stormer-verlet
 		if(stormerFlag){
 			prevCelestialBody = new LinkedList<>();
 
 			for (int i = 0; i < celestialBody.size(); i++)
 				prevCelestialBody.add(celestialBody.get(i).clone());
 
+			//For the first step, we use Verlet-Velocity
 			addMulVerletVelocity(step, rate, f);
 
 			stormerFlag = false;
 		} else {
 
+			//Gets acceleration from the Rate
 			LinkedList<Vector3d> accelerationVector = ((Rate) rate).getAcceleration();
 
+			//Temporary previous data of the solar system
 			LinkedList<PlanetBody> tmp_prevCelestialBody = new LinkedList<>();
 
+			//Cloning
 			for (int i = 0; i < celestialBody.size(); i++)
 				tmp_prevCelestialBody.add(celestialBody.get(i).clone());
 
+			//Update position and velocity
 			for (int i = 0; i < celestialBody.size(); i++) {
 				PlanetBody planet = celestialBody.get(i);
 
 				Vector3d acceleration = accelerationVector.get(i);
 
+				//New_position = old_position*2 - previous_position + acceleration * step^2
 				Vector3d tmp_pos = (Vector3d) planet.getPosition().mul(2);
 				tmp_pos = (Vector3d) tmp_pos.sub(prevCelestialBody.get(i).getPosition());
 				Vector3d tmp_acc = (Vector3d) acceleration.mul(step*step);
 				tmp_pos = (Vector3d) tmp_pos.add(tmp_acc);
-
-
 				planet.setPosition(tmp_pos);
 
+				//New_Velocity = old_velocity * acceleration
 				planet.setVelocity((Vector3d) planet.getVelocity().addMul(step, acceleration));
 
 				if(i == celestialBody.size()-1){
 					this.position = planet.getPosition();
+					this.velocity = planet.getVelocity();
 				}
 			}
 
@@ -179,11 +240,19 @@ public class State implements StateInterface {
 	}
 
 
+	/**
+	 * Outputs of the position and velocity of the probe
+	 * @return Position and Velocity of the probe
+	 */
 	public String toString() {
 		return ("Position: " + this.position.toString() + "\nVelocity: " + this.velocity.toString());
 	}
 
-	public State clone(StateInterface x){
+	/**
+	 * Clones the object State
+	 * @return new State object
+	 */
+	public State clone(){
 		LinkedList<PlanetBody> cloneplanets = new LinkedList<>()
 				;
 		for (int i = 0; i < celestialBody.size(); i++)

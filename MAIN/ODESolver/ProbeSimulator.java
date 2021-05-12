@@ -13,7 +13,7 @@ public class ProbeSimulator implements ProbeSimulatorInterface {
 
     private State[] trajectory;
 
-    /*
+    /**
      * Simulate the solar system, including a probe fired from Earth at 00:00h on 1 April 2020.
      *
      * @param   p0      the starting position of the probe, relative to the earth's position.
@@ -33,8 +33,10 @@ public class ProbeSimulator implements ProbeSimulatorInterface {
 
         ODEFunction odeFunction = new ODEFunction();
 
+        //Data of the solar system
         LinkedList<PlanetBody> solarSystem = data.getPlanets();
 
+        //Initial parameters for the probe
         State launchPosition = new State(15000, p0.add(solarSystem.get(3).getPosition()), v0.add(solarSystem.get(3).getVelocity()), solarSystem, true);
 
         //Array with positions and velocities of the probe and planets.
@@ -48,7 +50,7 @@ public class ProbeSimulator implements ProbeSimulatorInterface {
         return probeTraj;
     }
 
-    /*
+    /**
      * Simulate the solar system with steps of an equal size.
      * The final step may have a smaller size, if the step-size does not exactly divide the solution time range.
      *
