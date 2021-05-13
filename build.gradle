@@ -6,6 +6,7 @@ plugins {
 }
 
 javafx {
+    version = "15.0.1"
     modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
 
@@ -22,18 +23,12 @@ dependencies {
 }
 
 application {
-    mainClassName = 'bfst20.addressparser.GUI'
+    mainClassName = 'GUI.RunGui.Run'
 }
 
 test {
     useJUnitPlatform()
     testLogging {
         events "passed", "skipped", "failed"
-    }
-}
-
-jar {
-    manifest {
-        attributes 'Main-Class': application.mainClassName
     }
 }

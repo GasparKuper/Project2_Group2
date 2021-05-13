@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Vector3dTest" tests="13" skipped="0" failures="0" errors="0" timestamp="2021-05-13T17:17:19" hostname="DESKTOP-9M6EKHC" time="0.042">
+  <properties/>
+  <testcase name="testMul()" classname="Vector3dTest" time="0.002"/>
+  <testcase name="testSub()" classname="Vector3dTest" time="0.001"/>
+  <testcase name="testDist()" classname="Vector3dTest" time="0.001"/>
+  <testcase name="testGetX()" classname="Vector3dTest" time="0.0"/>
+  <testcase name="testGetY()" classname="Vector3dTest" time="0.001"/>
+  <testcase name="testGetZ()" classname="Vector3dTest" time="0.002"/>
+  <testcase name="testNorm()" classname="Vector3dTest" time="0.002"/>
+  <testcase name="testSetX()" classname="Vector3dTest" time="0.001"/>
+  <testcase name="testSetY()" classname="Vector3dTest" time="0.002"/>
+  <testcase name="testSetZ()" classname="Vector3dTest" time="0.001"/>
+  <testcase name="testToString()" classname="Vector3dTest" time="0.018"/>
+  <testcase name="testAddVector3d()" classname="Vector3dTest" time="0.001"/>
+  <testcase name="testAddMul()" classname="Vector3dTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
