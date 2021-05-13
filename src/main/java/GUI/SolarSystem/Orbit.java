@@ -1,4 +1,4 @@
-package SolarSystem;
+package GUI.SolarSystem;
 
 import javafx.scene.image.Image;
 import javafx.scene.paint.PhongMaterial;

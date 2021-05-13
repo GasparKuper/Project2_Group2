@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ProbeSimulatorTest" tests="7" skipped="0" failures="6" errors="0" timestamp="2021-05-13T16:44:29" hostname="DESKTOP-9M6EKHC" time="1.001">
+<testsuite name="ProbeSimulatorTest" tests="7" skipped="0" failures="6" errors="0" timestamp="2021-05-13T17:08:56" hostname="DESKTOP-9M6EKHC" time="3.37">
   <properties/>
-  <testcase name="testTrajectoryOneDayX()" classname="ProbeSimulatorTest" time="0.105">
+  <testcase name="testTrajectoryOneDayX()" classname="ProbeSimulatorTest" time="0.441">
     <failure message="org.opentest4j.AssertionFailedError: expected: &lt;-1.4218092965609787E11&gt; but was: &lt;-1.4218103615585437E11&gt;" type="org.opentest4j.AssertionFailedError">org.opentest4j.AssertionFailedError: expected: &lt;-1.4218092965609787E11&gt; but was: &lt;-1.4218103615585437E11&gt;
 	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
 	at org.junit.jupiter.api.AssertionUtils.failNotEqual(AssertionUtils.java:62)
@@ -101,7 +101,7 @@
 	at java.base/java.lang.Thread.run(Thread.java:832)
 </failure>
   </testcase>
-  <testcase name="testTrajectoryOneDayY()" classname="ProbeSimulatorTest" time="0.011">
+  <testcase name="testTrajectoryOneDayY()" classname="ProbeSimulatorTest" time="0.018">
     <failure message="org.opentest4j.AssertionFailedError: expected: &lt;-3.3475191084301098E10&gt; but was: &lt;-3.3475235915144165E10&gt;" type="org.opentest4j.AssertionFailedError">org.opentest4j.AssertionFailedError: expected: &lt;-3.3475191084301098E10&gt; but was: &lt;-3.3475235915144165E10&gt;
 	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
 	at org.junit.jupiter.api.AssertionUtils.failNotEqual(AssertionUtils.java:62)
@@ -201,7 +201,7 @@
 	at java.base/java.lang.Thread.run(Thread.java:832)
 </failure>
   </testcase>
-  <testcase name="testTrajectoryOneDayZ()" classname="ProbeSimulatorTest" time="0.002">
+  <testcase name="testTrajectoryOneDayZ()" classname="ProbeSimulatorTest" time="0.015">
     <failure message="org.opentest4j.AssertionFailedError: expected: &lt;8334994.892882561&gt; but was: &lt;8348751.45709178&gt;" type="org.opentest4j.AssertionFailedError">org.opentest4j.AssertionFailedError: expected: &lt;8334994.892882561&gt; but was: &lt;8348751.45709178&gt;
 	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
 	at org.junit.jupiter.api.AssertionUtils.failNotEqual(AssertionUtils.java:62)
@@ -301,8 +301,8 @@
 	at java.base/java.lang.Thread.run(Thread.java:832)
 </failure>
   </testcase>
-  <testcase name="testTrajectoryLength()" classname="ProbeSimulatorTest" time="0.467"/>
-  <testcase name="testTrajectoryOneYearX()" classname="ProbeSimulatorTest" time="0.306">
+  <testcase name="testTrajectoryLength()" classname="ProbeSimulatorTest" time="1.849"/>
+  <testcase name="testTrajectoryOneYearX()" classname="ProbeSimulatorTest" time="0.277">
     <failure message="org.opentest4j.AssertionFailedError: expected: &lt;-2.4951517995514418E13&gt; but was: &lt;-2.4960745487418824E13&gt;" type="org.opentest4j.AssertionFailedError">org.opentest4j.AssertionFailedError: expected: &lt;-2.4951517995514418E13&gt; but was: &lt;-2.4960745487418824E13&gt;
 	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
 	at org.junit.jupiter.api.AssertionUtils.failNotEqual(AssertionUtils.java:62)
@@ -402,7 +402,7 @@
 	at java.base/java.lang.Thread.run(Thread.java:832)
 </failure>
   </testcase>
-  <testcase name="testTrajectoryOneYearY()" classname="ProbeSimulatorTest" time="0.068">
+  <testcase name="testTrajectoryOneYearY()" classname="ProbeSimulatorTest" time="0.561">
     <failure message="org.opentest4j.AssertionFailedError: expected: &lt;-1.794349344879982E12&gt; but was: &lt;-1.7944073689932764E12&gt;" type="org.opentest4j.AssertionFailedError">org.opentest4j.AssertionFailedError: expected: &lt;-1.794349344879982E12&gt; but was: &lt;-1.7944073689932764E12&gt;
 	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
 	at org.junit.jupiter.api.AssertionUtils.failNotEqual(AssertionUtils.java:62)
@@ -502,7 +502,7 @@
 	at java.base/java.lang.Thread.run(Thread.java:832)
 </failure>
   </testcase>
-  <testcase name="testTrajectoryOneYearZ()" classname="ProbeSimulatorTest" time="0.028">
+  <testcase name="testTrajectoryOneYearZ()" classname="ProbeSimulatorTest" time="0.05">
     <failure message="org.opentest4j.AssertionFailedError: expected: &lt;2.901591968932223E7&gt; but was: &lt;2.9035016457470186E7&gt;" type="org.opentest4j.AssertionFailedError">org.opentest4j.AssertionFailedError: expected: &lt;2.901591968932223E7&gt; but was: &lt;2.9035016457470186E7&gt;
 	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
 	at org.junit.jupiter.api.AssertionUtils.failNotEqual(AssertionUtils.java:62)

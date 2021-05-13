@@ -1,7 +1,7 @@
-package Solvers;
+package GUI.Solvers;
 
 import Run.CalculationOutput;
-import RunGui.Run;
+import GUI.RunGui.Run;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;

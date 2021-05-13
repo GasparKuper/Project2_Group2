@@ -1,4 +1,4 @@
-package SolarSystem;
+package GUI.SolarSystem;
 // Scale x,y,z  - 1:1*10^(-9)
 // Scale volume - 1:1*10^(-6)
 

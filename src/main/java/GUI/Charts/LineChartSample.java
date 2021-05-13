@@ -1,4 +1,4 @@
-package Charts;
+package GUI.Charts;
 
 import Body.Data;
 import Body.PlanetBody;
@@ -8,7 +8,7 @@ import Interfaces.ODESolverInterface;
 import Interfaces.Vector3dInterface;
 import ODESolver.ODEFunction;
 import ODESolver.ODESolver;
-import RunGui.Run;
+import GUI.RunGui.Run;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;

@@ -1,8 +1,8 @@
-package RunGui;
+package GUI.RunGui;
 
-import Charts.LineChartSample;
-import SolarSystem.UI;
-import Solvers.SolversGUI;
+import GUI.Charts.LineChartSample;
+import GUI.SolarSystem.UI;
+import GUI.Solvers.SolversGUI;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

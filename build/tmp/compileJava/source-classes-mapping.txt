@@ -6,6 +6,12 @@ Body/State.java
  Body.State
 Interfaces/ODESolverInterface.java
  Interfaces.ODESolverInterface
+GUI/Charts/FileReaderXYZ.java
+ GUI.Charts.FileReaderXYZ
+GUI/Solvers/SolversGUI.java
+ GUI.Solvers.SolversGUI
+GUI/RunGui/Run.java
+ GUI.RunGui.Run
 ODESolver/ODESolver.java
  ODESolver.ODESolver
 Constant/Constant.java
@@ -16,10 +22,14 @@ Body/Data.java
  Body.Data
 Interfaces/ProbeSimulatorInterface.java
  Interfaces.ProbeSimulatorInterface
+GUI/Charts/LineChartSample.java
+ GUI.Charts.LineChartSample
 ODESolver/ProbeSimulator.java
  ODESolver.ProbeSimulator
 ODESolver/ODEFunction.java
  ODESolver.ODEFunction
+GUI/SolarSystem/Orbit.java
+ GUI.SolarSystem.Orbit
 Interfaces/ODEFunctionInterface.java
  Interfaces.ODEFunctionInterface
 Body/Rate.java
@@ -30,5 +40,8 @@ Interfaces/RateInterface.java
  Interfaces.RateInterface
 Interfaces/StateInterface.java
  Interfaces.StateInterface
+GUI/SolarSystem/UI.java
+ GUI.SolarSystem.UI
+ GUI.SolarSystem.UI$1
 Interfaces/Vector3dInterface.java
  Interfaces.Vector3dInterface
