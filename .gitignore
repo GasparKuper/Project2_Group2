@@ -6,3 +6,5 @@ gradle
 build
 .gradle
 trajectory.csv
+gradlew
+gradlew.bat
