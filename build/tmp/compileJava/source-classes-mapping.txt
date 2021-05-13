@@ -1,5 +1,5 @@
-Run/CalculationOutput.java
- Run.CalculationOutput
+ODESolver/ProbeSimulator.java
+ ODESolver.ProbeSimulator
 Body/Vector3d.java
  Body.Vector3d
 Body/State.java
@@ -8,24 +8,25 @@ Interfaces/ODESolverInterface.java
  Interfaces.ODESolverInterface
 GUI/Charts/FileReaderXYZ.java
  GUI.Charts.FileReaderXYZ
-GUI/Solvers/SolversGUI.java
- GUI.Solvers.SolversGUI
-GUI/RunGui/Run.java
- GUI.RunGui.Run
+Run/CalculationOutput.java
+ Run.CalculationOutput
+Interfaces/StateInterface.java
+ Interfaces.StateInterface
 ODESolver/ODESolver.java
  ODESolver.ODESolver
 Constant/Constant.java
  Constant.Constant
-Run/InitialValuesCalculation.java
- Run.InitialValuesCalculation
+Interfaces/RateInterface.java
+ Interfaces.RateInterface
 Body/Data.java
  Body.Data
 Interfaces/ProbeSimulatorInterface.java
  Interfaces.ProbeSimulatorInterface
-GUI/Charts/LineChartSample.java
- GUI.Charts.LineChartSample
-ODESolver/ProbeSimulator.java
- ODESolver.ProbeSimulator
+Interfaces/Vector3dInterface.java
+ Interfaces.Vector3dInterface
+GUI/SolarSystem/UI.java
+ GUI.SolarSystem.UI
+ GUI.SolarSystem.UI$1
 ODESolver/ODEFunction.java
  ODESolver.ODEFunction
 GUI/SolarSystem/Orbit.java
@@ -36,12 +37,11 @@ Body/Rate.java
  Body.Rate
 Body/PlanetBody.java
  Body.PlanetBody
-Interfaces/RateInterface.java
- Interfaces.RateInterface
-Interfaces/StateInterface.java
- Interfaces.StateInterface
-GUI/SolarSystem/UI.java
- GUI.SolarSystem.UI
- GUI.SolarSystem.UI$1
-Interfaces/Vector3dInterface.java
- Interfaces.Vector3dInterface
+Run/InitialValuesCalculation.java
+ Run.InitialValuesCalculation
+GUI/Charts/LineChartSample.java
+ GUI.Charts.LineChartSample
+GUI/Solvers/SolversGUI.java
+ GUI.Solvers.SolversGUI
+GUI/RunGui/Run.java
+ GUI.RunGui.Run

@@ -14,13 +14,13 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 
 public class Run extends Application {
 
     @Override
     public void start(Stage stage) {
-
         //Icon
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/Image/Logo.jpg")));
 

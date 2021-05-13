@@ -4,6 +4,8 @@ import Body.*;
 import Interfaces.Vector3dInterface;
 import ODESolver.ProbeSimulator;
 
+import java.io.File;
+
 import static Constant.Constant.SOLVER;
 import static Constant.Constant.TITANLASTPOS;
 

@@ -7,6 +7,7 @@ import Body.Vector3d;
 import Interfaces.ProbeSimulatorInterface;
 import Interfaces.Vector3dInterface;
 
+import java.io.File;
 import java.util.LinkedList;
 
 public class ProbeSimulator implements ProbeSimulatorInterface {
@@ -43,6 +44,8 @@ public class ProbeSimulator implements ProbeSimulatorInterface {
         trajectory = (State[]) odeSolver.solve(odeFunction, launchPosition, ts[ts.length-1], ts[0]);
 
         //System.out.println("DONE");
+        File starting = new File(System.getProperty("user.dir"));
+        System.out.println(starting);
 
         for (int i = 0; i < trajectory.length; i++)
             probeTraj[i] = (Vector3d) trajectory[i].position;
