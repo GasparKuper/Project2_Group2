@@ -42,7 +42,7 @@ public class ProbeSimulator implements ProbeSimulatorInterface {
         //Array with positions and velocities of the probe and planets.
         trajectory = (State[]) odeSolver.solve(odeFunction, launchPosition, ts[ts.length-1], ts[0]);
 
-        System.out.println("DONE");
+        //System.out.println("DONE");
 
         for (int i = 0; i < trajectory.length; i++)
             probeTraj[i] = (Vector3d) trajectory[i].position;

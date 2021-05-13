@@ -18,17 +18,17 @@ public class Constant {
      * Array VELOCITIES contains the initial velocity of the probe computed by the brute force for each solver
      * The values inside the array are used to start the trajectory of the probe
      */
-    public static Vector3d[] VELOCITIES = {new Vector3d(26059.683719982604,-17025.303205517623,-551.8038048972293),
-                                           new Vector3d(26064.95219309131,-17016.00144740622,-560.0979247429184),
-                                           new Vector3d(26060.191835965557,-17025.529139641676,-551.626002550228),
-                                           new Vector3d(26060.191835965557,-17025.529139641676,-551.626002550228)};
+    public static Vector3d[] VELOCITIES = {new Vector3d(26059.64822902804,-17025.274251441046,-551.8266716533692),
+                                           new Vector3d(26064.922970305346,-17015.98491274584,-560.1116360658285),
+                                           new Vector3d(26060.15681226142,-17025.499984899376,-551.6491230911201),
+                                           new Vector3d(26060.15681226142,-17025.499984899376,-551.6491230911201)};
 
     /**
      * Array TITANLASTPOS contains the result of the calculation of the last position of titan for each solver
      * The values inside the array are used by the brute force
      */
-    public static Vector3d[] TITANLASTPOS = {new Vector3d(8.790331863244542E11,-1.2037939117909973E12,-1.4405702426064991E10),
-                                             new Vector3d(8.792057635699379E11,-1.2034125745659744E12,-1.4619852655912003E10),
-                                             new Vector3d(8.790398852519586E11,-1.2038043949187737E12,-1.4401110492997408E10),
-                                             new Vector3d(8.790398852519586E11,-1.2038043949187737E12,-1.4401110492997408E10)};
+    public static Vector3d[] TITANLASTPOS = {new Vector3d(8.790322792822222E11,-1.2037926536678767E12,-1.4406260567073011E10),
+                                             new Vector3d(8.792050124292278E11,-1.203411806119769E12,-1.4620174774740269E10),
+                                             new Vector3d(8.790389926264305E11,-1.2038031270354197E12,-1.4401675088069757E10),
+                                             new Vector3d(8.790389926264305E11,-1.2038031270354197E12,-1.4401675088069757E10)};
 }

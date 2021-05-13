@@ -4,6 +4,7 @@ import MAIN.Body.Vector3d;
 import MAIN.ODESolver.ProbeSimulator;
 
 import static MAIN.Constant.Constant.SOLVER;
+import static MAIN.Constant.Constant.VELOCITIES;
 
 public class CalculationOutput extends Thread{
 
@@ -13,7 +14,7 @@ public class CalculationOutput extends Thread{
         //Array the trajectory of the probe
         Vector3d[] trajectoryOfProbe = (Vector3d[]) simulator.trajectory(
                 new Vector3d(-1.4718861838613153E11, -2.8615219147677864E10 ,8174296.311571818),
-                new Vector3d(27978.003182957942, -62341.39349461967 ,-651.590970913659), 31556952, 360);
+                VELOCITIES[SOLVER-1], 31556952, 360);
 
 
         MAIN.Body.State[] trajectoryOfAll = simulator.getTrajectory();
@@ -30,5 +31,7 @@ public class CalculationOutput extends Thread{
         System.out.println("Probe = " + trajectoryOfProbe[trajectoryOfProbe.length-1].toString());
         //Titan
         System.out.println("Titan = " + trajectoryOfAll[trajectoryOfAll.length-1].celestialBody.get(8).position);
+        //Distance between Titan and the probe
+        System.out.println("Distance between titan and the probe = " + trajectoryOfProbe[trajectoryOfProbe.length-1].dist(trajectoryOfAll[trajectoryOfAll.length-1].celestialBody.get(8).position));
     }
 }
