@@ -95,7 +95,7 @@ public class UI extends Application{
 		neptune.setImage("/Image/Textures/Neptune.JPG");
 		solarSystem.getChildren().add(neptune.getShape());
 
-		Orbit probe = new Orbit((double) 3000 / 6000); //500 meters
+		Orbit probe = new Orbit((double) 63710 / 6000); //500 meters
 		probe.setImage("/Image/Textures/probe.JPG");
 		solarSystem.getChildren().add(probe.getShape());
 
@@ -226,8 +226,8 @@ public class UI extends Application{
 
 		//Array the trajectory of the probe
 		simulator.trajectory(
-				new Vector3d(-1.4718861838613153E11, -2.8615219147677864E10 ,8174296.311571818),
-				new Vector3d(27978.003182957942, -62341.39349461967 ,-651.590970913659),
+				new Vector3d(-5796000.0,-2645000,0),
+				new Vector3d(26060.15681226142,-17025.499984899376,-551.6491230911201),
 				31556952, 360);
 
 		Body.State[] trajectoryOfAll = simulator.getTrajectory();
