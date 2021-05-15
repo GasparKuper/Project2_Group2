@@ -13,8 +13,7 @@ public class InitialValuesCalculation {
 
     private double minDist = Double.MAX_VALUE;
     public void run(){
-        for(int i =0;i<4;i++) {
-            int solver = i+1;
+        for(int solver = 1; solver <= 3 ;solver++) {
             Vector3d initialPos = new Vector3d(-5796000.0,-2645000,0);
             int total = 0;
             float step = 10000;
