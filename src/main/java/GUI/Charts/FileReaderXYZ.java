@@ -15,7 +15,7 @@ public class FileReaderXYZ {
         try {
             //scanner.next() is Input of our user
             File starting = new File(System.getProperty("user.dir"));
-            String fileStr = "/DataNasa/" + cord + ".txt";
+            String fileStr = "src/main/resources/DataNasa/" + cord + ".txt";
             File file = new File(starting, fileStr);
             Scanner scan = new Scanner(file);
             //scan.hasNextLine() reads whole file by one line
