@@ -78,7 +78,7 @@ public class InitialValuesCalculation {
      */
     private boolean velocity(Vector3d vel){
         double magnitude = vel.norm();
-        return (magnitude >= 50000.0 && magnitude <= 60001.0);
+        return magnitude > 60000.0;
     }
 
     /**
@@ -124,10 +124,10 @@ public class InitialValuesCalculation {
     }
 
     public static void main(String[] args) {
-        InitialValuesCalculation run = new InitialValuesCalculation();
+        InitialValuesCalculation start = new InitialValuesCalculation();
 
 //        run.BruteForceStart();
-        run.run();
+        start.run();
     }
 
     public  double getDist(){
