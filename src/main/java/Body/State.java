@@ -178,7 +178,7 @@ public class State implements StateInterface {
 	//Flag for the first step for Stormer-Verlet
 	private static boolean stormerFlag = true;
 	//Previous data of the solar system (Step before)
-	private LinkedList<PlanetBody> prevCelestialBody;
+	private static LinkedList<PlanetBody> prevCelestialBody;
 
 	/**
 	 * STORMER-VERLET
@@ -187,6 +187,7 @@ public class State implements StateInterface {
 	 * @param rate   Acceleration array.
 	 * @return The new state after the update. Required to have the same class as 'this'.
 	 */
+	//Not yet implemented, need to fix
 	public StateInterface addMulVerletStormer(double step, RateInterface rate, ODEFunctionInterface f) {
 		//if flag=true, it means that we have first step of the stormer-verlet
 		if(stormerFlag){
@@ -224,7 +225,7 @@ public class State implements StateInterface {
 				tmp_pos = (Vector3d) tmp_pos.add(tmp_acc);
 				planet.setPosition(tmp_pos);
 
-				//New_Velocity = old_velocity * acceleration
+				//New_Velocity = old_velocity + acceleration * step
 				planet.setVelocity((Vector3d) planet.getVelocity().addMul(step, acceleration));
 
 				if(i == celestialBody.size()-1){
