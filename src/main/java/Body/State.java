@@ -65,6 +65,9 @@ public class State implements StateInterface {
 
 		LinkedList<Vector3d> acceleration = ((Rate) rate).getAcceleration();
 
+		if(acceleration == null)
+			throw new RuntimeException("Acceleration is empty");
+
 		for (int i = 0; i < celestialBody.size(); i++) {
 			PlanetBody planet = celestialBody.get(i);
 
@@ -94,6 +97,9 @@ public class State implements StateInterface {
 
 		LinkedList<Vector3d> acceleration = ((Rate) rate).getAcceleration();
 
+		if(acceleration == null)
+			throw new RuntimeException("Acceleration is empty");
+
 		for (int i = 0; i < celestialBody.size(); i++) {
 			PlanetBody planet = celestialBody.get(i);
 
@@ -122,6 +128,9 @@ public class State implements StateInterface {
 	public StateInterface addMulVerletVelocity(double step, RateInterface rate, ODEFunctionInterface f) {
 
 		LinkedList<Vector3d> accelerationVector = ((Rate) rate).getAcceleration();
+
+		if(accelerationVector == null)
+			throw new RuntimeException("Acceleration is empty");
 
 		//Leapfrog Integration
 		//New_Position(i+1) = old_position(i) + old_velocity(i)*step + 1/2 * (a(i))*step^2
@@ -204,6 +213,9 @@ public class State implements StateInterface {
 
 			//Gets acceleration from the Rate
 			LinkedList<Vector3d> accelerationVector = ((Rate) rate).getAcceleration();
+
+			if(accelerationVector == null)
+				throw new RuntimeException("Acceleration is empty");
 
 			//Temporary previous data of the solar system
 			LinkedList<PlanetBody> tmp_prevCelestialBody = new LinkedList<>();

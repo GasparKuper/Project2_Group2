@@ -13,6 +13,8 @@ public class Rate implements RateInterface {
 	 * @param acceleration Acceleration for each planets
 	 */
 	public Rate(LinkedList<Vector3d> acceleration) {
+		if(acceleration == null)
+			throw new RuntimeException("Acceleration is empty");
 		this.acceleration = acceleration;
 	}
 

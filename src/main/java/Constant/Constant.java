@@ -1,7 +1,6 @@
 package Constant;
 
 import Body.Vector3d;
-import Experiments.StepSize;
 import Interfaces.Vector3dInterface;
 
 public class Constant {
@@ -15,6 +14,11 @@ public class Constant {
      * 5 = 4rd order Runge-Kutta
      */
     public static int SOLVER = 3;
+
+    /**
+     * Gravitational constant
+     */
+    public final static double G = 6.67408e-11;
 
     /**
      * Step size used to calculate trajectories
