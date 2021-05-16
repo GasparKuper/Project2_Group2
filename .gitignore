@@ -6,6 +6,10 @@ gradle
 build
 .gradle
 trajectory.csv
+trajectoryIMPLICIT_EULER.csv
+trajectorySTORMER_VERLET.csv
+trajectorySYMPLECTIC_EULER.csv
+trajectoryVELOCITY_VERLET.csv
 gradlew
 gradlew.bat
 gradlew
