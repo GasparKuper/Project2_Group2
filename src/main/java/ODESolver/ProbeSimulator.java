@@ -62,6 +62,9 @@ public class ProbeSimulator implements ProbeSimulatorInterface {
      */
     @Override
     public Vector3dInterface[] trajectory(Vector3dInterface p0, Vector3dInterface v0, double tf, double h) {
+        if(p0 == null || v0 == null)
+            throw new RuntimeException("Launch position or velocity are null");
+
         double tsLength = tf/h;
         if(tf % h > 0.0)
             tsLength++;

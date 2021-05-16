@@ -10,11 +10,9 @@ import Interfaces.StateInterface;
 
 import java.util.LinkedList;
 
+import static Constant.Constant.G;
+
 public class ODEFunction implements ODEFunctionInterface {
-
-	private final static double G = 6.67408e-11;
-
-	private LinkedList<PlanetBody> solarSystem;
 
 	/**
 	 * Calculating acceleration
@@ -29,7 +27,10 @@ public class ODEFunction implements ODEFunctionInterface {
 	public RateInterface call(double t, StateInterface y) {
 		LinkedList<Vector3d> accelerationBodies = new LinkedList<>();
 
-		this.solarSystem = ((State) y).celestialBody;
+		LinkedList<PlanetBody> solarSystem = ((State) y).celestialBody;
+
+		if(solarSystem == null)
+			throw new RuntimeException("Solar system is empty");
 
 
 		//Calculating acceleration
@@ -48,6 +49,11 @@ public class ODEFunction implements ODEFunctionInterface {
 					Vector3d acc = (Vector3d) b1b2.mul(force);
 					accel = (Vector3d) accel.add(acc);
 				}
+			}
+			if(Double.isNaN(accel.getX()) ||
+					Double.isNaN(accel.getY()) ||
+						Double.isNaN(accel.getZ())){
+				throw new RuntimeException("Acceleration goes in NaN");
 			}
 			accelerationBodies.add(accel);
 		}

@@ -80,9 +80,6 @@ public class ODESolver implements ODESolverInterface {
         return solve(f, y0, ts);
     }
 
-
-    private boolean stormerFlag = true;
-
     /**
      * Update rule for one step.
      *
@@ -101,6 +98,9 @@ public class ODESolver implements ODESolverInterface {
 
         //Create a clone of the State object
         State clone = x.clone();
+
+        if(x == clone)
+            throw new RuntimeException("State Clone wasn't created");
 
         if(SOLVER == 1) //Symplectic Euler Method
             clone = (State) clone.addMul(h, velocity_acceleration);
