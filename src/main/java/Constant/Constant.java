@@ -16,6 +16,11 @@ public class Constant {
     public static int SOLVER = 3;
 
     /**
+     * Flag for Verlet JUnit tests
+     */
+    public static boolean FLAG_VERLET_TEST = false;
+
+    /**
      * Gravitational constant
      */
     public final static double G = 6.67408e-11;
@@ -23,7 +28,7 @@ public class Constant {
     /**
      * Step size used to calculate trajectories
      */
-    public static double STEPSIZE = 20000;
+    public static double STEPSIZE = 600;
 
     /**
      * Final time used to calculate trajectories
@@ -40,15 +45,7 @@ public class Constant {
                                            new Vector3d(45767.13717953718,-38795.42429374674,-532.7219902108546)};
 
     /**
-     * Array TITANLASTPOS contains the result of the calculation of the last position of titan for each solver
-     * The values inside the array are used by the brute force
-     */
-    public static Vector3d[] TITANLASTPOS = {new Vector3d(8.792064226203754E11,-1.2040466447405679E12,-1.4284761255510523E10),
-                                             new Vector3d(8.751845348489886E11,-1.2082007407347507E12,-1.1752216332025648E10),
-                                             new Vector3d(8.792207314653517E11,-1.2042094620928135E12,-1.421029948775191E10),
-                                             new Vector3d(8.790389926264305E11,-1.2038031270354197E12,-1.4401675088069757E10)};
-    /**
      * Start position of the probe
      */
-    public static final Vector3d STARTPOS = new Vector3d(-1.4718861838613153E11, -2.8615219147677864E10, 8174296.311571818);
+    public static final Vector3d STARTPOS = new Vector3d(4301000.0,-4692000.0,-276000.0);
 }
