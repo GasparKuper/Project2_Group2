@@ -108,9 +108,13 @@ public class ODESolver implements ODESolverInterface {
             clone = (State) clone.addMulImplicit(h, velocity_acceleration);
         else if(SOLVER == 3) //Velocity-Verlet Solver
             clone = (State) clone.addMulVerletVelocity(h, velocity_acceleration, f);
-        else if(SOLVER == 4) { //Stormer-Verlet Solver
+        else if(SOLVER == 4) //Stormer-Verlet Solver
             clone = (State) clone.addMulVerletStormer(h, velocity_acceleration, f);
+        else if(SOLVER == 5) { // Runge-Kutta Solver
+            RungeKuttaSolver solver = new RungeKuttaSolver();
+            clone = (State) solver.step(f, t, y, h);
         }
+
 
         //Return a new state with a new position and velocity
         return clone;
