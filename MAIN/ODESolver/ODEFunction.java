@@ -7,14 +7,13 @@ import MAIN.Body.Vector3d;
 import MAIN.Interfaces.ODEFunctionInterface;
 import MAIN.Interfaces.RateInterface;
 import MAIN.Interfaces.StateInterface;
+import MAIN.Interfaces.Vector3dInterface;
 
 import java.util.LinkedList;
 
 public class ODEFunction implements ODEFunctionInterface {
 
 	private final static double G = 6.67408e-11;
-
-	private LinkedList<PlanetBody> solarSystem;
 
 	/*
 	 * This is an interface for the function f that represents the
@@ -31,9 +30,9 @@ public class ODEFunction implements ODEFunctionInterface {
 	 * @return  The average rate-of-change over the time-step. Has dimensions of [state]/[time].
 	 */
 	public RateInterface call(double t, StateInterface y) {
-		LinkedList<Vector3d> accelerationBodies = new LinkedList<>();
+		LinkedList<Vector3dInterface> accelerationBodies = new LinkedList<>();
 
-		this.solarSystem = ((State) y).celestialBody;
+		LinkedList<PlanetBody> solarSystem = ((State) y).celestialBody;
 
 
 		//Calculating the first function

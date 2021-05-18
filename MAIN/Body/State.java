@@ -32,7 +32,7 @@ public class State implements StateInterface {
 	 */
 	public StateInterface addMul(double step, RateInterface rate) {
 
-		LinkedList<Vector3d> acceleration = ((Rate) rate).getAcceleration();
+		LinkedList<Vector3dInterface> acceleration = ((Rate) rate).getAcceleration();
 
 		//Calculate two function
 		//New Velocity = old Velocity + stepSize * Rate (Acceleration)
@@ -53,7 +53,7 @@ public class State implements StateInterface {
 
 	public StateInterface addMulImplicit(double step, RateInterface rate) {
 
-		LinkedList<Vector3d> acceleration = ((Rate) rate).getAcceleration();
+		LinkedList<Vector3dInterface> acceleration = ((Rate) rate).getAcceleration();
 
 		//Calculate two function
 		//New position = old Position + stepSize * Velocity
@@ -74,7 +74,7 @@ public class State implements StateInterface {
 
 	public StateInterface addMulVerletVelocity(double step, RateInterface rate, ODEFunctionInterface f) {
 
-		LinkedList<Vector3d> accelerationVector = ((Rate) rate).getAcceleration();
+		LinkedList<Vector3dInterface> accelerationVector = ((Rate) rate).getAcceleration();
 
 		//Leapfrog Integration
 		//New_Position(i+1) = old_position(i) + old_velocity(i)*step + 1/2 * (a(i))*step^2
@@ -142,7 +142,7 @@ public class State implements StateInterface {
 			stormerFlag = false;
 		} else {
 
-			LinkedList<Vector3d> accelerationVector = ((Rate) rate).getAcceleration();
+			LinkedList<Vector3dInterface> accelerationVector = ((Rate) rate).getAcceleration();
 
 			LinkedList<PlanetBody> tmp_prevCelestialBody = new LinkedList<>();
 
@@ -152,7 +152,7 @@ public class State implements StateInterface {
 			for (int i = 0; i < celestialBody.size(); i++) {
 				PlanetBody planet = celestialBody.get(i);
 
-				Vector3d acceleration = accelerationVector.get(i);
+				Vector3dInterface acceleration = accelerationVector.get(i);
 
 				Vector3d tmp_pos = (Vector3d) planet.getPosition().mul(2);
 				tmp_pos = (Vector3d) tmp_pos.sub(prevCelestialBody.get(i).getPosition());
@@ -181,8 +181,7 @@ public class State implements StateInterface {
 	}
 
 	public State clone(StateInterface x){
-		LinkedList<PlanetBody> cloneplanets = new LinkedList<>()
-				;
+		LinkedList<PlanetBody> cloneplanets = new LinkedList<>();
 		for (int i = 0; i < celestialBody.size(); i++)
 			cloneplanets.add(celestialBody.get(i).clone());
 
