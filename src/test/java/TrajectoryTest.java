@@ -141,8 +141,8 @@ class TrajectoryTest {
 
 
     private static Vector3dInterface[] simulateOneYear() {
-        Vector3dInterface probe_relative_position = new Vector3d(6371e3,0,0);
-        Vector3dInterface probe_relative_velocity = new Vector3d(52500.0,-27000.0,0); // 12.0 months
+        Vector3dInterface probe_relative_position = new Vector3d(4301000.0,-4692000.0,-276000.0);
+        Vector3dInterface probe_relative_velocity = new Vector3d(35760.650634765625,-48159.48486328125,-604.095458984375); // 12.0 months
         double day = 24*60*60;
         double year = 365.25*day;
         ProbeSimulatorInterface simulator = new ProbeSimulator();
