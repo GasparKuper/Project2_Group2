@@ -67,43 +67,49 @@ public class RungeKuttaSolver {
      */
     public StateInterface step(ODEFunctionInterface f, double t, StateInterface y, double h) {
         LinkedList<PlanetBody> solarSystem = ((State) y).celestialBody;
-        LinkedList<Vector3d> ki = new LinkedList<>();
+        LinkedList<Vector3d> ki1 = new LinkedList<>();
 
         for (int i = 0; i < solarSystem.size(); i++) {
-            Rate rate = (Rate) f.call(t, y);
+            State clone = ((State) y).clone();
+            Rate rate = (Rate) f.call(t, clone);
             Vector3d k = (Vector3d) rate.getAcceleration().get(i).mul(h);
-            ki.add(k);
+            ki1.add(k);
         }
 
-        Rate k1 = new Rate(ki);
-        ki.clear();
+        Rate k1 = new Rate(ki1);
+
+        LinkedList<Vector3d> ki2 = new LinkedList<>();
 
         for (int i = 0; i < solarSystem.size(); i++) {
-            Rate rate = (Rate) f.call(t + h / 2, y.addMul(1.0/2, k1));
+            State clone = ((State) y).clone();
+            Rate rate = (Rate) f.call(t + h / 2, clone.addMul(1.0/2, k1));
             Vector3d k = (Vector3d) rate.getAcceleration().get(i).mul(h);
-            ki.add(k);
+            ki2.add(k);
         }
 
-        Rate k2 = new Rate(ki);
-        ki.clear();
+        Rate k2 = new Rate(ki2);
+
+        LinkedList<Vector3d> ki3 = new LinkedList<>();
 
         for (int i = 0; i < solarSystem.size(); i++) {
-            Rate rate = (Rate) f.call(t + h / 2, y.addMul(1.0/ 2, k2));
+            State clone = ((State) y).clone();
+            Rate rate = (Rate) f.call(t + h / 2, clone.addMul(1.0/ 2, k2));
             Vector3d k = (Vector3d) rate.getAcceleration().get(i).mul(h);
-            ki.add(k);
+            ki3.add(k);
         }
 
-        Rate k3 = new Rate(ki);
-        ki.clear();
+        Rate k3 = new Rate(ki3);
+
+        LinkedList<Vector3d> ki4 = new LinkedList<>();
 
         for (int i = 0; i < solarSystem.size(); i++) {
-            Rate rate = (Rate) f.call(t + h, y.addMul(1, k3));
+            State clone = ((State) y).clone();
+            Rate rate = (Rate) f.call(t + h, clone.addMul(1, k3));
             Vector3d k = (Vector3d) rate.getAcceleration().get(i).mul(h);
-            ki.add(k);
+            ki4.add(k);
         }
 
-        Rate k4 = new Rate(ki);
-        ki.clear();
+        Rate k4 = new Rate(ki4);
 
         return y.addMul(1.0/6, k1).addMul(1.0/3, k2).addMul(1.0/3, k3).addMul(1.0/6, k4);
     }
