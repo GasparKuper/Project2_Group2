@@ -5,6 +5,7 @@ import Body.Rate;
 import Body.State;
 import Body.Vector3d;
 import Interfaces.ODEFunctionInterface;
+import Interfaces.RateInterface;
 import Interfaces.StateInterface;
 
 import java.util.LinkedList;
@@ -66,51 +67,39 @@ public class RungeKuttaSolver {
      * @return  the new state after taking one step
      */
     public StateInterface step(ODEFunctionInterface f, double t, StateInterface y, double h) {
-        LinkedList<PlanetBody> solarSystem = ((State) y).celestialBody;
-        LinkedList<Vector3d> ki1 = new LinkedList<>();
 
-        for (int i = 0; i < solarSystem.size(); i++) {
-            State clone = ((State) y).clone();
-            Rate rate = (Rate) f.call(t, clone);
-            Vector3d k = (Vector3d) rate.getAcceleration().get(i).mul(h);
-            ki1.add(k);
-        }
+        RateInterface k1 = findK1(f,t,y);
+        RateInterface k2 = findK2(f,t,h,y,k1);
+        RateInterface k3 = findK3(f,t,h,y,k2);
+        RateInterface k4 = findK4(f,t,h,y,k3);
 
-        Rate k1 = new Rate(ki1);
+        StateInterface state = ((State) y).clone();
 
-        LinkedList<Vector3d> ki2 = new LinkedList<>();
+        state = state.addMul(h/6, k1);
+        state = state.addMul(2*h/6, k2);
+        state = state.addMul(2*h/6, k3);
+        state = state.addMul(h/6, k4);
 
-        for (int i = 0; i < solarSystem.size(); i++) {
-            State clone = ((State) y).clone();
-            Rate rate = (Rate) f.call(t + h / 2, clone.addMul(1.0/2, k1));
-            Vector3d k = (Vector3d) rate.getAcceleration().get(i).mul(h);
-            ki2.add(k);
-        }
+        return state;
+    }
 
-        Rate k2 = new Rate(ki2);
+    public RateInterface findK1(ODEFunctionInterface f, double t, StateInterface y) {
+        StateInterface clone = ((State) y).clone();
+        return f.call(t, clone);
+    }
 
-        LinkedList<Vector3d> ki3 = new LinkedList<>();
+    public RateInterface findK2(ODEFunctionInterface f, double t, double h, StateInterface y, RateInterface k1) {
+        StateInterface clone = ((State) y).clone();
+        return f.call(t + h/2, clone.addMul(1.0/2, k1));
+    }
 
-        for (int i = 0; i < solarSystem.size(); i++) {
-            State clone = ((State) y).clone();
-            Rate rate = (Rate) f.call(t + h / 2, clone.addMul(1.0/ 2, k2));
-            Vector3d k = (Vector3d) rate.getAcceleration().get(i).mul(h);
-            ki3.add(k);
-        }
+    public RateInterface findK3(ODEFunctionInterface f, double t, double h, StateInterface y, RateInterface k2) {
+        StateInterface clone = ((State) y).clone();
+        return f.call(t + h/2, clone.addMul(1.0/2, k2));
+    }
 
-        Rate k3 = new Rate(ki3);
-
-        LinkedList<Vector3d> ki4 = new LinkedList<>();
-
-        for (int i = 0; i < solarSystem.size(); i++) {
-            State clone = ((State) y).clone();
-            Rate rate = (Rate) f.call(t + h, clone.addMul(1, k3));
-            Vector3d k = (Vector3d) rate.getAcceleration().get(i).mul(h);
-            ki4.add(k);
-        }
-
-        Rate k4 = new Rate(ki4);
-
-        return y.addMul(1.0/6, k1).addMul(1.0/3, k2).addMul(1.0/3, k3).addMul(1.0/6, k4);
+    public RateInterface findK4(ODEFunctionInterface f, double t, double h, StateInterface y, RateInterface k3) {
+        StateInterface clone = ((State) y).clone();
+        return f.call(t + h, clone.addMul(1.0, k3));
     }
 }
