@@ -1,11 +1,11 @@
-package MAIN.ODESolver;
+package ODESolver;
 
-import MAIN.Body.PlanetBody;
-import MAIN.Body.Rate;
-import MAIN.Body.State;
-import MAIN.Interfaces.ODEFunctionInterface;
-import MAIN.Interfaces.StateInterface;
-import MAIN.Interfaces.Vector3dInterface;
+import Body.PlanetBody;
+import Body.Rate;
+import Body.State;
+import Body.Vector3d;
+import Interfaces.ODEFunctionInterface;
+import Interfaces.StateInterface;
 
 import java.util.LinkedList;
 
@@ -67,11 +67,11 @@ public class RungeKuttaSolver {
      */
     public StateInterface step(ODEFunctionInterface f, double t, StateInterface y, double h) {
         LinkedList<PlanetBody> solarSystem = ((State) y).celestialBody;
-        LinkedList<Vector3dInterface> ki = new LinkedList<>();
+        LinkedList<Vector3d> ki = new LinkedList<>();
 
         for (int i = 0; i < solarSystem.size(); i++) {
             Rate rate = (Rate) f.call(t, y);
-            Vector3dInterface k = rate.getAcceleration().get(i).mul(h);
+            Vector3d k = (Vector3d) rate.getAcceleration().get(i).mul(h);
             ki.add(k);
         }
 
@@ -80,7 +80,7 @@ public class RungeKuttaSolver {
 
         for (int i = 0; i < solarSystem.size(); i++) {
             Rate rate = (Rate) f.call(t + h / 2, y.addMul(1.0/2, k1));
-            Vector3dInterface k = rate.getAcceleration().get(i).mul(h);
+            Vector3d k = (Vector3d) rate.getAcceleration().get(i).mul(h);
             ki.add(k);
         }
 
@@ -89,7 +89,7 @@ public class RungeKuttaSolver {
 
         for (int i = 0; i < solarSystem.size(); i++) {
             Rate rate = (Rate) f.call(t + h / 2, y.addMul(1.0/ 2, k2));
-            Vector3dInterface k = rate.getAcceleration().get(i).mul(h);
+            Vector3d k = (Vector3d) rate.getAcceleration().get(i).mul(h);
             ki.add(k);
         }
 
@@ -98,7 +98,7 @@ public class RungeKuttaSolver {
 
         for (int i = 0; i < solarSystem.size(); i++) {
             Rate rate = (Rate) f.call(t + h, y.addMul(1, k3));
-            Vector3dInterface k = rate.getAcceleration().get(i).mul(h);
+            Vector3d k = (Vector3d) rate.getAcceleration().get(i).mul(h);
             ki.add(k);
         }
 
