@@ -7,10 +7,7 @@ import ODESolver.ProbeSimulator;
 import javafx.animation.ParallelTransition;
 import javafx.animation.PathTransition;
 import javafx.application.Application;
-import javafx.scene.Camera;
-import javafx.scene.Group;
-import javafx.scene.PerspectiveCamera;
-import javafx.scene.Scene;
+import javafx.scene.*;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
@@ -126,7 +123,7 @@ public class UI extends Application{
 		camera.setFieldOfView(25); // setting the camera to be telephoto
 		camera.translateXProperty().set(0); // setting the camera in the solar system
 		camera.translateYProperty().set(0);  // setting the camera in the solar system
-		camera.translateZProperty().set(-7000); // moving the camera back in the scence
+		camera.translateZProperty().set(-7000); // moving the camera back in the scene
 		camera.setRotationAxis(Rotate.Y_AXIS);
 		camera.setRotate(0);
 		camera.setNearClip(1);
