@@ -75,10 +75,10 @@ public class RungeKuttaSolver {
 
         StateInterface state = ((State) y).clone();
 
-        state = state.addMul(h/6, k1);
-        state = state.addMul(2*h/6, k2);
-        state = state.addMul(2*h/6, k3);
-        state = state.addMul(h/6, k4);
+        state = ((State) state).addMulImplicit(h/6, k1);
+        state = ((State) state).addMulImplicit(2*h/6, k2);
+        state = ((State) state).addMulImplicit(2*h/6, k3);
+        state = ((State) state).addMulImplicit(h/6, k4);
 
         return state;
     }
