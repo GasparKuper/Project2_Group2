@@ -7,7 +7,7 @@ build
 .gradle
 trajectory.csv
 trajectoryIMPLICIT_EULER.csv
-trajectorySTORMER_VERLET.csv
+trajectory4th_RUNGE_KUTTA.csv
 trajectorySYMPLECTIC_EULER.csv
 trajectoryVELOCITY_VERLET.csv
 gradlew

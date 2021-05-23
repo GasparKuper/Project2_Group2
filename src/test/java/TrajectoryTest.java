@@ -48,20 +48,9 @@ class TrajectoryTest {
     }
 
     @Test
-    @DisplayName("Test trajectory of Stormer-Verlet")
-    public void testTrajectoryStormerVelocity(){
-        SOLVER = 4;
-        Vector3dInterface[] trajectory = testSolverOutput();
-        Assertions.assertAll(() -> assertTrue(testOnNan(trajectory)),
-                () -> assertTrue(testOnPositiveInfinity(trajectory)),
-                () -> assertTrue(testOnNagativeInfinity(trajectory)));
-    }
-
-    @Test
-    @Disabled("Not implemented yet")
     @DisplayName("Test trajectory of 4th-order Runge-Kutta")
     public void testTrajectoryRungeKutta(){
-        SOLVER = 5;
+        SOLVER = 4;
         Vector3dInterface[] trajectory = testSolverOutput();
         Assertions.assertAll(() -> assertTrue(testOnNan(trajectory)),
                 () -> assertTrue(testOnPositiveInfinity(trajectory)),
@@ -113,7 +102,7 @@ class TrajectoryTest {
             else if(SOLVER == 3)
                 solverStr = "VELOCITY_VERLET";
             else if(SOLVER == 4)
-                    solverStr = "STORMER_VERLET";
+                    solverStr = "4th_RUNGE_KUTTA";
 
             FileWriter writer = new FileWriter("trajectory" + solverStr +  ".csv");
             String header = "day,x,y,z";

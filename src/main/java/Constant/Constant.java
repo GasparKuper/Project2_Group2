@@ -10,8 +10,7 @@ public class Constant {
      * 1 = Symplectic Euler
      * 2 = Implicit Euler
      * 3 = Velocity-Verlet
-     * 4 = Stormer-Velocity
-     * 5 = 4rd order Runge-Kutta
+     * 4 = 4rd order Runge-Kutta
      */
     public static int SOLVER = 3;
 
