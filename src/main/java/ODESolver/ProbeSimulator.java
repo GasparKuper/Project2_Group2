@@ -7,7 +7,6 @@ import Body.Vector3d;
 import Interfaces.ProbeSimulatorInterface;
 import Interfaces.Vector3dInterface;
 
-import java.io.File;
 import java.util.LinkedList;
 
 public class ProbeSimulator implements ProbeSimulatorInterface {

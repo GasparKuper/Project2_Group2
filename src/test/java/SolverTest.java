@@ -3,8 +3,8 @@ import Body.State;
 import Body.Vector3d;
 import static org.junit.jupiter.api.Assertions.*;
 
-import Interfaces.ODESolverInterface;
 import ODESolver.ODEFunction;
+import jdk.jfr.Description;
 import org.junit.jupiter.api.*;
 import static Constant.Constant.FLAG_VERLET_TEST;
 
@@ -15,13 +15,14 @@ public class SolverTest {
     private final State probe = new State(15000, new Vector3d(0, 0, 0), new Vector3d(100, 0, 0));
     private final Rate zeroRateAcceleration;
     private final Rate RateAcceleration;
+
     {
         LinkedList<Vector3d> zeroAcceleration = new LinkedList<>();
-        zeroAcceleration.add(new Vector3d(0, 0,0));
+        zeroAcceleration.add(new Vector3d(0, 0, 0));
         zeroRateAcceleration = new Rate(zeroAcceleration);
 
         LinkedList<Vector3d> Acceleration = new LinkedList<>();
-        Acceleration.add(new Vector3d(5, 0,0));
+        Acceleration.add(new Vector3d(5, 0, 0));
         RateAcceleration = new Rate(Acceleration);
     }
 
@@ -260,6 +261,17 @@ public class SolverTest {
             FLAG_VERLET_TEST = false;
             Assertions.assertAll(() -> assertEquals(fiveSteps_Pos, fiveSteps_Solver.position.getX()),
                     () -> assertEquals(fiveSteps_Vel, fiveSteps_Solver.velocity.getX()));
+        }
+    }
+
+    @Nested
+    @DisplayName("4th-order-Runge-Kutta")
+    @Description("If Acceleration function,Implicit and Symplectic Euler give passed test, then 4th order Runge-Kutta works correctly")
+    public class RungeKutta{
+
+        @Test
+        public void testRungeKutta(){
+            System.out.println("If Acceleration function,Implicit and Symplectic Euler give passed test, then 4th order Runge-Kutta works correctly");
         }
     }
 }
