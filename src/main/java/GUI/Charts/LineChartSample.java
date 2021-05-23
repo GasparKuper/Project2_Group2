@@ -75,7 +75,6 @@ public class LineChartSample extends Application {
         MenuItem eulerSymplectic_solver = new MenuItem("Symplectic Euler");
         MenuItem eulerImplicit_solver = new MenuItem("Implicit Euler");
         MenuItem verletVelocity_solver = new MenuItem("Velocity-Verlet");
-        MenuItem verletStormer_solver = new MenuItem("Stormer-Verlet");
         MenuItem runge_solver = new MenuItem("4th-Runge-Kutta");
 
         //Symplectic Euler
@@ -99,24 +98,16 @@ public class LineChartSample extends Application {
             this.trajectory = trajectory();
         });
 
-        //Stormer-Verlet
-        verletStormer_solver.setOnAction(e -> {
-            lineChart.getData().clear();
-            SOLVER = 4;
-            this.trajectory = trajectory();
-        });
-
         //4th-Runge-Kutta
         runge_solver.setOnAction(e -> {
             lineChart.getData().clear();
-            SOLVER = 5;
+            SOLVER = 4;
             this.trajectory = trajectory();
         });
 
         solver.getItems().add(eulerSymplectic_solver);
         solver.getItems().add(eulerImplicit_solver);
         solver.getItems().add(verletVelocity_solver);
-        solver.getItems().add(verletStormer_solver);
         solver.getItems().add(runge_solver);
 
         //EXIT BUTTON

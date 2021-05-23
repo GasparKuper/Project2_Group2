@@ -262,42 +262,4 @@ public class SolverTest {
                     () -> assertEquals(fiveSteps_Vel, fiveSteps_Solver.velocity.getX()));
         }
     }
-
-    @Nested
-    @Disabled("Not implemented yet")
-    @DisplayName("Stormer-Verlet")
-    class StormerVerlet{
-
-        @Test
-        @DisplayName("First step without acceleration")
-        public void firstStepWithoutAcceleration(){
-            //First Step with another solver
-            //New_position = old_position*2 - previous_position + acceleration * step^2
-            //New_Velocity = old_velocity + acceleration * step
-        }
-
-        @Test
-        @DisplayName("5 steps without acceleration")
-        public void fiveStepsWithoutAcceleration(){
-            //First Step with another solver
-            //New_position = old_position*2 - previous_position + acceleration * step^2
-            //New_Velocity = old_velocity + acceleration * step
-        }
-
-        @Test
-        @DisplayName("First step with acceleration")
-        public void firstStepWithAcceleration(){
-            //First Step with another solver
-            //New_position = old_position*2 - previous_position + acceleration * step^2
-            //New_Velocity = old_velocity + acceleration * step
-        }
-
-        @Test
-        @DisplayName("5 steps with acceleration")
-        public void fiveStepsWithAcceleration() {
-                //First Step with another solver
-                //New_position = old_position*2 - previous_position + acceleration * step^2
-                //New_Velocity = old_velocity + acceleration * step
-        }
-    }
 }
