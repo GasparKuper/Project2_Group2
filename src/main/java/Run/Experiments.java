@@ -42,7 +42,9 @@ public class Experiments extends Thread{
             double timeX1 = 1L;
             for (int j = 0; j < 6; j++) {
                 long startTime = System.currentTimeMillis();
-                simulator.trajectory(STARTPOS, VELOCITIES[SOLVER - 1], year, array[j]);
+
+                //Change the time year or day
+                simulator.trajectory(STARTPOS, VELOCITIES[SOLVER - 1], year , array[j]); //CA
                 long endTime = System.currentTimeMillis();
                 double time = (double) endTime - startTime;
 
