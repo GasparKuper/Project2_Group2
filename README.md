@@ -1,5 +1,5 @@
 # Project2_Group10
-# The capabilities of our program
+## The capabilities of our program
 1) Representation of the solar system (GUI)  <br />
    For representation, we use solver and then scale these coordinates for the visualization on the screen)
    
@@ -24,4 +24,4 @@
    
   ## Instruction on how to use our program
   
-  ### Experiments with solvers and brute force
+  ## Experiments with solvers and brute force
