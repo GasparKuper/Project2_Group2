@@ -38,8 +38,8 @@ public class Experiments extends Thread{
             else if (SOLVER == 4)
                 System.out.println("RUNGE-KUTTA SOLVER");
 
-            double timeX = 1L;
-            double timeX1 = 1L;
+            double theBestTime = 1L;
+            double theWorstTime = 1L;
             for (int j = 0; j < 6; j++) {
                 long startTime = System.currentTimeMillis();
 
@@ -79,33 +79,37 @@ public class Experiments extends Thread{
                 System.out.println("Step size = " + array[j]);
 
                 //Outputs solvers coordinates
-                System.out.println(trajectoryOfAll[trajectoryOfAll.length - 1].celestialBody.get(3).position.getX());
-                System.out.println(trajectoryOfAll[trajectoryOfAll.length - 1].celestialBody.get(3).position.getX());
-                System.out.println(trajectoryOfAll[trajectoryOfAll.length - 1].celestialBody.get(3).position.getZ());
+//                System.out.println(trajectoryOfAll[trajectoryOfAll.length - 1].celestialBody.get(3).position.getX());
+//                System.out.println(trajectoryOfAll[trajectoryOfAll.length - 1].celestialBody.get(3).position.getX());
+//                System.out.println(trajectoryOfAll[trajectoryOfAll.length - 1].celestialBody.get(3).position.getZ());
 
                 //Outputs errors
                 System.out.println("Average = " + df.format(average*100.0)+ "%");
-                System.out.println(df.format(errorX*100.0) + "%");
-                System.out.println(df.format(errorY*100.0)+ "%");
-                System.out.println(df.format(errorZ*100.0)+ "%");
+                System.out.println("x_error = " + df.format(errorX*100.0) + "%");
+                System.out.println("y_error = " + df.format(errorY*100.0)+ "%");
+                System.out.println("z_error = " + df.format(errorZ*100.0)+ "%");
+                System.out.println();
 
                 //The best calculation
                 if(average < best) {
                     best = average;
                     stepBest = array[j];
-                    timeX = time;
+                    theBestTime = time;
                 }
 
                 //The worst calculation
                 if(average > worst) {
                     worst = average;
                     stepWorst = array[j];
-                    timeX1 = time;
+                    theWorstTime = time;
                 }
             }
             //Outputs the best and the worst calculation
-            System.out.println("The best step = " + stepBest + " average = " + df.format(best*100.0) + "%" + " time = " + timeX + "ms");
-            System.out.println("The worst step = " + stepWorst + " average = " + df.format(worst*100.0) + "%" + " time = "  + timeX1 + "ms");
+            System.out.println("==============================================");
+            System.out.println("The best step = " + stepBest + " average = " + df.format(best*100.0) + "%" + " time = " + theBestTime + "ms");
+            System.out.println("The worst step = " + stepWorst + " average = " + df.format(worst*100.0) + "%" + " time = "  + theWorstTime + "ms");
+            System.out.println("==============================================");
+            System.out.println();
         }
     }
 
