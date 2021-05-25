@@ -26,7 +26,7 @@
   ### JUnit testing
    To test our program, run this command on the terminal inside the main directory (*You need to see "src" folder*): <br />
    ***gradle test*** <br />
-   **![Example](https://github.com/GasparKuper/Project2_Group2/tree/main/readmeImages/gradleTest.png)** <br />
+   **![Example](https://github.com/GasparKuper/Project2_Group2/tree/main/readmeImages/gradleTest.png)** <br /> <br />
    If first command does not give the output, try this: <br />
    ***gradle test --rerun-tasks*** <br />
    **![Example](https://github.com/GasparKuper/Project2_Group2/tree/main/readmeImages/gradleTestSec.png)**
