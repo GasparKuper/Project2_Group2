@@ -46,7 +46,7 @@
    ***gradle runVelocity*** <br />
    **![Example](https://github.com/GasparKuper/Project2_Group2/tree/main/readmeImages/runVelocity.png)**
    
-   ### Calculate the initial velocity of the probe 
+   ### Experiments output
    To watch experiments with solvers, run this command on the terminal inside the main directory (*You need to see "src" folder*): <br />
    ***gradle runExperiments*** <br />
    **![Example](https://github.com/GasparKuper/Project2_Group2/tree/main/readmeImages/runExperiments.png)**
