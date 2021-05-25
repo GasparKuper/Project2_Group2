@@ -24,6 +24,16 @@ public class RunSolver {
                 System.out.println("Wrong solver, Try again!");
         }
         SOLVER = solver;
+        System.out.println("Do you want to use the thrust for the probe");
+        String thrust = "Q";
+        while (!(thrust.equals("Y") || thrust.equals("N"))) {
+            System.out.println("Y/N");
+            thrust = scan.nextLine();
+            thrust = thrust.toUpperCase();
+        }
+
+        THRUST = thrust.equals("Y");
+
         System.out.println("\nLaunch Position: x= 4301000.0, y= -4692000.0, z= -276000.0");
         System.out.println("\nWrite your initial velocity: ");
         System.out.println("For example:");
