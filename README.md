@@ -29,6 +29,9 @@
    ### 5. JUnit testing
    We can test our program on the correctness. We implemented cases, which test our methods and formulas that we use. 
    
+   ### 6. Experiments with solvers
+   We can run our experiments calculation, where we can see the best and the worst step-size and their relative errors.
+   
    
   # Instruction on how to use our program
   
