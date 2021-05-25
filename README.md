@@ -8,10 +8,10 @@ The capabilities of our program:
    1) You can start the GUI and run solvers with our parameters
    2) You can start the console and run the program with yours parameters
    For calculation, we can use 4 solvers: 
-   #1 Implicit Euler
-   #2 Symplectic Euler
-   #3 Velocity-Verlet (Leapfrog-Verlet implementation)
-   #4 4th order Runge-Kutta
+   1) Implicit Euler
+   2) Symplectic Euler
+   3) Velocity-Verlet (Leapfrog-Verlet implementation)
+   4) 4th order Runge-Kutta
    
 4) Calculate the initial velocity fo the probe
    Program calculates the initial velocity in which probe reaches the Titan
