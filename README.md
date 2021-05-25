@@ -26,6 +26,12 @@
    ### 4. Compare coordinates with NASA coordinates
    We can compare the coordinates of the probe and planets calculated by our program with the ones from NASA horizons. Then, the program can represent this comparison using  line charts.
    
+   ### 5. JUnit testing
+   We can test our program on the correctness. We implemented cases, which test our methods and formulas that we use. 
+   
+   ### 6. Experiments with solvers
+   We can run our experiments calculation, where we can see the best and the worst step-size and their relative errors.
+   
    
   # Instruction on how to use our program
   
