@@ -30,7 +30,7 @@ public class Constant {
     public static double[] FINALTIME = {1.9628455E7,1.9640623E7,1.9630238E7,31556952};
 
     /**
-     * thrust condition
+     * Thrust condition
      */
     public static boolean THRUST = false;
 

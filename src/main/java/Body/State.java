@@ -64,7 +64,7 @@ public class State implements StateInterface {
 	 * @param velocity Initial velocity of the probe
 	 * @param celestialBody Data of the planets in the solar system
 	 * @param flag for cloning the object
-	 * @param fuel
+	 * @param fuel fuel of the probe
 	 */
 	public State(double mass, Vector3dInterface position, Vector3dInterface velocity, LinkedList<PlanetBody> celestialBody, boolean flag, double fuel) {
 		if(celestialBody == null)
@@ -82,7 +82,7 @@ public class State implements StateInterface {
 	 *  @param mass Initial Mass of the probe
 	 * 	@param position Initial position of the probe
 	 *  @param velocity Initial velocity of the probe
-	 * @param fuel
+	 * @param fuel fuel of the probe
 	 */
 	public State(double mass, Vector3dInterface position, Vector3dInterface velocity, double fuel) {
 		this.celestialBody = new LinkedList<>();
@@ -243,19 +243,18 @@ public class State implements StateInterface {
 		return new State(mass, position, velocity, cloneplanets, false);
 	}
 
-	private static double exhaustSpeed = 1.0;
-
 	public void activateThruster(double consume, Vector3d direction){
 		//v= v+(vex)ln(m0/m)
+		double exhaustSpeed = 1.0;
+
 		if(this.fuel >= consume){
-			this.velocity= this.velocity.add(direction.mul(exhaustSpeed*Math.log(this.mass+(this.fuel-consume)/(this.mass+this.fuel))));
+			this.velocity = this.velocity.add(direction.mul(exhaustSpeed *Math.log((this.mass+(this.fuel-consume))/(this.mass+this.fuel))));
 			this.celestialBody.get(11).setVelocity((Vector3d) this.velocity);
 			this.fuel = this.fuel-consume;
 		}else if(this.fuel > 0){
-			consume=this.fuel;
-			this.velocity= this.velocity.add(direction.mul(exhaustSpeed*Math.log(this.mass+(this.fuel-consume)/(this.mass+this.fuel))));
+			this.fuel = 0;
+			this.velocity = this.velocity.add(direction.mul(exhaustSpeed *Math.log((this.mass+(0))/(this.mass))));
 			this.celestialBody.get(11).setVelocity((Vector3d) this.velocity);
-			this.fuel = this.fuel-consume;
 		}
 	}
 }
