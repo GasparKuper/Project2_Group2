@@ -23,32 +23,33 @@
   # Instruction on how to use our program
   
   ### JUnit testing
-   To test our program, run this command on the terminal inside the main directory (*You need to see "src" folder*): <br />
-   ***gradle test*** <br />
-   **![Example](https://github.com/GasparKuper/Project2_Group2/tree/main/readmeImages/gradleTest.png)** <br /> <br />
-   If first command does not give the output, try this: <br />
-   ***gradle test --rerun-tasks*** <br />
-   **![Example](https://github.com/GasparKuper/Project2_Group2/tree/main/readmeImages/gradleTestSec.png)**
+   To test our program, run this command on the terminal inside the main directory (*You need to see "src" folder*): <br /><br />
+   ***gradle test*** <br /><br />
+   ![](readmeImages/gradleTest.png) <br /> <br />
+   If first command does not give the output, try this: <br /><br />
+   ***gradle test --rerun-tasks*** <br /><br />
+   ![](readmeImages/gradleTestSec.png) <br /> <br />
    
   ### Graphic User Interface
-   To run our GUI, run this command on the terminal inside the main directory (*You need to see "src" folder*): <br />
-   ***gradle run*** <br />
-   **![Example](https://github.com/GasparKuper/Project2_Group2/tree/main/readmeImages/gradleRun.png)**
+   To run our GUI, run this command on the terminal inside the main directory (*You need to see "src" folder*): <br /><br />
+   ***gradle run*** <br /><br />
+   ![](readmeImages/gradleRun.png) <br /> <br />
   
   ### Calculate the trajectory of the probe with your parameters 
-   To Calculate the trajectory of the probe with your parameters, run this command on the terminal inside the main directory (*You need to see "src" folder*): <br />
-   ***gradle runSolver*** <br />
-   **![Example](https://github.com/GasparKuper/Project2_Group2/tree/main/readmeImages/runSolver.png)**
+   To Calculate the trajectory of the probe with your parameters, run this command on the terminal inside the main directory (*You need to see "src" folder*): <br /><br />
+   ***gradle runSolver*** <br /><br />
+   ![](readmeImages/runSolver.png) <br /> <br />
   
   ### Calculate the initial velocity of the probe 
-   To Calculate the initial velocity of the probe, run this command on the terminal inside the main directory (*You need to see "src" folder*): <br />
-   ***gradle runVelocity*** <br />
-   **![Example](https://github.com/GasparKuper/Project2_Group2/tree/main/readmeImages/runVelocity.png)**
+   To Calculate the initial velocity of the probe, run this command on the terminal inside the main directory (*You need to see "src" folder*): <br /><br />
+   ***gradle runVelocity*** <br /><br />
+   ![](readmeImages/runVelocity.png) <br /> <br />
    
    ### Experiments output
-   To watch experiments with solvers, run this command on the terminal inside the main directory (*You need to see "src" folder*): <br />
-   ***gradle runExperiments*** <br />
-   **![Example](https://github.com/GasparKuper/Project2_Group2/tree/main/readmeImages/runExperiments.png)**
+   To watch experiments with solvers, run this command on the terminal inside the main directory (*You need to see "src" folder*): <br /><br />
+   ***gradle runExperiments*** <br /><br />
+   ![](readmeImages/runExperiments.png) <br /> <br />
+   
    
 
   
