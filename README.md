@@ -1,9 +1,16 @@
 *#Project2_Group10*
    # The capabilities of our program
-   ### 1.Representation of the solar system (GUI)  
-   To represent the solar system, we use coordinates that we get using solvers and then scale them to allow a better visualization on the screen.
+   ### 1. Representation of the solar system (GUI)  
+   To represent the solar system, we use coordinates that we get using solvers and then scale them to allow a better visualization on the screen.<br />
+         <br>**HOT-KEYS** for the solar system representation: <br /> 
+   - W - Zoom in <br />
+   - S - Zoom out <br />
+   - D - Camera to the right <br />
+   - A - Camera to the left <br />
+   - R - Camera to the top <br />
+   - F - Camera to the bottom <br />
    
-   ### 2.Calculate the trajectory of the probe and planets
+   ### 2. Calculate the trajectory of the probe and planets
    We have two options:<br />
       <br>1) You can start the GUI and run solvers with our parameters. <br />
       2) You can start the console and run the program with your parameters <br />
@@ -13,10 +20,10 @@
    - Velocity-Verlet (Leapfrog-Verlet implementation) <br />
    - 4th order Runge-Kutta <br />
    
-   ### 3.Calculate the initial velocity of the probe 
+   ### 3. Calculate the initial velocity of the probe 
    Our program calculates the optimal initial velocity to reach Titan.
    
-   ### 4.Compare coordinates with NASA coordinates
+   ### 4. Compare coordinates with NASA coordinates
    We can compare the coordinates of the probe and planets calculated by our program with the ones from NASA horizons. Then, the program can represent this comparison using  line charts.
    
    
@@ -53,4 +60,4 @@
    
 
   
-  ## Experiments with solvers and brute force
+  # Experiments with solvers and brute force
