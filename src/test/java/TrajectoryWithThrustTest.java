@@ -1,3 +1,4 @@
+import static Constant.Constant.THRUST;
 import static org.junit.jupiter.api.Assertions.*;
 
 import Body.Vector3d;
@@ -119,22 +120,15 @@ class TrajectoryWithThrustTest {
         return trajectory;
     }
 
-    @Test
-    @DisplayName("Trajectory length Test")
-    void testTrajectoryLength() {
-        Vector3dInterface[] trajectory = simulateOneYear();
-        System.out.println("Trajectory length: " + trajectory.length);
-        assertEquals(367, trajectory.length);
-    }
-
-
     private static Vector3dInterface[] simulateOneYear() {
+        THRUST = true;
         Vector3dInterface probe_relative_position = new Vector3d(4301000.0,-4692000.0,-276000.0);
         Vector3dInterface probe_relative_velocity = new Vector3d(0, 0, 0); // 12.0 months
         double day = 24*60*60;
         double year = 365.25*day;
+        double five_minutes = 60 * 5;
         ProbeSimulatorInterface simulator = new ProbeSimulator();
-        Vector3dInterface[] trajectory = simulator.trajectory(probe_relative_position, probe_relative_velocity, year, day);
+        Vector3dInterface[] trajectory = simulator.trajectory(probe_relative_position, probe_relative_velocity, year, five_minutes);
 
         return trajectory;
     }

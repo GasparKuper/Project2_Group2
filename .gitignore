@@ -10,5 +10,9 @@ trajectoryIMPLICIT_EULER.csv
 trajectory4th_RUNGE_KUTTA.csv
 trajectorySYMPLECTIC_EULER.csv
 trajectoryVELOCITY_VERLET.csv
+trajectoryIMPLICIT_EULER_THRUST.csv
+trajectory4th_RUNGE_KUTTA_THRUST.csv
+trajectorySYMPLECTIC_EULER_THRUST.csv
+trajectoryVELOCITY_VERLET_THRUST.csv
 gradlew
 gradlew.bat
