@@ -5,9 +5,9 @@ The capabilities of our program:
    
 3) Calculate the trajectory of the probe and planets
    We have two options:
-   1) You can start the GUI and run solvers with our parameters
-   2) You can start the console and run the program with yours parameters
-   For calculation, we can use 4 solvers: 
+   1) You can start the GUI and run solvers with our parameters.
+   2) You can start the console and run the program with yours parameters.
+For calculation, we can use 4 solvers: 
    1) Implicit Euler
    2) Symplectic Euler
    3) Velocity-Verlet (Leapfrog-Verlet implementation)
