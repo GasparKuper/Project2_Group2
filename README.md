@@ -19,7 +19,7 @@
    Program calculates the initial velocity in which probe reaches the Titan
    
 5) Compare coordinates with NASA coordinates
-   We can compare coordinates of the probe and planets, which program calculates, then program can represent the comparison our coordinates and NASA coordinates on line charts
+   We can compare coordinates of the probe and planets, which program calculates, then the program can represent the comparison of our coordinates and NASA coordinates on line charts
    
    
-  ## Instruction how to use our program
+  ## Instruction on how to use our program
