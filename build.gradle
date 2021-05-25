@@ -1,7 +1,6 @@
 plugins {
     id 'java'
     id 'application'
-    id 'jacoco'
     id 'org.openjfx.javafxplugin' version '0.0.9'
 }
 
@@ -13,8 +12,29 @@ javafx {
 group 'org.example'
 version '1.0-SNAPSHOT'
 
+
 repositories {
     mavenCentral()
+}
+
+apply plugin: 'java'
+
+task runSolver(type: JavaExec) {
+    standardInput = System.in
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'Run.RunSolver'
+}
+
+task runVelocity(type: JavaExec) {
+    standardInput = System.in
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'Run.InitialValuesCalculation'
+}
+
+task runExperiments(type: JavaExec) {
+    standardInput = System.in
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'Run.Experiments'
 }
 
 dependencies {
