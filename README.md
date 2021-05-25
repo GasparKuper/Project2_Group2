@@ -15,11 +15,11 @@
    3) Velocity-Verlet (Leapfrog-Verlet implementation) <br />
    4) 4th order Runge-Kutta <br />
    
-4) Calculate the initial velocity fo the probe
-   Program calculates the initial velocity in which probe reaches the Titan
+4) Calculate the initial velocity fo the probe. <br />
+   Program calculates the initial velocity in which probe reaches the Titan.
    
-5) Compare coordinates with NASA coordinates
-   We can compare coordinates of the probe and planets, which program calculates, then the program can represent the comparison of our coordinates and NASA coordinates on line charts
+5) Compare coordinates with NASA coordinates. <br />
+   We can compare coordinates of the probe and planets, which program calculates, then the program can represent the comparison of our coordinates and NASA coordinates on line charts.
    
    
   ## Instruction on how to use our program
