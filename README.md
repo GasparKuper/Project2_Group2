@@ -23,3 +23,5 @@
    
    
   ## Instruction on how to use our program
+  
+  ### Experiments with solvers and brute force
