@@ -1,6 +1,6 @@
 # Project2_Group10
 # The capabilities of our program
-1) Representation of the solar system (GUI) 
+1) Representation of the solar system (GUI)  <br />
    For representation, we use solver and then scale these coordinates for the visualization on the screen)
    
 3) Calculate the trajectory of the probe and planets<br />
