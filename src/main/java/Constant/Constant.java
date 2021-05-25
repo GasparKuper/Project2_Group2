@@ -35,6 +35,11 @@ public class Constant {
     public static double[] FINALTIME = {1.9628455E7,1.9640623E7,1.9630238E7,31556952};
 
     /**
+     * thrust condition
+     */
+    public static boolean THRUST = false;
+
+    /**
      * Array VELOCITIES contains the initial velocity of the probe computed by the brute force for each solver
      * The values inside the array are used to start the trajectory of the probe
      */

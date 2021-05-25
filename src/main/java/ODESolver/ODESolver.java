@@ -2,6 +2,7 @@ package ODESolver;
 
 import Body.PlanetBody;
 import Body.State;
+import Body.Vector3d;
 import Interfaces.ODEFunctionInterface;
 import Interfaces.ODESolverInterface;
 import Interfaces.RateInterface;
@@ -10,6 +11,7 @@ import Interfaces.StateInterface;
 import java.util.LinkedList;
 
 import static Constant.Constant.SOLVER;
+import static Constant.Constant.THRUST;
 
 /**
  * A class for solving a general differential equation dy/dt = f(t,y)
@@ -35,6 +37,7 @@ public class ODESolver implements ODESolverInterface {
 
         StateInterface[] result = new State[ts.length+1];
 
+        Thrust thrust = new Thrust();
         //Launching position
         result[0] = y0;
 
@@ -44,9 +47,20 @@ public class ODESolver implements ODESolverInterface {
 
 
             if (i == ts.length - 1 && i != 0) {
-                result[i + 1] = step(f, ts[i], result[i], ts[i] - ts[i-1]);
+                if(THRUST){
+                    thrust.findDirection();
+                    result[i + 1] = step(f, ts[i], result[i], ts[i] - ts[i-1], thrust.getDirection(), thrust.getConsume());
+                }else{
+                    result[i + 1] = step(f, ts[i], result[i], ts[i] - ts[i-1]);
+                }
             } else {
-                result[i + 1] = step(f, ts[i], result[i], ts[0]);
+                if(THRUST){
+                    thrust.findDirection();
+                    result[i + 1] = step(f, ts[i], result[i], ts[0], thrust.getDirection(), thrust.getConsume());
+                }else {
+                    result[i + 1] = step(f, ts[i], result[i], ts[0]);
+                }
+
             }
         }
 
@@ -113,6 +127,50 @@ public class ODESolver implements ODESolverInterface {
             clone = (State) solver.step(f, t, y, h);
         }
 
+        //Return a new state with a new position and velocity
+        return clone;
+    }
+
+    /**
+     * Update rule for one step.
+     *
+     * @param   f   the function defining the differential equation dy/dt=f(t,y)
+     * @param   t   the time
+     * @param   y   the state
+     * @param   h   the step size
+     * @return  the new state after taking one step
+     */
+    public StateInterface step(ODEFunctionInterface f, double t, StateInterface y, double h, Vector3d direction, double consume) {
+
+        RateInterface velocity_acceleration = f.call(h, y);
+
+        State x = (State) y;
+
+        //Create a clone of the State object
+        State clone = x.clone();
+
+        if(x == clone)
+            throw new RuntimeException("State Clone wasn't created");
+
+        if(SOLVER == 1) {
+            clone.activateThruster(consume, direction);
+            //Symplectic Euler Method
+            clone = (State) clone.addMul(h, velocity_acceleration);
+        } else if(SOLVER == 2){
+            clone.activateThruster(consume, direction);
+            //Implicit Euler Solver
+            clone = (State) clone.addMulImplicit(h, velocity_acceleration);
+        } else if(SOLVER == 3) {
+            clone.activateThruster(consume, direction);
+            //Velocity-Verlet Solver
+            clone = (State) clone.addMulVerletVelocity(h, velocity_acceleration, f);
+        }
+        else if(SOLVER == 4) {
+            clone.activateThruster(consume, direction);
+            // Runge-Kutta Solver
+            RungeKuttaSolver solver = new RungeKuttaSolver();
+            clone = (State) solver.step(f, t, y, h);
+        }
 
         //Return a new state with a new position and velocity
         return clone;
