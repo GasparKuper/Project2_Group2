@@ -26,13 +26,11 @@ task runSolver(type: JavaExec) {
 }
 
 task runVelocity(type: JavaExec) {
-    standardInput = System.in
     classpath = sourceSets.main.runtimeClasspath
     main = 'Run.InitialValuesCalculation'
 }
 
 task runExperiments(type: JavaExec) {
-    standardInput = System.in
     classpath = sourceSets.main.runtimeClasspath
     main = 'Run.Experiments'
 }
