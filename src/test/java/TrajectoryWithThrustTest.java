@@ -14,7 +14,7 @@ import java.lang.System;
 
 import static Constant.Constant.SOLVER;
 
-class TrajectoryTest {
+class TrajectoryWithThrustTest {
 
     @Test
     @DisplayName("Test trajectory of Symplectic Euler")
@@ -22,8 +22,8 @@ class TrajectoryTest {
         SOLVER = 1;
         Vector3dInterface[] trajectory = testSolverOutput();
         Assertions.assertAll(() -> assertTrue(testOnNan(trajectory)),
-                                () -> assertTrue(testOnPositiveInfinity(trajectory)),
-                                () -> assertTrue(testOnNagativeInfinity(trajectory)));
+                () -> assertTrue(testOnPositiveInfinity(trajectory)),
+                () -> assertTrue(testOnNagativeInfinity(trajectory)));
     }
 
     @Test
@@ -60,7 +60,7 @@ class TrajectoryTest {
         for (int i = 0; i < trajectory.length; i++) {
             if(Double.isNaN(trajectory[i].getX()) ||
                     Double.isNaN(trajectory[i].getY()) ||
-                        Double.isNaN(trajectory[i].getZ())){
+                    Double.isNaN(trajectory[i].getZ())){
                 return false;
             }
         }
@@ -71,7 +71,7 @@ class TrajectoryTest {
         for (int i = 0; i < trajectory.length; i++) {
             if(trajectory[i].getX() == Double.POSITIVE_INFINITY ||
                     trajectory[i].getY() == Double.POSITIVE_INFINITY ||
-                        trajectory[i].getZ() == Double.POSITIVE_INFINITY){
+                    trajectory[i].getZ() == Double.POSITIVE_INFINITY){
                 return false;
             }
         }
@@ -82,7 +82,7 @@ class TrajectoryTest {
         for (int i = 0; i < trajectory.length; i++) {
             if(trajectory[i].getX() == Double.NEGATIVE_INFINITY ||
                     trajectory[i].getY() == Double.NEGATIVE_INFINITY ||
-                        trajectory[i].getZ() == Double.NEGATIVE_INFINITY){
+                    trajectory[i].getZ() == Double.NEGATIVE_INFINITY){
                 return false;
             }
         }
@@ -101,23 +101,23 @@ class TrajectoryTest {
             else if(SOLVER == 3)
                 solverStr = "VELOCITY_VERLET";
             else if(SOLVER == 4)
-                    solverStr = "4th_RUNGE_KUTTA";
+                solverStr = "4th_RUNGE_KUTTA";
 
-            FileWriter writer = new FileWriter("trajectory" + solverStr +  ".csv");
+            FileWriter writer = new FileWriter("trajectory" + solverStr +  "_THRUST.csv");
             String header = "day,x,y,z";
             writer.write(header + "\n");
             for (int i = 0; i < trajectory.length; i++) {
                 String row = i + "," + trajectory[i].getX() + "," + trajectory[i].getY() + "," + trajectory[i].getZ();
                 writer.write(row + "\n");
             }
-                writer.close();
-            } catch (IOException e) {
-                System.out.println("An error occurred.");
-                e.printStackTrace();
-            }
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
 
         return trajectory;
-        }
+    }
 
     @Test
     @DisplayName("Trajectory length Test")
@@ -130,7 +130,7 @@ class TrajectoryTest {
 
     private static Vector3dInterface[] simulateOneYear() {
         Vector3dInterface probe_relative_position = new Vector3d(4301000.0,-4692000.0,-276000.0);
-        Vector3dInterface probe_relative_velocity = new Vector3d(35760.650634765625,-48159.48486328125,-604.095458984375); // 12.0 months
+        Vector3dInterface probe_relative_velocity = new Vector3d(0, 0, 0); // 12.0 months
         double day = 24*60*60;
         double year = 365.25*day;
         ProbeSimulatorInterface simulator = new ProbeSimulator();
@@ -140,3 +140,4 @@ class TrajectoryTest {
     }
 
 }
+
