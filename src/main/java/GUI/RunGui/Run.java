@@ -4,6 +4,7 @@ import GUI.Charts.LineChartSample;
 import GUI.SolarSystem.UI;
 import GUI.Solvers.SolversGUI;
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -33,24 +34,13 @@ public class Run extends Application {
         //Resolution
         stage.setResizable(false);
 
-
-
-        //TEXT
-        Text text = new Text("TITAN ODYSSEY");
-        text.setFont(font);
-        //Setting the color
-        text.setFill(Color.ALICEBLUE);
-
-        //Setting the Stroke
-        text.setStrokeWidth(2);
-
-        //Setting the stroke color
-        text.setStroke(Color.BLACK);
+        Pane root = new Pane();
 
         //BUTTON SOLAR SYSTEM
         Button buttonGUI = new Button("Solar System");
         buttonGUI.setFont(font);
-        buttonGUI.setTextFill(Color.GRAY);
+        buttonGUI.setTextFill(Color.BLACK);
+
         buttonGUI.setOnAction(actionEvent ->  {
             stage.close();
             UI ui = new UI();
@@ -60,46 +50,49 @@ public class Run extends Application {
                 e.printStackTrace();
             }
         });
+        buttonGUI.setLayoutX(450);
+        buttonGUI.setLayoutY(150);
+
 
         //BUTTON LINE CHART
         Button buttonChart = new Button("Line Chart");
         buttonChart.setFont(font);
-        buttonChart.setTextFill(Color.GRAY);
+        buttonChart.setTextFill(Color.BLACK);
         buttonChart.setOnAction(actionEvent ->  {
             stage.close();
             LineChartSample lineChartSample = new LineChartSample();
             lineChartSample.start(stage);
         });
+        buttonChart.setLayoutX(450);
+        buttonChart.setLayoutY(250);
+
 
         //BUTTON SOLVERS
         Button buttonSolver = new Button("Solvers");
         buttonSolver.setFont(font);
-        buttonSolver.setTextFill(Color.GRAY);
+        buttonSolver.setTextFill(Color.BLACK);
         buttonSolver.setOnAction(actionEvent ->  {
             stage.close();
             SolversGUI SolversGUI = new SolversGUI();
             SolversGUI.start(stage);
         });
+        buttonSolver.setLayoutX(450);
+        buttonSolver.setLayoutY(350);
 
-        VBox buttons = new VBox(buttonGUI, buttonChart, buttonSolver);
-        buttons.setSpacing(30);
-
-
-        VBox vbox = new VBox(text, buttons);
-        vbox.setSpacing(90);
+        // Adding the buttons to the root node
+        root.getChildren().add(buttonSolver);
+        root.getChildren().add(buttonChart);
+        root.getChildren().add(buttonGUI);
 
         //Background
-        BackgroundImage backgroundImage = new BackgroundImage(new Image("/Image/Background.jpg", 800, 400, false, true),
+        BackgroundImage backgroundImage = new BackgroundImage(new Image("/Image/BG_StartPage.png", 800, 500, false, true),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
         Background background = new Background(backgroundImage);
 
-        vbox.setBackground(background);
+        root.setBackground(background);
 
-        //Settings
-        vbox.getAlignment();
-
-        Scene scene = new Scene(vbox, 800, 400);
+        Scene scene = new Scene(root, 800, 500);
 
         stage.setScene(scene);
 
