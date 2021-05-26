@@ -233,16 +233,18 @@ public class State implements StateInterface {
 		return new State(mass, position, velocity, cloneplanets, false, fuel);
 	}
 
-
-	public void activateThruster(double consume, Vector3d direction){
+	//M(vr-vo)/(change in time)=ve(change in fuel)
+	public void activateThruster(double consume, Vector3d direction, double stepSize){
 		//v= v+(vex)ln(m0/m)
 		int l = celestialBody.size() - 1;
 		if(this.fuel >= consume){
-			this.velocity = this.velocity.add(direction.mul(EXHAUSTSPEED *Math.log(((this.mass+this.fuel))/(this.mass+(this.fuel-consume)))));
+			this.velocity = this.velocity.mul(-1);
+			this.velocity = this.velocity.add(direction.mul(EXHAUSTSPEED *((this.mass+this.fuel)-(this.mass+this.fuel-consume))).mul(1/(this.mass+this.fuel-consume)).mul(stepSize));
 			this.celestialBody.get(l).setVelocity((Vector3d) this.velocity);
 			this.fuel = this.fuel-consume;
 		}else if(this.fuel > 0){
-			this.velocity = this.velocity.add(direction.mul(EXHAUSTSPEED *Math.log((this.mass+this.fuel)/(this.mass))));
+			this.velocity = this.velocity.mul(-1);
+			this.velocity = this.velocity.add(direction.mul(EXHAUSTSPEED *((this.mass+this.fuel)-(this.mass+this.fuel-consume))).mul(1/(this.mass+this.fuel-consume)).mul(stepSize));
 			this.celestialBody.get(l).setVelocity((Vector3d) this.velocity);
 			this.fuel = 0;
 		}
