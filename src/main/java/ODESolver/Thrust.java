@@ -49,21 +49,21 @@ public class Thrust {
         THRUST = true;
     }
 
-    public double findGas(Vector3d direction, Vector3d currentVelocity, double velocity, double fuel){
-        double temp = direction.mul(velocity).sub(currentVelocity).mul(1/EXHAUSTSPEED).norm();
-        System.out.println("Gas need:" + (fuel+15000)/Math.exp(temp));
-        return (fuel+15000)/Math.exp(temp);
+    public double findGas(Vector3d Goal, double stepSize, State probe){
+        double temp = Goal.sub(probe.velocity).mul(1/EXHAUSTSPEED).norm();
+        System.out.println("Gas need:" + ((temp/stepSize)*(probe.mass+probe.fuel-consume)/EXHAUSTSPEED);
+        return ((temp/stepSize)*(probe.mass+probe.fuel-consume)/EXHAUSTSPEED;
     }
 
 
 
-    public void findParameters(double maxtime, double currentTime, State probe){ //figure out how to get current velocity
+    public void findParameters(double maxtime, double currentTime, State probe, double stepSize, Vector3d goalVelocity){ //figure out how to get current velocity
         //first find impulse needed to get to titan
         double day = 24*60*60 ;
         double year =  365.25*day;
-            Vector3d temp = (Vector3d) titanLastPos.sub(probe.position);
-            this.direction = temp.Normalize();
-            double averageVelocity = titanLastPos.dist(probe.position)/(year-currentTime);
-            this.consume = findGas(this.direction, (Vector3d) probe.velocity, averageVelocity, probe.fuel);
+        Vector3d temp = (Vector3d) titanLastPos.sub(probe.position);
+        this.direction = temp.Normalize();
+        double averageVelocity = titanLastPos.dist(probe.position)/(year-currentTime);
+        this.consume = findGas(goalVelocity, stepSize, probe);
     }
 }
