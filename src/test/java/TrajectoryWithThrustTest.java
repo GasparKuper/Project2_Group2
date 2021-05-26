@@ -4,9 +4,7 @@ import Body.Vector3d;
 import Interfaces.ProbeSimulatorInterface;
 import Interfaces.Vector3dInterface;
 import ODESolver.ProbeSimulator;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -17,6 +15,16 @@ import static Constant.Constant.FUEL;
 import static Constant.Constant.THRUST;
 
 class TrajectoryWithThrustTest {
+
+    @BeforeAll
+    public static void ThrustOn(){
+        THRUST = true;
+    }
+
+    @AfterAll
+    public static void ThrustOff(){
+        THRUST = false;
+    }
 
     @Test
     @DisplayName("Test trajectory of Symplectic Euler")
@@ -122,10 +130,8 @@ class TrajectoryWithThrustTest {
     }
 
     private static Vector3dInterface[] simulateOneYear() {
-        THRUST = true;
         Vector3dInterface probe_relative_position = new Vector3d(4301000.0,-4692000.0,-276000.0);
         Vector3dInterface probe_relative_velocity = new Vector3d(0, 0, 0); // 12.0 months
-
         //Change parameters
         double day = 24*60*60;
         double year = 365.25*day;
