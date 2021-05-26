@@ -6,6 +6,7 @@ import Body.State;
 import Body.Vector3d;
 import Interfaces.ProbeSimulatorInterface;
 import Interfaces.Vector3dInterface;
+import static Constant.Constant.THRUST;
 
 import java.util.LinkedList;
 
@@ -35,9 +36,13 @@ public class ProbeSimulator implements ProbeSimulatorInterface {
 
         //Data of the solar system
         LinkedList<PlanetBody> solarSystem = data.getPlanets();
+        double mass = 15000;
+
+        if(THRUST)
+            mass = 78000;
 
         //Initial parameters for the probe
-        State launchPosition = new State(15000, p0.add(solarSystem.get(3).getPosition()), v0.add(solarSystem.get(3).getVelocity()), solarSystem, true);
+        State launchPosition = new State(mass, p0.add(solarSystem.get(3).getPosition()), v0.add(solarSystem.get(3).getVelocity()), solarSystem, true);
 
         //Array with positions and velocities of the probe and planets.
         trajectory = (State[]) odeSolver.solve(odeFunction, launchPosition, ts[ts.length-1], ts[0]);
