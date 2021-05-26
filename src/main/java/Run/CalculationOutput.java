@@ -37,14 +37,14 @@ public class CalculationOutput extends Thread{
         //Probe
         System.out.println("Probe = " + trajectoryOfProbe[trajectoryOfProbe.length-1].toString());
         //Titan
-        System.out.println("Titan = " + trajectoryOfAll[trajectoryOfAll.length-1].celestialBody.get(8).position);
+        System.out.println("Titan = " + trajectoryOfAll[trajectoryOfAll.length-1].celestialBody.get(8).getPosition());
         //Distance between Titan and the probe
-        System.out.println("Distance between titan and the probe = " + trajectoryOfProbe[trajectoryOfProbe.length-1].dist(trajectoryOfAll[trajectoryOfAll.length-1].celestialBody.get(8).position));
+        System.out.println("Distance between titan and the probe = " + trajectoryOfProbe[trajectoryOfProbe.length-1].dist(trajectoryOfAll[trajectoryOfAll.length-1].celestialBody.get(8).getPosition()));
     }
     public Vector3d getFinalPos(){
         return this.trajectoryOfProbe[trajectoryOfProbe.length-1];
     }
     public Vector3d getTitanLastPos(){
-        return this.trajectoryOfAll[trajectoryOfAll.length-1].celestialBody.get(8).position;
+        return this.trajectoryOfAll[trajectoryOfAll.length-1].celestialBody.get(8).getPosition();
     }
 }
