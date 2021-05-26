@@ -1,4 +1,6 @@
 package GUI.SolarSystem;
+// Scale x,y,z  - 1:1*10^(-9)
+// Scale volume - 1:1*10^(-6)
 
 import Body.Vector3d;
 import ODESolver.ProbeSimulator;
@@ -36,13 +38,18 @@ public class UI extends Application{
 
 		primaryStage.setMaximized(true);
 		primaryStage.setResizable(false);
+		primaryStage.setTitle("Solar System");
 
 		//Icon
 		primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/Image/Logo.jpg")));
 
 		Group solarSystem = new Group();
+		solarSystem.setCache(true);
+		solarSystem.setCacheHint(CacheHint.SPEED);
 
-		Scene scene = new Scene(solarSystem,0, 0, true);
+		Scene scene = new Scene(solarSystem,800,500,true);
+		scene.setFill(Color.BLACK);
+
 
 
 		Orbit sun = new Orbit((double) 69634 / 1000);
@@ -52,7 +59,6 @@ public class UI extends Application{
 		Orbit mercury = new Orbit( 24390.7 / 6000);
 		mercury.setImage("/Image/Textures/Mercury.JPG");
 		solarSystem.getChildren().add(mercury.getShape());
-
 
 		Orbit venus = new Orbit( 60510.8 / 6000);
 		venus.setImage("/Image/Textures/Venus.JPG");
@@ -94,11 +100,7 @@ public class UI extends Application{
 		probe.setImage("/Image/Textures/probe.JPG");
 		solarSystem.getChildren().add(probe.getShape());
 
-		/*ImageView background = new ImageView("/Image/Textures/Space.JPG");
-		background.setPreserveRatio(true);
-		background.setFitWidth(WIDTH*1.3);
-		background.setFitHeight(HEIGHT*1.2);
-		solarSystem.getChildren().add(background);*/
+
 		orbitArr[0] = sun;
 		orbitArr[1] = mercury;
 		orbitArr[2] = venus;
@@ -112,10 +114,7 @@ public class UI extends Application{
 		orbitArr[10] = neptune;
 		orbitArr[11] = probe;
 
-		scene.setFill(Color.BLACK);
-		
-		//PointLight lighting = new PointLight();
-		//solarSystem.getChildren().add(lighting);
+
 
 		PerspectiveCamera camera = new PerspectiveCamera(true);
 		camera.setFieldOfView(25); // setting the camera to be telephoto
@@ -154,15 +153,10 @@ public class UI extends Application{
 
 
 		primaryStage.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
-			//				case Q:
-			//					yRotate.angleProperty().set(yRotate.getAngle() + 10);
-			//					System.out.println("yRotate" + yRotate.getAngle());
-			//					break;
 			switch (event.getCode()) {
-				//Does not work properly
-//				case V -> yRotate.angleProperty().set(yRotate.getAngle() + 10);
-//				//cameraRotate.angleProperty().set(cameraRotate.getAngle() -10);
-//				case B -> yRotate.setAngle(yRotate.getAngle() - 10);
+				case V -> yRotate.angleProperty().set(yRotate.getAngle() + 10);
+
+				case B -> yRotate.setAngle(yRotate.getAngle() - 10);
 
 				case F -> {
 					camera.translateYProperty().set(camera.getTranslateY() + 500);
@@ -271,7 +265,6 @@ public class UI extends Application{
 			transition.setPath(polyline);
 			transition.setCycleCount(PathTransition.INDEFINITE);
 			ptr.getChildren().add(transition);
-
 		}
 		ptr.play();
 	}
