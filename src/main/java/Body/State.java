@@ -202,8 +202,9 @@ public class State implements StateInterface {
 	 * @return new State object
 	 */
 	public State clone(){
-		LinkedList<PlanetBody> cloneplanets = new LinkedList<>()
-				;
+		LinkedList<PlanetBody> cloneplanets = new LinkedList<>();
+		FUEL = this.fuel;
+
 		for (int i = 0; i < celestialBody.size(); i++)
 			cloneplanets.add(celestialBody.get(i).clone());
 
