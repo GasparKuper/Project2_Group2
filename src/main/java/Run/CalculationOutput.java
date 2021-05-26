@@ -26,6 +26,9 @@ public class CalculationOutput extends Thread{
 
         trajectoryOfAll = simulator.getTrajectory();
 
+        System.out.println("Thrust = " + THRUST);
+        System.out.println("Fuel = " + FUEL);
+
         if(SOLVER == 1)
             System.out.println("SYMPLECTIC EULER SOLVER");
         else if(SOLVER == 2)
