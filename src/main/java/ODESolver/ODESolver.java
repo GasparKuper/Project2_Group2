@@ -39,7 +39,7 @@ public class ODESolver implements ODESolverInterface {
 
         Thrust thrust = new Thrust();
         if(THRUST)
-            thrust.calculateTitanPos(ts[0], ts[ts.length-1]);
+            thrust.calculateTitanPos(ts[0], ts[ts.length-1], 8);
 
         //Launching position
         result[0] = y0;
@@ -51,22 +51,20 @@ public class ODESolver implements ODESolverInterface {
 
             if (i == ts.length - 1 && i != 0) {
                 if(THRUST){
-                    thrust.findDirection();
+                    thrust.findParameters(ts[ts.length-1], ts[i]-ts[0], (State) result[i]);
                     result[i + 1] = step(f, ts[i], result[i], ts[i] - ts[i-1], thrust.getDirection(), thrust.getConsume());
                 }else{
                     result[i + 1] = step(f, ts[i], result[i], ts[i] - ts[i-1]);
                 }
             } else {
                 if(THRUST){
-                    thrust.findDirection();
+                     thrust.findParameters(ts[ts.length-1], ts[i]-ts[0], (State) result[i]);
                     result[i + 1] = step(f, ts[i], result[i], ts[0], thrust.getDirection(), thrust.getConsume());
                 }else {
                     result[i + 1] = step(f, ts[i], result[i], ts[0]);
                 }
-
             }
         }
-
         return result;
     }
 
@@ -133,7 +131,7 @@ public class ODESolver implements ODESolverInterface {
      * @param   t   the time
      * @param   y   the state
      * @param   h   the step size
-     * @param   direction in which direction goes the probe
+     * @param   direction in which the probe wants to go
      * @param   consume how many fuel it will burn
      * @return  the new state after taking one step
      */
@@ -150,7 +148,9 @@ public class ODESolver implements ODESolverInterface {
             throw new RuntimeException("State Clone wasn't created");
 
         //Thrust
+        System.out.println("Fuel left pre: "+ clone.fuel);
         clone.activateThruster(consume, direction);
+        System.out.println("Fuel left post: "+ clone.fuel);
 
         //Step
         clone = solverStep(h, velocity_acceleration, clone, f, t, y);

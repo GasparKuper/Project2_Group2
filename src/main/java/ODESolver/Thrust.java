@@ -18,15 +18,16 @@ public class Thrust {
         return direction;
     }
 
-    private Vector3d titanLastPos;
+    private Vector3d [] trajectoryOfProbe;
 
-    public void calculateTitanPos(double stepSize, double finalTime){
+    private Vector3d titanLastPos, EarthLastPos;
+
+    public void calculateTitanPos(double stepSize, double finalTime , int planet){
         ProbeSimulator simulator = new ProbeSimulator();
 
         THRUST = false;
         //Array the trajectory of the probe
-        simulator.trajectory(STARTPOS, new Vector3d(0, 0, 0), finalTime, stepSize);
-
+        this.trajectoryOfProbe= (Vector3d[]) simulator.trajectory(STARTPOS, new Vector3d(19874.77595339754,-29886.750406091705,-941.4823395838957), finalTime, stepSize);
 
 
         State[] trajectoryOfAll = simulator.getTrajectory();
@@ -43,15 +44,26 @@ public class Thrust {
         else if(SOLVER == 4)
             System.out.println("4th-RUNGE-KUTTA SOLVER");
 
-        this.titanLastPos = trajectoryOfAll[trajectoryOfAll.length-1].celestialBody.get(8).getPosition();
-        //Titan
+        this.titanLastPos = trajectoryOfAll[trajectoryOfAll.length-1].celestialBody.get(planet).getPosition();
         System.out.println("Titan = " + titanLastPos);
-
         THRUST = true;
     }
 
-    public void findDirection(){
-        consume = 6;
-        direction = new Vector3d( 10, 10, 10);
+    public double findGas(Vector3d direction, Vector3d currentVelocity, double velocity, double fuel){
+        double temp = direction.mul(velocity).sub(currentVelocity).mul(1/EXHAUSTSPEED).norm();
+        System.out.println("Gas need:" + (fuel+15000)/Math.exp(temp));
+        return (fuel+15000)/Math.exp(temp);
+    }
+
+
+
+    public void findParameters(double maxtime, double currentTime, State probe){ //figure out how to get current velocity
+        //first find impulse needed to get to titan
+        double day = 24*60*60 ;
+        double year =  365.25*day;
+            Vector3d temp = (Vector3d) titanLastPos.sub(probe.position);
+            this.direction = temp.Normalize();
+            double averageVelocity = titanLastPos.dist(probe.position)/(year-currentTime);
+            this.consume = findGas(this.direction, (Vector3d) probe.velocity, averageVelocity, probe.fuel);
     }
 }

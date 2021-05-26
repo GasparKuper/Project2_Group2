@@ -57,4 +57,6 @@ public class Constant {
      * Start position of the probe
      */
     public static final Vector3d STARTPOS = new Vector3d(4301000.0,-4692000.0,-276000.0);
+
+    public static final double EXHAUSTSPEED = 20000.0;
 }
