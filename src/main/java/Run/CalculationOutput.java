@@ -36,7 +36,7 @@ public class CalculationOutput extends Thread{
         else if(SOLVER == 3)
             System.out.println("VELOCITY-VERLET SOLVER");
         else if(SOLVER == 4)
-            System.out.println("STORMER-VERLET SOLVER");
+            System.out.println("4th-RUNGE-KUTTA SOLVER");
         //Probe
         System.out.println("Probe = " + trajectoryOfProbe[trajectoryOfProbe.length-1].toString());
         //Titan
