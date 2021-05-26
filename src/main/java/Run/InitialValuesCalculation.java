@@ -1,15 +1,10 @@
 package Run;
 
-import Body.Data;
-import Body.PlanetBody;
 import Body.State;
 import Body.Vector3d;
 import Interfaces.Vector3dInterface;
-import ODESolver.ODESolver;
 import ODESolver.ProbeSimulator;
 
-import java.util.Arrays;
-import java.util.LinkedList;
 
 import static Constant.Constant.*;
 
@@ -120,7 +115,7 @@ public class InitialValuesCalculation {
         boolean end = false;
         int timeStep = 10000000;
         while(timeStep>5000){
-          //  System.out.println(timeStep);
+            //  System.out.println(timeStep);
             Vector3dInterface bruteForceResult = computeBruteforce(solver);
             if(velocity(bruteForceResult)){
                 if(timeStep/2<5000){
