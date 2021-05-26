@@ -21,10 +21,11 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import static Constant.Constant.SOLVER;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+
+import static Constant.Constant.*;
 
 
 public class LineChartSample extends Application {
@@ -115,6 +116,9 @@ public class LineChartSample extends Application {
         MenuItem exit1 = new MenuItem("EXIT");
         exit1.setOnAction(e -> {
             Run run = new Run();
+            SOLVER = 3;
+            THRUST = false;
+            FUEL = 0;
             try {
                 stage.close();
                 run.start(stage);
@@ -123,6 +127,20 @@ public class LineChartSample extends Application {
             }
         });
         exit.getItems().add(exit1);
+
+        //Thrust
+        Menu thrust = new Menu("Thrust");
+        MenuItem thrustOn = new MenuItem("On");
+        MenuItem thrustOff = new MenuItem("Off");
+
+        thrustOn.setOnAction(e -> {
+            THRUST = true;
+        });
+
+        thrustOff.setOnAction(e -> {
+            THRUST = false;
+        });
+        thrust.getItems().addAll(thrustOn, thrustOff);
 
         //LIST of the planets
         Menu sun = new Menu("Sun");
@@ -307,20 +325,8 @@ public class LineChartSample extends Application {
         probe.getItems().add(probeV);
 
         //Adds of bars into a MenuBar
-        menuBar.getMenus().add(sun);
-        menuBar.getMenus().add(mercury);
-        menuBar.getMenus().add(venus);
-        menuBar.getMenus().add(earth);
-        menuBar.getMenus().add(moon);
-        menuBar.getMenus().add(mars);
-        menuBar.getMenus().add(jupiter);
-        menuBar.getMenus().add(saturn);
-        menuBar.getMenus().add(titan);
-        menuBar.getMenus().add(uranus);
-        menuBar.getMenus().add(neptune);
-        menuBar.getMenus().add(probe);
-        menuBar.getMenus().add(exit);
-        menuBar.getMenus().add(solver);
+        menuBar.getMenus().addAll(sun, mercury, venus, earth, moon, mars,
+                jupiter, saturn, titan, uranus, neptune, probe, solver, thrust, exit);
 
         return menuBar;
     }

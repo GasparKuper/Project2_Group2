@@ -34,31 +34,42 @@ public class RunSolver {
 
         THRUST = thrust.equals("Y");
 
-        System.out.println("\nLaunch Position: x= 4301000.0, y= -4692000.0, z= -276000.0");
-        System.out.println("\nWrite your initial velocity: ");
-        System.out.println("For example:");
-        System.out.println("x= 34127.250682276586");
-        System.out.println("y= -45331.80455765947");
-        System.out.println("z= -1860.62108143532");
-        System.out.println("Or you want try 'example' velocity");
-        String flag = "Q";
-        while (!(flag.equals("Y") || flag.equals("N"))) {
-            System.out.println("Y/N");
-            flag = scan.nextLine();
-            flag = flag.toUpperCase();
-        }
-        Vector3d velocity;
-        if(flag.equals("N")) {
-            System.out.println("Initial velocity");
-            System.out.print("\nx=");
-            double x = scan.nextDouble();
-            System.out.print("\ny=");
-            double y = scan.nextDouble();
-            System.out.println("\nz=");
-            double z = scan.nextDouble();
-            velocity = new Vector3d(x, y, z);
+        Vector3d velocity = new Vector3d(0, 0, 0);
+        if(!THRUST) {
+            System.out.println("\nLaunch Position: x= 4301000.0, y= -4692000.0, z= -276000.0");
+            System.out.println("\nWrite your initial velocity: ");
+            System.out.println("For example:");
+            System.out.println("x= 34127.250682276586");
+            System.out.println("y= -45331.80455765947");
+            System.out.println("z= -1860.62108143532");
+            System.out.println("Or you want try 'example' velocity");
+            String flag = "Q";
+            while (!(flag.equals("Y") || flag.equals("N"))) {
+                System.out.println("Y/N");
+                flag = scan.nextLine();
+                flag = flag.toUpperCase();
+            }
+            if (flag.equals("N")) {
+                System.out.println("Initial velocity");
+                System.out.print("\nx=");
+                double x = scan.nextDouble();
+                System.out.print("\ny=");
+                double y = scan.nextDouble();
+                System.out.print("\nz=");
+                double z = scan.nextDouble();
+                velocity = new Vector3d(x, y, z);
+            } else {
+                velocity = new Vector3d(34127.250682276586, -45331.80455765947, -1860.62108143532);
+            }
         } else {
-            velocity = new Vector3d(34127.250682276586, -45331.80455765947, -1860.62108143532);
+            double fuel = 0;
+            while (!(fuel > 0)) {
+                System.out.println("How much fuel do you want to refuel in the rocket?");
+                fuel = scan.nextDouble();
+                if(fuel <= 0)
+                    System.out.println("Try again!");
+            }
+            FUEL = fuel;
         }
 
         System.out.println("Your initial speed is = " + velocity(velocity)/1000.0 + "km/s");
@@ -81,7 +92,9 @@ public class RunSolver {
             System.out.print("VELOCITY-VERLET SOLVER ");
         else if(SOLVER == 4)
             System.out.print("STORMER-VERLET SOLVER ");
-        System.out.println("\nPosition of the probe = (" + pos.getX() + " " + pos.getY() + " " + pos.getZ() + ")");
+        System.out.println("\nThrust = " + THRUST);
+        System.out.println("Fuel tank size = " + FUEL);
+        System.out.println("Position of the probe = (" + pos.getX() + " " + pos.getY() + " " + pos.getZ() + ")");
         System.out.println("Initial velocity of the probe = (" + velocity.getX() + " " + velocity.getY() + " " + velocity.getZ() + ")");
         System.out.println("Final time = " + finalTime);
         System.out.println("Step size = " + stepSize);

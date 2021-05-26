@@ -12,8 +12,16 @@ public class CalculationOutput extends Thread{
     public void Solver() {
         ProbeSimulator simulator = new ProbeSimulator();
 
+        double day = 24*60*60;
+        double year = 365.25*day;
+        double five_minutes = 60 * 5;
+
         //Array the trajectory of the probe
-        this.trajectoryOfProbe = (Vector3d[]) simulator.trajectory(STARTPOS,VELOCITIES[SOLVER-1], FINALTIME[SOLVER-1], STEPSIZE);
+        if(THRUST){
+            this.trajectoryOfProbe = (Vector3d[]) simulator.trajectory(STARTPOS, new Vector3d(0, 0, 0), year, five_minutes);
+        } else {
+            this.trajectoryOfProbe = (Vector3d[]) simulator.trajectory(STARTPOS, VELOCITIES[SOLVER - 1], FINALTIME[SOLVER - 1], STEPSIZE);
+        }
 
 
         trajectoryOfAll = simulator.getTrajectory();

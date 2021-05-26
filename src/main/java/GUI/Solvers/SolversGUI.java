@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import static Constant.Constant.SOLVER;
+import static Constant.Constant.THRUST;
 
 public class SolversGUI extends Application {
 
@@ -40,6 +41,20 @@ public class SolversGUI extends Application {
             }
         });
         exit.getItems().add(exit1);
+
+        //Thrust
+        Menu thrust = new Menu("Thrust");
+        MenuItem thrustOn = new MenuItem("On");
+        MenuItem thrustOff = new MenuItem("Off");
+
+        thrustOn.setOnAction(e -> {
+            THRUST = true;
+        });
+
+        thrustOff.setOnAction(e -> {
+            THRUST = false;
+        });
+        thrust.getItems().addAll(thrustOn, thrustOff);
 
         Menu solver = new Menu("Solvers");
         MenuItem eulerSymplectic_solver = new MenuItem("Symplectic Euler");
@@ -73,13 +88,10 @@ public class SolversGUI extends Application {
             start.Solver();
         });
 
-        solver.getItems().add(eulerSymplectic_solver);
-        solver.getItems().add(eulerImplicit_solver);
-        solver.getItems().add(verletVelocity_solver);
-        solver.getItems().add(runge_solver);
+        solver.getItems().addAll(eulerSymplectic_solver, eulerImplicit_solver,
+                verletVelocity_solver, runge_solver);
 
-        menuBar.getMenus().add(solver);
-        menuBar.getMenus().add(exit);
+        menuBar.getMenus().addAll(solver, exit, thrust);
 
         VBox vBox = new VBox(menuBar);
 

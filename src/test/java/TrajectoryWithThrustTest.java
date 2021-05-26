@@ -1,4 +1,3 @@
-import static Constant.Constant.THRUST;
 import static org.junit.jupiter.api.Assertions.*;
 
 import Body.Vector3d;
@@ -14,6 +13,8 @@ import java.io.IOException;
 import java.lang.System;
 
 import static Constant.Constant.SOLVER;
+import static Constant.Constant.FUEL;
+import static Constant.Constant.THRUST;
 
 class TrajectoryWithThrustTest {
 
@@ -124,9 +125,13 @@ class TrajectoryWithThrustTest {
         THRUST = true;
         Vector3dInterface probe_relative_position = new Vector3d(4301000.0,-4692000.0,-276000.0);
         Vector3dInterface probe_relative_velocity = new Vector3d(0, 0, 0); // 12.0 months
+
+        //Change parameters
         double day = 24*60*60;
         double year = 365.25*day;
         double five_minutes = 60 * 5;
+        //Change the fuel
+        FUEL = 100;
         ProbeSimulatorInterface simulator = new ProbeSimulator();
         Vector3dInterface[] trajectory = simulator.trajectory(probe_relative_position, probe_relative_velocity, year, five_minutes);
 
