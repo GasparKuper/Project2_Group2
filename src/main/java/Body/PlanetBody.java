@@ -8,10 +8,10 @@ public class PlanetBody {
     private double m;
 
     //Position
-    public Vector3d position;
+    private Vector3d position;
 
     //Velocity
-    public Vector3d velocity;
+    private Vector3d velocity;
 
     /**
      * Constructor of the planet body

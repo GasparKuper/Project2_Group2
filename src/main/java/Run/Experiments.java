@@ -54,13 +54,13 @@ public class Experiments extends Thread{
                 //CHANGE ARRAY *CA, it depends on which time, you want check
                 //earth1year = 1 year 6 hours (NASA Coordinates)
                 //earth1day = 1 day (NASA Coordinates)
-                double tmpX = trajectoryOfAll[trajectoryOfAll.length - 1].celestialBody.get(3).position.getX() -
+                double tmpX = trajectoryOfAll[trajectoryOfAll.length - 1].celestialBody.get(3).getPosition().getX() -
                         earth1year[0]; //CA
 
-                double tmpY = trajectoryOfAll[trajectoryOfAll.length - 1].celestialBody.get(3).position.getY() -
+                double tmpY = trajectoryOfAll[trajectoryOfAll.length - 1].celestialBody.get(3).getPosition().getY() -
                         earth1year[1]; //CA
 
-                double tmpZ = trajectoryOfAll[trajectoryOfAll.length - 1].celestialBody.get(3).position.getZ() -
+                double tmpZ = trajectoryOfAll[trajectoryOfAll.length - 1].celestialBody.get(3).getPosition().getZ() -
                         earth1year[2]; //CA
 
 

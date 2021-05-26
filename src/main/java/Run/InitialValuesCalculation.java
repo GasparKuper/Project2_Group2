@@ -89,7 +89,7 @@ public class InitialValuesCalculation {
         //Array the trajectory of the probe
         Vector3d[] trajectoryOfProbe = (Vector3d[]) simulator.trajectory(STARTPOS, init, FINALTIME[solver-1], STEPSIZE);
         State[] trajectoryOfAll = simulator.getTrajectory();
-        lastPos = trajectoryOfAll[trajectoryOfAll.length-1].celestialBody.get(8).position;
+        lastPos = trajectoryOfAll[trajectoryOfAll.length-1].celestialBody.get(8).getPosition();
         SOLVER = solver;
         return trajectoryOfProbe[trajectoryOfProbe.length-1];
     }
