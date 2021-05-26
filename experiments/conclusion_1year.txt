@@ -1,0 +1,17 @@
+*Time may differ on different computers
+
+IMPLICIT EULER SOLVER
+The best step = 1 minutes average = 0.55544927% time = 6661.0ms
+The worst step = 1 day average = 152.91863146% time = 2.0ms
+
+SYMPLECTIC EULER SOLVER
+The best step = 1 minutes average = 0.02931843% time = 7644.0ms
+The worst step = 1 day average = 1.23843228% time = 22.0ms
+
+VELOCITY-VERLET SOLVER
+The best step = 1 minutes average = 0.02828209% time = 10218.0ms
+The worst step = 1 day average = 0.5745253% time = 11.0ms
+
+RUNGE-KUTTA SOLVER
+The best step = 1 minutes average = 0.55327744% time = 23754.0ms
+The worst step = 1 day average = 107.23832829% time = 21.0ms
