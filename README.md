@@ -68,7 +68,7 @@
   
   # Experiments with solvers and brute force
   ## Solvers
-  In our experiments, we compare our coordinates and NASA coordinates and represent comparisons using line charts. Also, we represent the trajectory of the probe, like that we can understand that solvers calculate correctly and we don't have 'anomalies' in the trajectory. Additionaly, we calculate the relative error of each solver, with different step sizes.<br /> <br />
+  In our experiments, we compare our coordinates and the coordiantes we got from NASA horizons system. We then represent this comparison using line charts. Also, we represent the trajectory of the probe, like that we can understand that solvers calculate correctly and we don't have 'anomalies' in the trajectory. Additionaly, we calculate the relative error of each solver, with different step sizes.<br /> <br />
   Parameters for calculation:<br /> <br />
   Initial position of the probe = x=4301000.0  y=-4692000.0  z=276000.0 <br /> 
   Initial velocity of the probe = x=35760.650634765625  y=-48159.48486328125  z=-604.095458984375 <br /> 
