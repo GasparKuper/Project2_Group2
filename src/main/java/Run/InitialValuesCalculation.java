@@ -1,11 +1,15 @@
 package Run;
 
+import Body.Data;
+import Body.PlanetBody;
 import Body.State;
 import Body.Vector3d;
 import Interfaces.Vector3dInterface;
+import ODESolver.ODESolver;
 import ODESolver.ProbeSimulator;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 
 import static Constant.Constant.*;
 
@@ -15,9 +19,9 @@ public class InitialValuesCalculation {
     private Vector3dInterface initialVelocity;
 
     public static void main(String[] args) {
-        STEPSIZE = 20000;
         InitialValuesCalculation init = new InitialValuesCalculation();
         boolean end = false;
+        // init.computeBruteforce(3);
         for (int i = 0; i < 3; i++) {
             System.out.println("We reach titan at " +init.timeBruteForce(i+1));
             System.out.println("With initial speed of " +VELOCITIES[i].norm());
@@ -26,7 +30,7 @@ public class InitialValuesCalculation {
     }
     public Vector3dInterface computeBruteforce(int solverNbr){
         int solver = solverNbr;
-      //  arrivalTime(solver);
+        //  arrivalTime(solver);
         int total = 0;
         float step = 10000;
         Vector3d previousOne = new Vector3d(Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE);
@@ -37,12 +41,15 @@ public class InitialValuesCalculation {
         Vector3d result = calculateTraj(initialVelocity, solver);
         Vector3d lastPosTitan = getLastPos();
         minDist = result.dist(lastPosTitan);
-        while (step > 1E-16) {
+        while (step > 1E-15) {
             //   System.out.println("Current velocity " + initialVelocity.toString() + " step " + step);
             result = calculateTraj(initialVelocity, solver);
             previousThree = previousTwo;
             previousTwo = previousOne;
             previousOne = result;
+            if (result.dist(lastPosTitan)-2573.5e3<=0){
+                break;
+            }
             if (result.getX() < lastPosTitan.getX()) {
                 initialVelocity.setX(initialVelocity.getX() + step);
             } else if (result.getX() > lastPosTitan.getX()) {
@@ -76,7 +83,7 @@ public class InitialValuesCalculation {
                 previousThree = new Vector3d(Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE);
             }
         }
-   /*     System.out.println("Increased " + total);
+     /*   System.out.println("Increased " + total);
         System.out.println("Initial velocity in km/s "+ initialVelocity.norm()/1000);
         System.out.println("Final dist is " + minDist);
         System.out.println("Initial velocity " + initialVelocity);
@@ -104,18 +111,19 @@ public class InitialValuesCalculation {
      * @param vel velocity of the probe
      * @return true, if velocity superior to 60.1km/s
      */
-    private static boolean velocity(Vector3dInterface vel){
+    public static boolean velocity(Vector3dInterface vel){
         double magnitude = vel.norm();
         return magnitude > 60000.0;
     }
     public double timeBruteForce(int solver){
-        FINALTIME[solver-1] = 31556952;
+        FINALTIME[solver-1] = 41556952;
         boolean end = false;
         int timeStep = 10000000;
-        while(timeStep>5){
+        while(timeStep>5000){
+          //  System.out.println(timeStep);
             Vector3dInterface bruteForceResult = computeBruteforce(solver);
             if(velocity(bruteForceResult)){
-                if(timeStep/2<5){
+                if(timeStep/2<5000){
                     return FINALTIME[solver-1];
                 }
                 FINALTIME[solver-1]+=timeStep;

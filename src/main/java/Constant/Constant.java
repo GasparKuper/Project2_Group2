@@ -23,7 +23,7 @@ public class Constant {
     /**
      * Step size used to calculate trajectories
      */
-    public static double STEPSIZE = 20000;
+    public static double STEPSIZE = 500;
 
     /**
      * Final time used to calculate trajectories
