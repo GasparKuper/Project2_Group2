@@ -46,6 +46,27 @@ public class State implements StateInterface {
 	}
 
 	/**
+	 * Constructor for the simulation of the solar system and the probe
+	 * @param mass Initial Mass of the probe
+	 * @param position Initial position of the probe
+	 * @param velocity Initial velocity of the probe
+	 * @param celestialBody Data of the planets in the solar system
+	 * @param flag for cloning the object
+	 * @param fuel fuel fo the probe
+	 */
+	public State(double mass, Vector3dInterface position, Vector3dInterface velocity, LinkedList<PlanetBody> celestialBody, boolean flag, double fuel) {
+		if(celestialBody == null)
+			throw new RuntimeException("Data of the solar system is empty");
+
+		this.fuel = fuel;
+		this.position = position;
+		this.velocity = velocity;
+		this.celestialBody = celestialBody;
+		this.mass = mass;
+		if(flag) celestialBody.add(new PlanetBody(mass, position, velocity));
+	}
+
+	/**
 	 * Constructor for the solver only without planets of the solar system
 	 *  @param mass Initial Mass of the probe
 	 * 	@param position Initial position of the probe
@@ -203,12 +224,11 @@ public class State implements StateInterface {
 	 */
 	public State clone(){
 		LinkedList<PlanetBody> cloneplanets = new LinkedList<>();
-		FUEL = this.fuel;
 
 		for (int i = 0; i < celestialBody.size(); i++)
 			cloneplanets.add(celestialBody.get(i).clone());
 
-		return new State(mass, position, velocity, cloneplanets, false);
+		return new State(mass, position, velocity, cloneplanets, false, fuel);
 	}
 
 	public void activateThruster(double consume, Vector3d direction){
