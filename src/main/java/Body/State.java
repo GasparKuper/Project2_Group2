@@ -235,14 +235,15 @@ public class State implements StateInterface {
 	public void activateThruster(double consume, Vector3d direction){
 		//v= v+(vex)ln(m0/m)
 		double exhaustSpeed = 1.0;
+		int l = celestialBody.size() - 1;
 
 		if(this.fuel >= consume){
 			this.velocity = this.velocity.add(direction.mul(exhaustSpeed *Math.log(((this.mass+this.fuel))/(this.mass+(this.fuel-consume)))));
-			this.celestialBody.get(11).setVelocity((Vector3d) this.velocity);
+			this.celestialBody.get(l).setVelocity((Vector3d) this.velocity);
 			this.fuel = this.fuel-consume;
 		}else if(this.fuel > 0){
 			this.velocity = this.velocity.add(direction.mul(exhaustSpeed *Math.log((this.mass+this.fuel)/(this.mass))));
-			this.celestialBody.get(11).setVelocity((Vector3d) this.velocity);
+			this.celestialBody.get(l).setVelocity((Vector3d) this.velocity);
 			this.fuel = 0;
 		}
 	}
