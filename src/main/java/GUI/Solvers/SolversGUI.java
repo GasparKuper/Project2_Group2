@@ -91,7 +91,7 @@ public class SolversGUI extends Application {
         solver.getItems().addAll(eulerSymplectic_solver, eulerImplicit_solver,
                 verletVelocity_solver, runge_solver);
 
-        menuBar.getMenus().addAll(solver, exit, thrust);
+        menuBar.getMenus().addAll(solver, thrust, exit);
 
         VBox vBox = new VBox(menuBar);
 
