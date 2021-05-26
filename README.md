@@ -75,7 +75,7 @@
   Steap size = 1 day (This is not a good step size, but like that, we can see differents between solvers) <br /> 
   Final time = 1 year 6 hours (Average = 3 year and 1 leap year) <br /> 
   ### Implicit Euler
-  **&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Earth &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Titan &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Probe <br />** 
+  **&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Earth &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Titan &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;  <br />** 
   <img src="readmeImages/ImplicitEarth.jpg" width="300" height="200"> &emsp;  <img src="readmeImages/ImplicitTitan.png" width="300" height="200"> &emsp;  <img src="readmeImages/IP.png" width="300" height="200"> <br />
 
 |   | 1 day experiments | 1 year and 6 hours experiments |
@@ -89,7 +89,7 @@
 |Run time|less than 0ms|2.0ms|
 
   ### Symplectic Euler
-  **&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Earth &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Titan &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Probe <br />** 
+  **&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Earth &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Titan &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;  <br />** 
   <img src="readmeImages/SymplEarth.png" width="300" height="200"> &emsp;  <img src="readmeImages/SymplTitan.png" width="300" height="200"> &emsp;  <img src="readmeImages/SP.png" width="300" height="200"> <br />
   
 |   | 1 day experiments | 1 year and 6 hours experiments |
@@ -103,7 +103,7 @@
 |Run time|less than 0ms|22.0ms|
 
   ### Verlet-Velocity (Leap-frog integration)
-  **&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Earth &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Titan &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Probe <br />** 
+  **&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Earth &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Titan &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;  <br />** 
   <img src="readmeImages/VerletEarth.png" width="300" height="200"> &emsp;  <img src="readmeImages/VerletTitan.png" width="300" height="200"> &emsp;  <img src="readmeImages/VP.png" width="300" height="200"> <br />
 
 |   | 1 day experiments | 1 year and 6 hours experiments |
@@ -117,7 +117,7 @@
 |Run time|less than 0ms|11.0ms|
 
   ### 4th order Runge-Kutta
-  **&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Earth &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Titan &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Probe <br />** 
+  **&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Earth &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Titan &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;  <br />** 
   <img src="readmeImages/RungaEath.png" width="300" height="200"> &emsp;  <img src="readmeImages/RungaTitan.png" width="300" height="200"> &emsp;  <img src="readmeImages/RP.png" width="300" height="200"> <br />
 
 |   | 1 day experiments | 1 year and 6 hours experiments |
