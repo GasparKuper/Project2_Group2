@@ -51,14 +51,16 @@ public class ODESolver implements ODESolverInterface {
 
             if (i == ts.length - 1 && i != 0) {
                 if(THRUST){
-                    thrust.findParameters(ts[ts.length-1], ts[i]-ts[0], (State) result[i]);
+                    thrust.findParameters(ts[ts.length-1], ts[i]-ts[0], (State) result[i], ts[i] - ts[i-1],
+                            new Vector3d(19874.778572788367,-29886.7493006965,-941.4766655371209));
                     result[i + 1] = step(f, ts[i], result[i], ts[i] - ts[i-1], thrust.getDirection(), thrust.getConsume());
                 }else{
                     result[i + 1] = step(f, ts[i], result[i], ts[i] - ts[i-1]);
                 }
             } else {
                 if(THRUST){
-                     thrust.findParameters(ts[ts.length-1], ts[i]-ts[0], (State) result[i]);
+                    thrust.findParameters(ts[ts.length-1], ts[i]-ts[0], (State) result[i], ts[0],
+                            new Vector3d(19874.778572788367,-29886.7493006965,-941.4766655371209));
                     result[i + 1] = step(f, ts[i], result[i], ts[0], thrust.getDirection(), thrust.getConsume());
                 }else {
                     result[i + 1] = step(f, ts[i], result[i], ts[0]);
@@ -148,9 +150,7 @@ public class ODESolver implements ODESolverInterface {
             throw new RuntimeException("State Clone wasn't created");
 
         //Thrust
-        System.out.println("Fuel left pre: "+ clone.fuel);
-        clone.activateThruster(consume, direction);
-        System.out.println("Fuel left post: "+ clone.fuel);
+        clone.activateThruster(consume, direction, h);
 
         //Step
         clone = solverStep(h, velocity_acceleration, clone, f, t, y);

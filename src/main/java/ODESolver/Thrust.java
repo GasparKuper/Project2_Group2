@@ -51,8 +51,8 @@ public class Thrust {
 
     public double findGas(Vector3d Goal, double stepSize, State probe){
         double temp = Goal.sub(probe.velocity).mul(1/EXHAUSTSPEED).norm();
-        System.out.println("Gas need:" + ((temp/stepSize)*(probe.mass+probe.fuel-consume)/EXHAUSTSPEED);
-        return ((temp/stepSize)*(probe.mass+probe.fuel-consume)/EXHAUSTSPEED;
+        System.out.println("Gas need:" + ((temp/stepSize)*(probe.mass+probe.fuel-consume)/EXHAUSTSPEED));
+        return ((temp/stepSize)*(probe.mass+probe.fuel-consume)/EXHAUSTSPEED);
     }
 
 
