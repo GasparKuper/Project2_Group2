@@ -38,6 +38,9 @@ public class ODESolver implements ODESolverInterface {
         StateInterface[] result = new State[ts.length+1];
 
         Thrust thrust = new Thrust();
+        if(THRUST)
+            thrust.calculateTitanPos(ts[0], ts[ts.length-1]);
+
         //Launching position
         result[0] = y0;
 
