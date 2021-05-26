@@ -4,7 +4,7 @@ import Body.PlanetBody;
 import Body.Vector3d;
 import ODESolver.ProbeSimulator;
 
-public class BruteForce {
+public class BruteForcePosition {
 
     private final int radiusEarth = 6371000;
 
@@ -99,7 +99,7 @@ public class BruteForce {
     }
 
     public static void main(String[] args) {
-        BruteForce run = new BruteForce();
+        BruteForcePosition run = new BruteForcePosition();
         run.BruteForceStart();
     }
 }

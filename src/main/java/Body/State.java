@@ -6,6 +6,7 @@ import Interfaces.StateInterface;
 import Interfaces.Vector3dInterface;
 
 import java.util.LinkedList;
+import static Constant.Constant.FUEL;
 
 public class State implements StateInterface {
 
@@ -36,6 +37,7 @@ public class State implements StateInterface {
 		if(celestialBody == null)
 			throw new RuntimeException("Data of the solar system is empty");
 
+		this.fuel = FUEL;
 		this.position = position;
 		this.velocity = velocity;
 		this.celestialBody = celestialBody;
@@ -50,43 +52,8 @@ public class State implements StateInterface {
 	 *  @param velocity Initial velocity of the probe
 	 */
 	public State(double mass, Vector3dInterface position, Vector3dInterface velocity) {
+		this.fuel = FUEL;
 		this.celestialBody = new LinkedList<>();
-		this.position = position;
-		this.velocity = velocity;
-		this.mass = mass;
-		celestialBody.add(new PlanetBody(mass, position, velocity));
-	}
-
-	/**
-	 * Constructor for the simulation of the solar system and the probe
-	 * @param mass Initial Mass of the probe
-	 * @param position Initial position of the probe
-	 * @param velocity Initial velocity of the probe
-	 * @param celestialBody Data of the planets in the solar system
-	 * @param flag for cloning the object
-	 * @param fuel fuel of the probe
-	 */
-	public State(double mass, Vector3dInterface position, Vector3dInterface velocity, LinkedList<PlanetBody> celestialBody, boolean flag, double fuel) {
-		if(celestialBody == null)
-			throw new RuntimeException("Data of the solar system is empty");
-		this.fuel=fuel;
-		this.position = position;
-		this.velocity = velocity;
-		this.celestialBody = celestialBody;
-		this.mass = mass;
-		if(flag) celestialBody.add(new PlanetBody(mass, position, velocity));
-	}
-
-	/**
-	 * Constructor for the solver only without planets of the solar system
-	 *  @param mass Initial Mass of the probe
-	 * 	@param position Initial position of the probe
-	 *  @param velocity Initial velocity of the probe
-	 * @param fuel fuel of the probe
-	 */
-	public State(double mass, Vector3dInterface position, Vector3dInterface velocity, double fuel) {
-		this.celestialBody = new LinkedList<>();
-		this.fuel=fuel;
 		this.position = position;
 		this.velocity = velocity;
 		this.mass = mass;

@@ -40,6 +40,11 @@ public class Constant {
     public static boolean THRUST = false;
 
     /**
+     * Fuel for the probe
+     */
+    public static double FUEL = 0;
+
+    /**
      * Array VELOCITIES contains the initial velocity of the probe computed by the brute force for each solver
      * The values inside the array are used to start the trajectory of the probe
      */
