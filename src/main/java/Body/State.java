@@ -6,6 +6,7 @@ import Interfaces.StateInterface;
 import Interfaces.Vector3dInterface;
 
 import java.util.LinkedList;
+import static Constant.Constant.FUEL;
 
 public class State implements StateInterface {
 
@@ -17,6 +18,9 @@ public class State implements StateInterface {
 
 	//Mass of the probe
 	public double mass;
+
+	//Fuel of the probe
+	public double fuel;
 
 	//Planets data of the solar system, also here a data of the probe index=11
 	public LinkedList<PlanetBody> celestialBody;
@@ -33,6 +37,28 @@ public class State implements StateInterface {
 		if(celestialBody == null)
 			throw new RuntimeException("Data of the solar system is empty");
 
+		this.fuel = FUEL;
+		this.position = position;
+		this.velocity = velocity;
+		this.celestialBody = celestialBody;
+		this.mass = mass;
+		if(flag) celestialBody.add(new PlanetBody(mass, position, velocity));
+	}
+
+	/**
+	 * Constructor for the simulation of the solar system and the probe
+	 * @param mass Initial Mass of the probe
+	 * @param position Initial position of the probe
+	 * @param velocity Initial velocity of the probe
+	 * @param celestialBody Data of the planets in the solar system
+	 * @param flag for cloning the object
+	 * @param fuel fuel fo the probe
+	 */
+	public State(double mass, Vector3dInterface position, Vector3dInterface velocity, LinkedList<PlanetBody> celestialBody, boolean flag, double fuel) {
+		if(celestialBody == null)
+			throw new RuntimeException("Data of the solar system is empty");
+
+		this.fuel = fuel;
 		this.position = position;
 		this.velocity = velocity;
 		this.celestialBody = celestialBody;
@@ -47,6 +73,7 @@ public class State implements StateInterface {
 	 *  @param velocity Initial velocity of the probe
 	 */
 	public State(double mass, Vector3dInterface position, Vector3dInterface velocity) {
+		this.fuel = FUEL;
 		this.celestialBody = new LinkedList<>();
 		this.position = position;
 		this.velocity = velocity;
@@ -183,76 +210,6 @@ public class State implements StateInterface {
 		return this;
 	}
 
-
-	//Flag for the first step for Stormer-Verlet
-	private static boolean stormerFlag = true;
-	//Previous data of the solar system (Step before)
-	private static LinkedList<PlanetBody> prevCelestialBody;
-
-	/**
-	 * STORMER-VERLET
-	 * Updates position and velocity of each planets
-	 * @param step   The time-step of the update
-	 * @param rate   Acceleration array.
-	 * @return The new state after the update. Required to have the same class as 'this'.
-	 */
-	//Not yet implemented, need to fix
-	public StateInterface addMulVerletStormer(double step, RateInterface rate, ODEFunctionInterface f) {
-		//if flag=true, it means that we have first step of the stormer-verlet
-		if(stormerFlag){
-			prevCelestialBody = new LinkedList<>();
-
-			for (int i = 0; i < celestialBody.size(); i++)
-				prevCelestialBody.add(celestialBody.get(i).clone());
-
-			//For the first step, we use Verlet-Velocity
-			addMulVerletVelocity(step, rate, f);
-
-			stormerFlag = false;
-		} else {
-
-			//Gets acceleration from the Rate
-			LinkedList<Vector3d> accelerationVector = ((Rate) rate).getAcceleration();
-
-			if(accelerationVector == null)
-				throw new RuntimeException("Acceleration is empty");
-
-			//Temporary previous data of the solar system
-			LinkedList<PlanetBody> tmp_prevCelestialBody = new LinkedList<>();
-
-			//Cloning
-			for (int i = 0; i < celestialBody.size(); i++)
-				tmp_prevCelestialBody.add(celestialBody.get(i).clone());
-
-			//Update position and velocity
-			for (int i = 0; i < celestialBody.size(); i++) {
-				PlanetBody planet = celestialBody.get(i);
-
-				Vector3d acceleration = accelerationVector.get(i);
-
-				//New_position = old_position*2 - previous_position + acceleration * step^2
-				Vector3d tmp_pos = (Vector3d) planet.getPosition().mul(2);
-				tmp_pos = (Vector3d) tmp_pos.sub(prevCelestialBody.get(i).getPosition());
-				Vector3d tmp_acc = (Vector3d) acceleration.mul(step*step);
-				tmp_pos = (Vector3d) tmp_pos.add(tmp_acc);
-				planet.setPosition(tmp_pos);
-
-				//New_Velocity = old_velocity + acceleration * step
-				planet.setVelocity((Vector3d) planet.getVelocity().addMul(step, acceleration));
-
-				if(i == celestialBody.size()-1){
-					this.position = planet.getPosition();
-					this.velocity = planet.getVelocity();
-				}
-			}
-
-			prevCelestialBody = tmp_prevCelestialBody;
-		}
-
-		return this;
-	}
-
-
 	/**
 	 * Outputs of the position and velocity of the probe
 	 * @return Position and Velocity of the probe
@@ -266,11 +223,27 @@ public class State implements StateInterface {
 	 * @return new State object
 	 */
 	public State clone(){
-		LinkedList<PlanetBody> cloneplanets = new LinkedList<>()
-				;
+		LinkedList<PlanetBody> cloneplanets = new LinkedList<>();
+
 		for (int i = 0; i < celestialBody.size(); i++)
 			cloneplanets.add(celestialBody.get(i).clone());
 
-		return new State(mass, position, velocity, cloneplanets, false);
+		return new State(mass, position, velocity, cloneplanets, false, fuel);
+	}
+
+
+	public void activateThruster(double consume, Vector3d direction){
+		//v= v+(vex)ln(m0/m)
+		double exhaustSpeed = 1.0;
+
+		if(this.fuel >= consume){
+			this.velocity = this.velocity.add(direction.mul(exhaustSpeed *Math.log(((this.mass+this.fuel))/(this.mass+(this.fuel-consume)))));
+			this.celestialBody.get(11).setVelocity((Vector3d) this.velocity);
+			this.fuel = this.fuel-consume;
+		}else if(this.fuel > 0){
+			this.velocity = this.velocity.add(direction.mul(exhaustSpeed *Math.log((this.mass+this.fuel)/(this.mass))));
+			this.celestialBody.get(11).setVelocity((Vector3d) this.velocity);
+			this.fuel = 0;
+		}
 	}
 }

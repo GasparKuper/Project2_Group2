@@ -130,4 +130,13 @@ public class Vector3d implements Vector3dInterface{
     public String toString() {
         return ("(" + this.x + "," + this.y + "," + this.z + ")");
     }
+
+    /**
+     *
+     * @return
+     */
+    public Vector3d Normalize(){
+        double magnitude = this.norm();
+        return new Vector3d(this.getX()/magnitude, this.getY()/magnitude,this.getZ()/magnitude);
+    }
 }

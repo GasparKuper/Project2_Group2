@@ -10,6 +10,7 @@ import Interfaces.StateInterface;
 
 import java.util.LinkedList;
 
+import static Constant.Constant.FLAG_VERLET_TEST;
 import static Constant.Constant.G;
 
 public class ODEFunction implements ODEFunctionInterface {
@@ -56,6 +57,13 @@ public class ODEFunction implements ODEFunctionInterface {
 				throw new RuntimeException("Acceleration goes in NaN");
 			}
 			accelerationBodies.add(accel);
+		}
+
+		if(FLAG_VERLET_TEST){
+			LinkedList<Vector3d> acc = new LinkedList<>();
+			Vector3d accVector = new Vector3d(5, 0, 0);
+			acc.add(accVector);
+			return new Rate(acc);
 		}
 
 		return new Rate(accelerationBodies);

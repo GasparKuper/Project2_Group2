@@ -2,7 +2,11 @@ import Body.Rate;
 import Body.State;
 import Body.Vector3d;
 import static org.junit.jupiter.api.Assertions.*;
+
+import ODESolver.ODEFunction;
+import jdk.jfr.Description;
 import org.junit.jupiter.api.*;
+import static Constant.Constant.FLAG_VERLET_TEST;
 
 import java.util.LinkedList;
 
@@ -11,13 +15,14 @@ public class SolverTest {
     private final State probe = new State(15000, new Vector3d(0, 0, 0), new Vector3d(100, 0, 0));
     private final Rate zeroRateAcceleration;
     private final Rate RateAcceleration;
+
     {
         LinkedList<Vector3d> zeroAcceleration = new LinkedList<>();
-        zeroAcceleration.add(new Vector3d(0, 0,0));
+        zeroAcceleration.add(new Vector3d(0, 0, 0));
         zeroRateAcceleration = new Rate(zeroAcceleration);
 
         LinkedList<Vector3d> Acceleration = new LinkedList<>();
-        Acceleration.add(new Vector3d(5, 0,0));
+        Acceleration.add(new Vector3d(5, 0, 0));
         RateAcceleration = new Rate(Acceleration);
     }
 
@@ -168,7 +173,6 @@ public class SolverTest {
     }
 
     @Nested
-    @Disabled("Later")
     @DisplayName("Velocity-Verlet")
     class VelocityVerlet{
 
@@ -178,6 +182,14 @@ public class SolverTest {
             //New_HALF_Velocity(i + 1/2) = old_velocity(i) + a(i) * step/2
             //New_Position(i+1) = old_position(i) + New_HALF_Velocity(i + 1/2) * step
             //New_Velocity = New_HALF_Velocity(i + 1/2) + a(i+1) * step/2
+            double old_velocity = 100;
+            double old_position = 0;
+            double new_HALF_Velocity = old_velocity + 0 * 10/2;
+            double new_Position = old_position + new_HALF_Velocity * 10;
+            double new_Velocity = new_HALF_Velocity + 0 * 10/2;
+            State firstStep = (State) probe.addMulVerletVelocity(10, zeroRateAcceleration, new ODEFunction());
+            Assertions.assertAll(() -> assertEquals(new_Position, firstStep.position.getX()),
+                    () -> assertEquals(new_Velocity, firstStep.velocity.getX()));
         }
 
         @Test
@@ -186,6 +198,23 @@ public class SolverTest {
             //New_HALF_Velocity(i + 1/2) = old_velocity(i) + a(i) * step/2
             //New_Position(i+1) = old_position(i) + New_HALF_Velocity(i + 1/2) * step
             //New_Velocity = New_HALF_Velocity(i + 1/2) + a(i+1) * step/2
+            double old_velocity = 100;
+            double old_position = 0;
+            State fiveSteps = null;
+            for (int i = 0; i < 5; i++) {
+                double new_HALF_Velocity = old_velocity + 0 * 10/2;
+                double new_Position = old_position + new_HALF_Velocity * 10;
+                double new_Velocity = new_HALF_Velocity + 0 * 10/2;
+                old_position = new_Position;
+                old_velocity = new_Velocity;
+                fiveSteps = (State) probe.addMulVerletVelocity(10, zeroRateAcceleration, new ODEFunction());
+            }
+            double fiveSteps_Pos = old_position;
+            double fiveSteps_Vel = old_velocity;
+            State fiveSteps_Solver = fiveSteps;
+
+            Assertions.assertAll(() -> assertEquals(fiveSteps_Pos, fiveSteps_Solver.position.getX()),
+                    () -> assertEquals(fiveSteps_Vel, fiveSteps_Solver.velocity.getX()));
         }
 
         @Test
@@ -194,6 +223,17 @@ public class SolverTest {
             //New_HALF_Velocity(i + 1/2) = old_velocity(i) + a(i) * step/2
             //New_Position(i+1) = old_position(i) + New_HALF_Velocity(i + 1/2) * step
             //New_Velocity = New_HALF_Velocity(i + 1/2) + a(i+1) * step/2
+            FLAG_VERLET_TEST = true;
+            double old_velocity = 100;
+            double old_position = 0;
+            double new_HALF_Velocity = old_velocity + 5.0 * 10/2;
+            double new_Position = old_position + new_HALF_Velocity * 10;
+            double new_Velocity = new_HALF_Velocity + 5.0 * 10/2;
+            State firstStep = (State) probe.addMulVerletVelocity(10, RateAcceleration, new ODEFunction());
+
+            FLAG_VERLET_TEST = false;
+            Assertions.assertAll(() -> assertEquals(new_Position, firstStep.position.getX()),
+                    () -> assertEquals(new_Velocity, firstStep.velocity.getX()));
         }
 
         @Test
@@ -202,44 +242,36 @@ public class SolverTest {
             //New_HALF_Velocity(i + 1/2) = old_velocity(i) + a(i) * step/2
             //New_Position(i+1) = old_position(i) + New_HALF_Velocity(i + 1/2) * step
             //New_Velocity = New_HALF_Velocity(i + 1/2) + a(i+1) * step/2
+            FLAG_VERLET_TEST = true;
+            double old_velocity = 100;
+            double old_position = 0;
+            State fiveSteps = null;
+            for (int i = 0; i < 5; i++) {
+                double new_HALF_Velocity = old_velocity + 5.0 * 10/2;
+                double new_Position = old_position + new_HALF_Velocity * 10;
+                double new_Velocity = new_HALF_Velocity + 5.0 * 10/2;
+                old_position = new_Position;
+                old_velocity = new_Velocity;
+                fiveSteps = (State) probe.addMulVerletVelocity(10, RateAcceleration, new ODEFunction());
+            }
+            double fiveSteps_Pos = old_position;
+            double fiveSteps_Vel = old_velocity;
+            State fiveSteps_Solver = fiveSteps;
+
+            FLAG_VERLET_TEST = false;
+            Assertions.assertAll(() -> assertEquals(fiveSteps_Pos, fiveSteps_Solver.position.getX()),
+                    () -> assertEquals(fiveSteps_Vel, fiveSteps_Solver.velocity.getX()));
         }
     }
 
     @Nested
-    @Disabled("Not implemented yet")
-    @DisplayName("Stormer-Verlet")
-    class StormerVerlet{
+    @DisplayName("4th-order-Runge-Kutta")
+    @Description("If Acceleration function,Implicit and Symplectic Euler give passed test, then 4th order Runge-Kutta works correctly")
+    public class RungeKutta{
 
         @Test
-        @DisplayName("First step without acceleration")
-        public void firstStepWithoutAcceleration(){
-            //First Step with another solver
-            //New_position = old_position*2 - previous_position + acceleration * step^2
-            //New_Velocity = old_velocity + acceleration * step
-        }
-
-        @Test
-        @DisplayName("5 steps without acceleration")
-        public void fiveStepsWithoutAcceleration(){
-            //First Step with another solver
-            //New_position = old_position*2 - previous_position + acceleration * step^2
-            //New_Velocity = old_velocity + acceleration * step
-        }
-
-        @Test
-        @DisplayName("First step with acceleration")
-        public void firstStepWithAcceleration(){
-            //First Step with another solver
-            //New_position = old_position*2 - previous_position + acceleration * step^2
-            //New_Velocity = old_velocity + acceleration * step
-        }
-
-        @Test
-        @DisplayName("5 steps with acceleration")
-        public void fiveStepsWithAcceleration() {
-                //First Step with another solver
-                //New_position = old_position*2 - previous_position + acceleration * step^2
-                //New_Velocity = old_velocity + acceleration * step
+        public void testRungeKutta(){
+            System.out.println("If Acceleration function,Implicit and Symplectic Euler give passed test, then 4th order Runge-Kutta works correctly");
         }
     }
 }

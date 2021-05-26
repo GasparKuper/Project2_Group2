@@ -1,16 +1,11 @@
 package GUI.SolarSystem;
-// Scale x,y,z  - 1:1*10^(-9)
-// Scale volume - 1:1*10^(-6)
 
 import Body.Vector3d;
 import ODESolver.ProbeSimulator;
 import javafx.animation.ParallelTransition;
 import javafx.animation.PathTransition;
 import javafx.application.Application;
-import javafx.scene.Camera;
-import javafx.scene.Group;
-import javafx.scene.PerspectiveCamera;
-import javafx.scene.Scene;
+import javafx.scene.*;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
@@ -126,7 +121,7 @@ public class UI extends Application{
 		camera.setFieldOfView(25); // setting the camera to be telephoto
 		camera.translateXProperty().set(0); // setting the camera in the solar system
 		camera.translateYProperty().set(0);  // setting the camera in the solar system
-		camera.translateZProperty().set(-7000); // moving the camera back in the scence
+		camera.translateZProperty().set(-7000); // moving the camera back in the scene
 		camera.setRotationAxis(Rotate.Y_AXIS);
 		camera.setRotate(0);
 		camera.setNearClip(1);
@@ -164,13 +159,13 @@ public class UI extends Application{
 			//					System.out.println("yRotate" + yRotate.getAngle());
 			//					break;
 			switch (event.getCode()) {
-				case V -> yRotate.angleProperty().set(yRotate.getAngle() + 10);
-				//cameraRotate.angleProperty().set(cameraRotate.getAngle() -10);
-				case B -> yRotate.setAngle(yRotate.getAngle() - 10);
+				//Does not work properly
+//				case V -> yRotate.angleProperty().set(yRotate.getAngle() + 10);
+//				//cameraRotate.angleProperty().set(cameraRotate.getAngle() -10);
+//				case B -> yRotate.setAngle(yRotate.getAngle() - 10);
 
 				case F -> {
 					camera.translateYProperty().set(camera.getTranslateY() + 500);
-					System.out.println("X Position: " + camera.getTranslateX() + "  Y Position: " + camera.getTranslateY() + "  Z Position: " + camera.getTranslateZ());
 				}
 				case R -> {
 					camera.translateYProperty().set(camera.getTranslateY() - 500);
@@ -224,11 +219,14 @@ public class UI extends Application{
 	private void path(){
 		ProbeSimulator simulator = new ProbeSimulator();
 
+		double day = 24*60*60;
+		double year = 365.25*day;
+
 		//Array the trajectory of the probe
 		simulator.trajectory(
 				new Vector3d(-5796000.0,-2645000,0),
 				new Vector3d(26060.15681226142,-17025.499984899376,-551.6491230911201),
-				31556952, 360);
+				year, day);
 
 		Body.State[] trajectoryOfAll = simulator.getTrajectory();
 
@@ -273,6 +271,7 @@ public class UI extends Application{
 			transition.setPath(polyline);
 			transition.setCycleCount(PathTransition.INDEFINITE);
 			ptr.getChildren().add(transition);
+
 		}
 		ptr.play();
 	}

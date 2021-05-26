@@ -25,6 +25,8 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import static Constant.Constant.*;
+
 
 public class LineChartSample extends Application {
 
@@ -44,12 +46,13 @@ public class LineChartSample extends Application {
         xAxis.setLabel("Days");
         lineChart = new LineChart<Number,Number>(xAxis,yAxis);
 
+        SOLVER = 3;
         lineChart.setAnimated(false);
         lineChart.setCreateSymbols(false);
 
         lineChart.setTitle("Vector 3D");
 
-        VBox vbox = new VBox(createMenuBar(trajectory(), stage), lineChart);
+        VBox vbox = new VBox(createMenuBar(stage), lineChart);
         VBox.setVgrow(lineChart, Priority.ALWAYS);
         Scene scene  = new Scene(vbox,800,600);
         stage.setScene(scene);
@@ -57,19 +60,65 @@ public class LineChartSample extends Application {
     }
 
     /**
+     *  trajectory Data of the trajectories of the all planets and the probe
+     */
+    private State[] trajectory = trajectory();
+
+    /**
      * Create MenuBar in the GUI
-     * @param trajectory Data of the trajectories of the all planets and the probe
      * @param stage GUI
      * @return MenuBars
      */
-    private MenuBar createMenuBar(State[] trajectory, Stage stage){
+    private MenuBar createMenuBar(Stage stage){
         MenuBar menuBar = new MenuBar();
+
+        Menu solver = new Menu("Solvers");
+        MenuItem eulerSymplectic_solver = new MenuItem("Symplectic Euler");
+        MenuItem eulerImplicit_solver = new MenuItem("Implicit Euler");
+        MenuItem verletVelocity_solver = new MenuItem("Velocity-Verlet");
+        MenuItem runge_solver = new MenuItem("4th-Runge-Kutta");
+
+        //Symplectic Euler
+        eulerSymplectic_solver.setOnAction(e -> {
+            lineChart.getData().clear();
+            SOLVER = 1;
+            this.trajectory = trajectory();
+        });
+
+        //Implicit Euler
+        eulerImplicit_solver.setOnAction(e -> {
+            lineChart.getData().clear();
+            SOLVER = 2;
+            this.trajectory = trajectory();
+        });
+
+        //Velocity-Verlet
+        verletVelocity_solver.setOnAction(e -> {
+            lineChart.getData().clear();
+            SOLVER = 3;
+            this.trajectory = trajectory();
+        });
+
+        //4th-Runge-Kutta
+        runge_solver.setOnAction(e -> {
+            lineChart.getData().clear();
+            SOLVER = 4;
+            this.trajectory = trajectory();
+        });
+
+        solver.getItems().add(eulerSymplectic_solver);
+        solver.getItems().add(eulerImplicit_solver);
+        solver.getItems().add(verletVelocity_solver);
+        solver.getItems().add(runge_solver);
 
         //EXIT BUTTON
         Menu exit = new Menu("EXIT");
         MenuItem exit1 = new MenuItem("EXIT");
         exit1.setOnAction(e -> {
             Run run = new Run();
+            SOLVER = 3;
+            THRUST = false;
+            FUEL = 0;
             try {
                 stage.close();
                 run.start(stage);
@@ -78,6 +127,20 @@ public class LineChartSample extends Application {
             }
         });
         exit.getItems().add(exit1);
+
+        //Thrust
+        Menu thrust = new Menu("Thrust");
+        MenuItem thrustOn = new MenuItem("On");
+        MenuItem thrustOff = new MenuItem("Off");
+
+        thrustOn.setOnAction(e -> {
+            THRUST = true;
+        });
+
+        thrustOff.setOnAction(e -> {
+            THRUST = false;
+        });
+        thrust.getItems().addAll(thrustOn, thrustOff);
 
         //LIST of the planets
         Menu sun = new Menu("Sun");
@@ -262,19 +325,8 @@ public class LineChartSample extends Application {
         probe.getItems().add(probeV);
 
         //Adds of bars into a MenuBar
-        menuBar.getMenus().add(sun);
-        menuBar.getMenus().add(mercury);
-        menuBar.getMenus().add(venus);
-        menuBar.getMenus().add(earth);
-        menuBar.getMenus().add(moon);
-        menuBar.getMenus().add(mars);
-        menuBar.getMenus().add(jupiter);
-        menuBar.getMenus().add(saturn);
-        menuBar.getMenus().add(titan);
-        menuBar.getMenus().add(uranus);
-        menuBar.getMenus().add(neptune);
-        menuBar.getMenus().add(probe);
-        menuBar.getMenus().add(exit);
+        menuBar.getMenus().addAll(sun, mercury, venus, earth, moon, mars,
+                jupiter, saturn, titan, uranus, neptune, probe, solver, thrust, exit);
 
         return menuBar;
     }
@@ -357,8 +409,8 @@ public class LineChartSample extends Application {
 
         LinkedList<PlanetBody> solarSystem = data.getPlanets();
 
-        Vector3dInterface probe_relative_position = new Vector3d(-1.4718861838613153E11, -2.8615219147677864E10 ,8174296.311571818);
-        Vector3dInterface probe_relative_velocity = new Vector3d(27978.003182957942, -62341.39349461967 ,-651.590970913659);
+        Vector3dInterface probe_relative_position = new Vector3d(35760.650634765625,-48159.48486328125,-604.095458984375);
+        Vector3dInterface probe_relative_velocity = new Vector3d(4301000.0,-4692000.0,-276000.0);
 
         State launchPosition = new State(15000, probe_relative_position, probe_relative_velocity, solarSystem, true);
         ODESolverInterface simulator = new ODESolver();
