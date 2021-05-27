@@ -44,7 +44,6 @@ public class ODESolver implements ODESolverInterface {
 
             solarSystem = ((State) y0).celestialBody;
 
-
             if (i == ts.length - 1 && i != 0) {
                 result[i + 1] = step(f, ts[i], result[i], ts[i] - ts[i-1]);
             } else {
@@ -104,56 +103,21 @@ public class ODESolver implements ODESolverInterface {
             throw new RuntimeException("State Clone wasn't created");
 
         if(THRUST)//Thrust
-            clone.activateThruster(h);
+            clone.activateThruster(h, new Vector3d(5123.76070022583,-19016.060829162598,-1210.176944732666));
 
         //Step
-        clone = solverStep(h, velocity_acceleration, clone, f, t, y);
-
-        //Return a new state with a new position and velocity
-        return clone;
-    }
-
-    /**
-     * Update rule for one step.
-     *
-     * @param   f   the function defining the differential equation dy/dt=f(t,y)
-     * @param   t   the time
-     * @param   y   the state
-     * @param   h   the step size
-     * @param   direction in which the probe wants to go
-     * @param   consume how many fuel it will burn
-     * @return  the new state after taking one step
-     */
-    public StateInterface step(ODEFunctionInterface f, double t, StateInterface y, double h, Vector3d direction, double consume) {
-
-        RateInterface velocity_acceleration = f.call(h, y);
-
-        State x = (State) y;
-
-        //Create a clone of the State object
-        State clone = x.clone();
-
-        if(x == clone)
-            throw new RuntimeException("State Clone wasn't created");
-
-        //Step
-        clone = solverStep(h, velocity_acceleration, clone, f, t, y);
-
-        //Return a new state with a new position and velocity
-        return clone;
-    }
-
-    private State solverStep(double h, RateInterface velocity_acceleration, State clone, ODEFunctionInterface f, double t, StateInterface y){
         if(SOLVER == 1) //Symplectic Euler Method
-            return  (State) clone.addMul(h, velocity_acceleration);
+            clone = (State) clone.addMul(h, velocity_acceleration);
         else if(SOLVER == 2)//Implicit Euler Solver
-            return  (State) clone.addMulImplicit(h, velocity_acceleration);
+            clone = (State) clone.addMulImplicit(h, velocity_acceleration);
         else if(SOLVER == 3) //Velocity-Verlet Solver
-            return  (State) clone.addMulVerletVelocity(h, velocity_acceleration, f);
+            clone = (State) clone.addMulVerletVelocity(h, velocity_acceleration, f);
         else if(SOLVER == 4) { // Runge-Kutta Solver
             RungeKuttaSolver solver = new RungeKuttaSolver();
-            return  (State) solver.step(f, t, y, h);
+            clone = (State) solver.step(f, t, y, h);
         }
+
+        //Return a new state with a new position and velocity
         return clone;
     }
 }

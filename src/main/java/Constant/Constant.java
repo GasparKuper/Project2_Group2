@@ -32,7 +32,7 @@ public class Constant {
     /**
      * Final time used to calculate trajectories
      */
-    public static double[] FINALTIME = {3,154e+7,3,154e+7,6.167E7,3,154e+7};
+    public static double[] FINALTIME = {3.154e+7, 3.154e+7, 6.167E7, 3.154e+7};
 
     /**
      * Thrust condition
@@ -42,7 +42,7 @@ public class Constant {
     /**
      * Fuel for the probe
      */
-    public static double FUEL = 1800;
+    public static double FUEL = 99900;
 
     /**
      * Array VELOCITIES contains the initial velocity of the probe computed by the brute force for each solver

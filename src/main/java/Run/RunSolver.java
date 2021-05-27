@@ -12,6 +12,8 @@ public class RunSolver {
 
     private void Solver(){
         Scanner scan = new Scanner(System.in);
+
+        //Chose the Solver
         System.out.println("IMPLICIT EULER = 1");
         System.out.println("SYMPLECTIC EULER = 2");
         System.out.println("VELOCITY-VERLET = 3");
@@ -24,6 +26,8 @@ public class RunSolver {
                 System.out.println("Wrong solver, Try again!");
         }
         SOLVER = solver;
+
+        //Thrust
         System.out.println("Do you want to use the thrust for the probe");
         String thrust = "Q";
         while (!(thrust.equals("Y") || thrust.equals("N"))) {
@@ -36,6 +40,7 @@ public class RunSolver {
 
         Vector3d velocity = new Vector3d(0, 0, 0);
         if(!THRUST) {
+            //Initial Velocity
             System.out.println("\nLaunch Position: x= 4301000.0, y= -4692000.0, z= -276000.0");
             System.out.println("\nWrite your initial velocity: ");
             System.out.println("For example:");
@@ -64,6 +69,7 @@ public class RunSolver {
         } else {
             double fuel = 0;
             while (!(fuel > 0)) {
+                //Fuel
                 System.out.println("How much fuel do you want to refuel in the rocket?");
                 fuel = scan.nextDouble();
                 if(fuel <= 0)
@@ -72,6 +78,7 @@ public class RunSolver {
             FUEL = fuel;
         }
 
+        //Parameters
         System.out.println("Your initial speed is = " + velocity(velocity)/1000.0 + "km/s");
 
         System.out.println("\nWrite your final time in seconds:");
@@ -102,6 +109,8 @@ public class RunSolver {
         ProbeSimulator simulator = new ProbeSimulator();
         System.out.println("\nProgram starts calculating");
         Vector3d[] trajectory = (Vector3d[])simulator.trajectory(pos, velocity, finalTime, stepSize);
+
+        //Output of the trajectory of the probe
         for (int i = 0; i < trajectory.length; i++) {
             String row = "Step = " + i + "," + trajectory[i].getX() + "," + trajectory[i].getY() + "," + trajectory[i].getZ();
             System.out.println(row);
@@ -109,6 +118,11 @@ public class RunSolver {
 
     }
 
+    /**
+     * Gets the speed of the velocity
+     * @param vel vector to check
+     * @return the speed of the vector
+     */
     private double velocity(Vector3dInterface vel){
         return vel.norm();
     }
