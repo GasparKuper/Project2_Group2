@@ -6,6 +6,9 @@ import java.text.DecimalFormat;
 
 import static Constant.Constant.*;
 
+/**
+ * Experiments with solvers
+ */
 public class Experiments extends Thread{
 
     /**

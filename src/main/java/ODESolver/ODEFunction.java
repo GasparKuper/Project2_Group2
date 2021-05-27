@@ -13,6 +13,9 @@ import java.util.LinkedList;
 import static Constant.Constant.FLAG_VERLET_TEST;
 import static Constant.Constant.G;
 
+/**
+ * Class for calculation acceleration for the object
+ */
 public class ODEFunction implements ODEFunctionInterface {
 
 	/**

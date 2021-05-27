@@ -6,6 +6,9 @@ import ODESolver.ProbeSimulator;
 
 import static Constant.Constant.*;
 
+/**
+ * Outputs the result of solvers
+ */
 public class CalculationOutput extends Thread{
     private Vector3d[] trajectoryOfProbe;
     private Body.State[] trajectoryOfAll;

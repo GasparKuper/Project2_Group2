@@ -8,6 +8,9 @@ import java.util.Scanner;
 
 import static Constant.Constant.*;
 
+/**
+ * Run the solver through terminal
+ */
 public class RunSolver {
 
     private void Solver(){
@@ -127,7 +130,10 @@ public class RunSolver {
         return vel.norm();
     }
 
-
+    /**
+     * Main method
+     * @param args args
+     */
     public static void main(String[] args) {
         RunSolver run = new RunSolver();
         run.Solver();

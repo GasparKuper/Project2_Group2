@@ -9,6 +9,9 @@ import java.util.LinkedList;
 
 import static Constant.Constant.FUEL;
 
+/**
+ * The state of the solar system
+ */
 public class State implements StateInterface {
 
 	//Position of the Probe

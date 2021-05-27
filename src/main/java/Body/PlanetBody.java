@@ -2,6 +2,9 @@ package Body;
 
 import Interfaces.Vector3dInterface;
 
+/**
+ * Body of the object
+ */
 public class PlanetBody {
 
     //Mass

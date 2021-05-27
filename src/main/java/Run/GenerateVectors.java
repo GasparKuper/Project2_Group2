@@ -2,6 +2,9 @@ package Run;
 
 import Body.Vector3d;
 
+/**
+ * Generate Vector
+ */
 public class GenerateVectors {
     public GenerateVectors(){
         //Do nothing

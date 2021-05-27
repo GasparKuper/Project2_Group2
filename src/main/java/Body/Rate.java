@@ -4,6 +4,9 @@ import Interfaces.RateInterface;
 
 import java.util.LinkedList;
 
+/**
+ * Rate class for storing acceleration
+ */
 public class Rate implements RateInterface {
 
 	private LinkedList<Vector3d> acceleration;

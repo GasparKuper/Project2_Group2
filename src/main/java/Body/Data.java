@@ -3,7 +3,12 @@ package Body;
 
 import java.util.LinkedList;
 
+/**
+ * Data of the solar system
+ */
 public class Data {
+
+    //Array of planets
     public LinkedList<PlanetBody> planets;
 
     /**

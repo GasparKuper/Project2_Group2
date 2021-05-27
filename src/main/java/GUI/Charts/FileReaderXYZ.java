@@ -3,6 +3,9 @@ package GUI.Charts;
 import java.io.*;
 import java.util.Scanner;
 
+/**
+ * File reader for NASA coordinates
+ */
 public class FileReaderXYZ {
 
     /**

@@ -9,6 +9,9 @@ import Interfaces.Vector3dInterface;
 
 import java.util.LinkedList;
 
+/**
+ * Class for calculation the trajectory of the probe
+ */
 public class ProbeSimulator implements ProbeSimulatorInterface {
 
     private State[] trajectory;

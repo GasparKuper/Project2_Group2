@@ -10,6 +10,9 @@ import Interfaces.StateInterface;
 
 import java.util.LinkedList;
 
+/**
+ * 4rd order Runge-Kutta
+ */
 public class RungeKuttaSolver {
 
     /*

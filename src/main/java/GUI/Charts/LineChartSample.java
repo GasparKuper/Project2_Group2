@@ -27,7 +27,9 @@ import java.util.LinkedList;
 
 import static Constant.Constant.*;
 
-
+/**
+ * Line chart representation of the trajectory
+ */
 public class LineChartSample extends Application {
 
     private LineChart<Number,Number> lineChart;

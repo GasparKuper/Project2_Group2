@@ -7,8 +7,11 @@
 
 package Interfaces;
 
+/**
+ * Probe Simulator
+ */
 public interface ProbeSimulatorInterface {
-    /*
+    /**
      * Simulate the solar system, including a probe fired from Earth at 00:00h on 1 April 2020.
      *
      * @param   p0      the starting position of the probe, relative to the earth's position.
@@ -19,7 +22,7 @@ public interface ProbeSimulatorInterface {
      */
     Vector3dInterface[] trajectory(Vector3dInterface p0, Vector3dInterface v0, double[] ts);
 
-    /*
+    /**
      * Simulate the solar system with steps of an equal size.
      * The final step may have a smaller size, if the step-size does not exactly divide the solution time range.
      *

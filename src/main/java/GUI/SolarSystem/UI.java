@@ -25,6 +25,10 @@ import static Constant.Constant.THRUST;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
+
+/**
+ * Representation of the solar system in the GUI
+ */
 public class UI extends Application{
 
 	//Array of sphere for the GUI
