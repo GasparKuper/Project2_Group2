@@ -18,6 +18,8 @@ import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import static Constant.Constant.SOLVER;
 import static Constant.Constant.THRUST;
 
 import java.io.FileNotFoundException;
@@ -214,7 +216,8 @@ public class UI extends Application{
 	 * Calculate a path for every planet
 	 */
 	 private void path() {
-	 THRUST =true;
+	 THRUST = true;
+	 SOLVER = 3;
 	 Vector3dInterface probe_relative_position = new Vector3d(4301000.0,-4692000.0,-276000.0);
 	 Vector3dInterface probe_relative_velocity = new Vector3d(0, 0, 0); // 12.0 months
 	 //Change parameters

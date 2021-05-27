@@ -62,30 +62,29 @@ public class SolversGUI extends Application {
         MenuItem verletVelocity_solver = new MenuItem("Velocity-Verlet");
         MenuItem runge_solver = new MenuItem("4th-Runge-Kutta");
 
-        CalculationOutput start = new CalculationOutput();
 
         //Symplectic Euler
         eulerSymplectic_solver.setOnAction(e -> {
             SOLVER = 1;
-            start.Solver();
+            new CalculationOutput().Solver();
         });
 
         //Implicit Euler
         eulerImplicit_solver.setOnAction(e -> {
             SOLVER = 2;
-            start.Solver();
+            new CalculationOutput().Solver();
         });
 
         //Velocity-Verlet
         verletVelocity_solver.setOnAction(e -> {
             SOLVER = 3;
-            start.Solver();
+            new CalculationOutput().Solver();
         });
 
         //4th-Runge-Kutta
         runge_solver.setOnAction(e -> {
             SOLVER = 4;
-            start.Solver();
+            new CalculationOutput().Solver();
         });
 
         solver.getItems().addAll(eulerSymplectic_solver, eulerImplicit_solver,
