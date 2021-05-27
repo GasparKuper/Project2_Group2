@@ -36,10 +36,8 @@ public class ProbeSimulator implements ProbeSimulatorInterface {
 
         //Data of the solar system
         LinkedList<PlanetBody> solarSystem = data.getPlanets();
-        double mass = 15000;
 
-        if(THRUST)
-            mass = 78000;
+        double mass = 78000;
 
         //Initial parameters for the probe
         State launchPosition = new State(mass, p0.add(solarSystem.get(3).getPosition()), v0.add(solarSystem.get(3).getVelocity()), solarSystem, true);
