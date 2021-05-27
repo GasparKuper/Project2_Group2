@@ -8,14 +8,14 @@
 package Interfaces;
 
 
-/*
+/**
  * A class for solving a general differential equation dy/dt = f(t,y)
  *     y(t) describes the state of the system at time t
  *     f(t,y(t)) defines the derivative of y(t) with respect to time t
  */
 public interface ODESolverInterface {
 
-    /*
+    /**
      * Solve the differential equation by taking multiple steps.
      *
      * @param   f       the function defining the differential equation dy/dt=f(t,y)
@@ -25,7 +25,7 @@ public interface ODESolverInterface {
      */
     public StateInterface[] solve(ODEFunctionInterface f, StateInterface y0, double[] ts);
 
-    /*
+    /**
      * Solve the differential equation by taking multiple steps of equal size, starting at time 0.
      * The final step may have a smaller size, if the step-size does not exactly divide the solution time range
      *
@@ -37,7 +37,7 @@ public interface ODESolverInterface {
      */
     public StateInterface[] solve(ODEFunctionInterface f, StateInterface y0, double tf, double h);
 
-    /*
+    /**
      * Update rule for one step.
      *
      * @param   f   the function defining the differential equation dy/dt=f(t,y)

@@ -137,7 +137,7 @@ public class InitialValuesCalculation {
     }
 
     /**
-     * Finds the optimal time at which we reach titan, with initial velocity < 20000 (to be able to use the thrust to reach that initial velocity)
+     * Finds the optimal time at which we reach titan, with initial velocity less than 20000 (to be able to use the thrust to reach that initial velocity)
      * @param solver solver number
      * @return the final time
      */

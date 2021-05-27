@@ -4,6 +4,9 @@ import Body.PlanetBody;
 import Body.Vector3d;
 import ODESolver.ProbeSimulator;
 
+/**
+ * Find optimal position for the probe
+ */
 public class BruteForcePosition {
 
     private final int radiusEarth = 6371000;

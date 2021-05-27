@@ -4,6 +4,9 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
 
+/**
+ * Body of the planet in the GUI
+ */
 public class Orbit {
 
 	private Sphere shape; // 3d component that models the orbit

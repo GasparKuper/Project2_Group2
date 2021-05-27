@@ -18,6 +18,9 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.FileNotFoundException;
 
+/**
+ * Main interface in the GUI
+ */
 public class Run extends Application {
 
     @Override

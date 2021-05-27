@@ -14,6 +14,10 @@ import javafx.stage.Stage;
 import static Constant.Constant.SOLVER;
 import static Constant.Constant.THRUST;
 
+
+/**
+ * Run solvers with the program parameters
+ */
 public class SolversGUI extends Application {
 
 

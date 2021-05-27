@@ -6,6 +6,9 @@ import Body.Vector3d;
 import static Constant.Constant.*;
 import static Constant.Constant.SOLVER;
 
+/**
+ * Thrust (Not implemented yet), we use the method thrust in the State class
+ */
 public class Thrust {
     private double consume;
     private Vector3d direction;

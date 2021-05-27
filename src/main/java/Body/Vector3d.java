@@ -3,6 +3,9 @@ package Body;
 import Interfaces.Vector3dInterface;
 import java.lang.Math;
 
+/**
+ * Vector math
+ */
 public class Vector3d implements Vector3dInterface{
 
     private double x;

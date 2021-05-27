@@ -3,6 +3,9 @@ package Constant;
 import Body.Vector3d;
 import Interfaces.Vector3dInterface;
 
+/**
+ * Constant for the program
+ */
 public class Constant {
 
     /**

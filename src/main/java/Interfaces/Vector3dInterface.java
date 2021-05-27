@@ -7,6 +7,9 @@
 
 package Interfaces;
 
+/**
+ * Vector Interface
+ */
 public interface Vector3dInterface {
 
     public double getX();

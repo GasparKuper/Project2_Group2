@@ -7,9 +7,12 @@
 
 package Interfaces;
 
+/**
+ * ODE Function interface
+ */
 public interface ODEFunctionInterface {
 
-    /*
+    /**
      * This is an interface for the function f that represents the
      * differential equation dy/dt = f(t,y).
      * You need to implement this function to represent to the laws of physics.
