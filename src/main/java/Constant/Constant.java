@@ -51,10 +51,10 @@ public class Constant {
      * Array VELOCITIES contains the initial velocity of the probe computed by the brute force for each solver
      * The values inside the array are used to start the trajectory of the probe
      */
-    public static Vector3dInterface[] VELOCITIES = {new Vector3d(45754.49514230483,-38810.39783267506,-527.8779302246595),
-                                           new Vector3d(45653.49832969943,-38930.537266394975,-411.5923649919469),
+    public static Vector3dInterface[] VELOCITIES = {new Vector3d(21879.822207944835,-32073.987587165077,-1064.792031059488),
+                                           new Vector3d(21744.742783895097,-31956.466390002974,-1113.868596091232),
                                            new Vector3d(5123.76070022583,-19016.060829162598,-1210.176944732666),
-                                           new Vector3d(45767.13717953718,-38795.42429374674,-532.7219902108546)};
+                                           new Vector3d(19892.578125,-29904.78515625,-935.05859375)};
 
     /**
      * Start position of the probe
