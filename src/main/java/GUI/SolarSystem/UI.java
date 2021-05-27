@@ -2,7 +2,9 @@ package GUI.SolarSystem;
 // Scale x,y,z  - 1:1*10^(-9)
 // Scale volume - 1:1*10^(-6)
 
+import Body.State;
 import Body.Vector3d;
+import Interfaces.Vector3dInterface;
 import ODESolver.ProbeSimulator;
 import javafx.animation.ParallelTransition;
 import javafx.animation.PathTransition;
@@ -16,6 +18,7 @@ import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import static Constant.Constant.THRUST;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -210,23 +213,23 @@ public class UI extends Application{
 	/**
 	 * Calculate a path for every planet
 	 */
-	private void path(){
-		ProbeSimulator simulator = new ProbeSimulator();
+	 private void path() {
+	 THRUST =true;
+	 Vector3dInterface probe_relative_position = new Vector3d(4301000.0,-4692000.0,-276000.0);
+	 Vector3dInterface probe_relative_velocity = new Vector3d(0, 0, 0); // 12.0 months
+	 //Change parameters
+	 double day = 246060;
+	 double year = 365.25*day;
+	 double ten_minutes = 60 * 10;
 
-		double day = 24*60*60;
-		double year = 365.25*day;
+	 ProbeSimulator simulator = new ProbeSimulator();
+	 simulator.trajectory(probe_relative_position, probe_relative_velocity, 6.167E7, ten_minutes);
 
-		//Array the trajectory of the probe
-		simulator.trajectory(
-				new Vector3d(-5796000.0,-2645000,0),
-				new Vector3d(26060.15681226142,-17025.499984899376,-551.6491230911201),
-				year, day);
+	 State[] trajectoryOfAll = simulator.getTrajectory();
 
-		Body.State[] trajectoryOfAll = simulator.getTrajectory();
-
-		//start animation
-		this.smoothUpdate(trajectoryOfAll);
-	}
+	 //start animation
+	 this.smoothUpdate(trajectoryOfAll);
+	 }
 
 	/**
 	 * Create a path for the planet, also scale coordinates
