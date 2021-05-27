@@ -12,7 +12,7 @@ public class GenerateVectors {
      */
     public static void main(String[] args) {
         GenerateVectors generateVectors = new GenerateVectors();
-        generateVectors.generate(new Vector3d(1.0805958821390627E12,-1.0131426222635747E12,-2.5264354228682713E10),150000);
+        System.out.println(generateVectors.generate(new Vector3d(1.0805958821390627E12,-1.0131426222635747E12,-2.5264354228682713E10),150000));
     }
 
     /**
