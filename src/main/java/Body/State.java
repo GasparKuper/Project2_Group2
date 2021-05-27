@@ -234,20 +234,21 @@ public class State implements StateInterface {
 
 	public void activateThruster(double step){
 
-		Vector3d exhaustVector = new Vector3d(-2127.3399756677745,-21377.45720015392,-1573.2108835915021);
-		Vector3d eathVel = new Vector3d(5427.1933760188148881, -29310.566234715199244, 0.65751148935788705785);
+		Vector3d exhaustVector = new Vector3d(5123.76070022583,-19016.060829162598,-1210.176944732666);
 		int l = celestialBody.size() - 1;
-		double consumeMax = -1.5;
-		while (step >= 0.0 && stopTheThrust((Vector3d) this.velocity.sub(eathVel), exhaustVector) && this.fuel > 0.0) {
-			this.velocity = this.velocity.sub((((exhaustVector.mul(consumeMax)).mul(1.0/(this.mass+this.fuel)))));
+		double consumeMax = 1.5;
+		if (consumeMax*step <= this.fuel) {
+			Vector3d acceleration = (Vector3d) exhaustVector.mul(consumeMax/ (this.mass+this.fuel));
+			acceleration = (Vector3d) acceleration.mul(step);
+			System.out.println("Velocity = " + acceleration);
+			this.velocity = this.velocity.add(acceleration);
 			this.celestialBody.get(l).setVelocity((Vector3d) this.velocity);
-			this.fuel = this.fuel - consumeMax;
-			step -= 1.0;
+			this.fuel = this.fuel - (consumeMax*step);
 		}
 
 //		System.out.println("Fuel remain = " + this.fuel);
-		Vector3d speed = (Vector3d) this.velocity;
 //		System.out.println("Speed = " + speed.norm());
+		double x = 1+1;
 	}
 
 	private boolean stopTheThrust(Vector3d probe, Vector3d exhaust){

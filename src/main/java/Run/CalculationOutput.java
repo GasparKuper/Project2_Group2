@@ -18,7 +18,7 @@ public class CalculationOutput extends Thread{
 
         //Array the trajectory of the probe
         if(THRUST){
-            this.trajectoryOfProbe = (Vector3d[]) simulator.trajectory(STARTPOS, new Vector3d(0, 0, 0), 24*60*60*488, day);
+            this.trajectoryOfProbe = (Vector3d[]) simulator.trajectory(STARTPOS, new Vector3d(0, 0, 0), 6.167E7, ten_minutes);
         } else {
             this.trajectoryOfProbe = (Vector3d[]) simulator.trajectory(STARTPOS, VELOCITIES[SOLVER-1], FINALTIME[SOLVER-1], STEPSIZE);
         }
