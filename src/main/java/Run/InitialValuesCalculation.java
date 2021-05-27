@@ -7,6 +7,10 @@ import ODESolver.ProbeSimulator;
 
 import static Constant.Constant.*;
 
+/**
+ * InitialValuesCalculation class calculates the initial velocity of the probe and the final time at which we reach titan using a bruteforce
+ *
+ */
 public class InitialValuesCalculation {
     private static double minDist = Double.MAX_VALUE;
     private static Vector3d lastPos;
@@ -15,12 +19,16 @@ public class InitialValuesCalculation {
     private static Vector3dInterface bruteForceResult;
     private static State[] trajectoryOfAll;
 
+    /**
+     * Method used to run the bruteforce and display the results for each solver
+     */
     public static void main(String[] args) {
         InitialValuesCalculation init = new InitialValuesCalculation();
         boolean end = false;
         // init.computeBruteforce(3);
-        for (int i = 0; i < 4; i++) {
+        for (int i = 3; i < 4; i++) {
         System.out.println("We reach titan at " +init.timeBruteForce(i+1));
+        init.precisionBruteforce(i+1);
         System.out.println("With initial speed of " +VELOCITIES[i].norm());
         System.out.println("And initial velocity is "+VELOCITIES[i].toString());
         System.out.println("Distance to titan is : "+calculateTraj(VELOCITIES[i],i+1).dist(lastPos));
@@ -28,6 +36,17 @@ public class InitialValuesCalculation {
         System.out.println("Last pos titan "+lastPos);
         }
     }
+
+    /**
+     * finds the initial velocity of the probe
+     * @param solverNbr integer that decides which solver we will use in our calculations
+     * 1 = Symplectic Euler
+     * 2 = Implicit Euler
+     * 3 = Velocity-Verlet
+     * 4 = 4th order Runge-Kutta
+     * @param precision is the minimal step that we use
+     * @return the initial velocity
+     */
     public Vector3dInterface computeBruteforce(int solverNbr,double precision){
         int total = 0;
         float step = 10000;
@@ -40,7 +59,6 @@ public class InitialValuesCalculation {
         Vector3d lastPosTitan = getLastPos();
         minDist = result.dist(lastPosTitan);
         while (step > precision) {
-            // System.out.println("Current velocity " + initialVelocity.toString() + " step " + step);
             result = calculateTraj(initialVelocity, solverNbr);
             previousThree = previousTwo;
             previousTwo = previousOne;
@@ -64,26 +82,13 @@ public class InitialValuesCalculation {
             if(velocity(initialVelocity)){
                 if(result.dist(lastPosTitan)<100000){
                     minDist = result.dist(testDist);
-                    //     System.out.println("END");
-                    //     System.out.println("norm is "+initialVelocity.norm());
-                    //     System.out.println("new dist is " + minDist);
-                    //    System.out.println("probe final position " + result);
-                    //  System.out.println("Best velocity " + initialVelocity.toString());
                     break;
-
                 }
             }
-            //2,675,500
-            //2,875,500
             if (result.dist(lastPosTitan) < minDist) {
                 total++;
                 testDist = new Vector3d(getLastPos().getX(),getLastPos().getZ(),getLastPos().getZ());
-                //  testDist=trajectoryOfAll[trajectoryOfAll.length-1].celestialBody.get(8).getPosition();
-                //   System.out.println("norm is "+initialVelocity.norm());
                 minDist = result.dist(testDist);
-                //     System.out.println("new dist is " + minDist);
-                //    System.out.println("probe final position " + result);
-                //   System.out.println("Best velocity " + initialVelocity.toString());
             }
             if ((result.dist(previousThree) == 0)) {
                 float l = 2;
@@ -93,14 +98,15 @@ public class InitialValuesCalculation {
                 previousThree = new Vector3d(Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE);
             }
         }
- /*       System.out.println("Initial time is " + FINALTIME[solverNbr-1]);
-        System.out.println("Initial velocity in km/s "+ initialVelocity.norm()/1000);
-        System.out.println("Final dist is " + minDist);
-        System.out.println("Initial velocity " + initialVelocity);
-        System.out.println("probe final position " + calculateTraj(initialVelocity, solverNbr));
-        System.out.println("titan final position " + lastPosTitan);*/
         return initialVelocity;
     }
+
+    /**
+     * Calculates the trajectory of the probe, used to improve the results of the bruteforce
+     * @param init initial velocity computed by the bruteforce
+     * @param solver solver number
+     * @return the last position of the probe
+     */
     public static Vector3d calculateTraj(Vector3dInterface init,int solver){
         SOLVER = solver;
         ProbeSimulator simulator = new ProbeSimulator();
@@ -111,12 +117,15 @@ public class InitialValuesCalculation {
         lastPos = generateVectors.generate(trajectoryOfAll[trajectoryOfAll.length-1].celestialBody.get(8).getPosition(),200000);
         return trajectoryOfProbe[trajectoryOfProbe.length-1];
     }
+
+    /**
+     * Get titan's last position
+     * @return titan's last position
+     */
     public Vector3d getLastPos(){
         return lastPos;
     }
-    public Vector3dInterface getInitialVelocity(){
-        return initialVelocity;
-    }
+
     /**
      * Check the speed of the probe
      * @param vel velocity of the probe
@@ -126,12 +135,14 @@ public class InitialValuesCalculation {
         double magnitude = vel.norm();
         return magnitude <19900;
     }
+
+    /**
+     * Finds the optimal time at which we reach titan, with initial velocity < 20000 (to be able to use the thrust to reach that initial velocity)
+     * @param solver solver number
+     * @return the final time
+     */
     public double timeBruteForce(int solver){
-        //     int timeStep = 500000;
-        //  VELOCITIES[solver-1] = computeBruteforce(solver,1E-15);
-        // return FINALTIME[solver-1];
-        //   int i =0;
-        int timeStep = 10000000;
+        int timeStep = 50000000;
         while(timeStep>1000){
             //  System.out.println(timeStep);
             Vector3dInterface bruteForceResult = computeBruteforce(solver,1);
@@ -144,5 +155,18 @@ public class InitialValuesCalculation {
             }
         }
         return FINALTIME[solver-1];
+    }
+
+    /**
+     * Computes the brute force with more precision, used after we get the final time to make the results more accurate
+     * @param solver solver number
+     * @return the initial velocity, with a good precision
+     */
+    public Vector3dInterface precisionBruteforce(int solver){
+        Vector3dInterface bruteForceResult = computeBruteforce(solver,1);
+        System.out.println(FINALTIME[solver-1]+ "   "+bruteForceResult.norm());
+        VELOCITIES[solver-1] = bruteForceResult;
+        return VELOCITIES[solver-1];
+
     }
 }
