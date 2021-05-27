@@ -32,7 +32,7 @@ public class Constant {
     /**
      * Final time used to calculate trajectories
      */
-    public static double[] FINALTIME = {3,154e+7,3,154e+7,6.167E7,3,154e+7};
+    public static double[] FINALTIME = {3.154e+7, 3.154e+7, 6.167E7, 3.154e+7};
 
     /**
      * Thrust condition
