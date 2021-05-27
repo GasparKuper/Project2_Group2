@@ -237,9 +237,9 @@ public class State implements StateInterface {
 		Vector3d exhaustVector = new Vector3d(-2127.3399756677745,-21377.45720015392,-1573.2108835915021);
 		Vector3d eathVel = new Vector3d(5427.1933760188148881, -29310.566234715199244, 0.65751148935788705785);
 		int l = celestialBody.size() - 1;
-		double consumeMax = 1.5;
+		double consumeMax = -1.5;
 		while (step >= 0.0 && stopTheThrust((Vector3d) this.velocity.sub(eathVel), exhaustVector) && this.fuel > 0.0) {
-			this.velocity = this.velocity.add((((exhaustVector.mul(consumeMax)).mul(1.0/(this.mass+this.fuel-consumeMax)))));
+			this.velocity = this.velocity.sub((((exhaustVector.mul(consumeMax)).mul(1.0/(this.mass+this.fuel)))));
 			this.celestialBody.get(l).setVelocity((Vector3d) this.velocity);
 			this.fuel = this.fuel - consumeMax;
 			step -= 1.0;
