@@ -10,17 +10,23 @@ public class GenerateVectors {
         //Do nothing
     }
 
+    /**
+     * runs the calculations
+     */
     public static void main(String[] args) {
         GenerateVectors generateVectors = new GenerateVectors();
-        generateVectors.generate(new Vector3d(1.0805958821390627E12,-1.0131426222635747E12,-2.5264354228682713E10),150000);
+        System.out.println(generateVectors.generate(new Vector3d(1.0805958821390627E12,-1.0131426222635747E12,-2.5264354228682713E10),150000));
     }
+
+    /**
+     * Calculate the position vector
+     * @param aim position of titan that we are aiming
+     * @param distance at which we want our vector to be from the titan's position (aim)
+     * @return computed vector at specific distance from titan
+     */
     public Vector3d generate(Vector3d aim, double distance) {
-        //2675500
-        //2875500
-        //2775500
         double radius = 2575500;
         double optimalDist = radius + distance;
-     //   System.out.println(optimalDist);
         final Vector3d posWithoutChange =new Vector3d(aim.getX(), aim.getY(), aim.getZ());
         Vector3d lastPos =new Vector3d(aim.getX(), aim.getY(), aim.getZ());
         Vector3d lastPosProbe =new Vector3d(aim.getX(), aim.getY(), aim.getZ());
