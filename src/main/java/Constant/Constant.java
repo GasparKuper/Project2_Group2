@@ -32,7 +32,7 @@ public class Constant {
     /**
      * Final time used to calculate trajectories
      */
-    public static double[] FINALTIME = {1.9628455E7,1.9640623E7,1.9630238E7,31556952};
+    public static double[] FINALTIME = {3,154e+7,3,154e+7,6.167E7,3,154e+7};
 
     /**
      * Thrust condition
@@ -50,7 +50,7 @@ public class Constant {
      */
     public static Vector3dInterface[] VELOCITIES = {new Vector3d(45754.49514230483,-38810.39783267506,-527.8779302246595),
                                            new Vector3d(45653.49832969943,-38930.537266394975,-411.5923649919469),
-                                           new Vector3d(45767.13717953718,-38795.42429374674,-532.7219902108546),
+                                           new Vector3d(5123.76070022583,-19016.060829162598,-1210.176944732666),
                                            new Vector3d(45767.13717953718,-38795.42429374674,-532.7219902108546)};
 
     /**
