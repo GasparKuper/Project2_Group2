@@ -7,7 +7,6 @@ import Interfaces.Vector3dInterface;
 
 import java.util.LinkedList;
 
-import static Constant.Constant.EXHAUSTSPEED;
 import static Constant.Constant.FUEL;
 
 public class State implements StateInterface {
@@ -233,20 +232,27 @@ public class State implements StateInterface {
 		return new State(mass, position, velocity, cloneplanets, false, fuel);
 	}
 
-	//M(vr-vo)/(change in time)=ve(change in fuel)
-	public void activateThruster(double consume, Vector3d direction, double stepSize){
-		//v= v+(vex)ln(m0/m)
+	public void activateThruster(double step){
+
+		Vector3d exhaustVector = new Vector3d(-2127.3399756677745,-21377.45720015392,-1573.2108835915021);
+		Vector3d eathVel = new Vector3d(5427.1933760188148881, -29310.566234715199244, 0.65751148935788705785);
 		int l = celestialBody.size() - 1;
-		if(this.fuel >= consume){
-			this.velocity = this.velocity.mul(-1);
-			this.velocity = this.velocity.add(direction.mul(EXHAUSTSPEED *((this.mass+this.fuel)-(this.mass+this.fuel-consume))).mul(1/(this.mass+this.fuel-consume)).mul(stepSize));
+		double consumeMax = 1.5;
+		while (step >= 0.0 && stopTheThrust((Vector3d) this.velocity.sub(eathVel), exhaustVector) && this.fuel > 0.0) {
+			Vector3d tmp = (Vector3d) exhaustVector.mul(consumeMax);
+			this.velocity = this.velocity.add(tmp);
 			this.celestialBody.get(l).setVelocity((Vector3d) this.velocity);
-			this.fuel = this.fuel-consume;
-		}else if(this.fuel > 0){
-			this.velocity = this.velocity.mul(-1);
-			this.velocity = this.velocity.add(direction.mul(EXHAUSTSPEED *((this.mass+this.fuel)-(this.mass+this.fuel-consume))).mul(1/(this.mass+this.fuel-consume)).mul(stepSize));
-			this.celestialBody.get(l).setVelocity((Vector3d) this.velocity);
-			this.fuel = 0;
+			this.fuel = this.fuel - consumeMax;
+			step -= 1.0;
 		}
+
+//		System.out.println("Fuel remain = " + this.fuel);
+		Vector3d speed = (Vector3d) this.velocity;
+//		System.out.println("Speed = " + speed.norm());
+	}
+
+	private boolean stopTheThrust(Vector3d probe, Vector3d exhaust){
+//		System.out.println(probe.norm() + "    " + exhaust.norm());
+		return probe.norm() < exhaust.norm();
 	}
 }

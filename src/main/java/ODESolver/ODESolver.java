@@ -37,10 +37,6 @@ public class ODESolver implements ODESolverInterface {
 
         StateInterface[] result = new State[ts.length+1];
 
-        Thrust thrust = new Thrust();
-        if(THRUST)
-            thrust.calculateTitanPos(ts[0], ts[ts.length-1], 8);
-
         //Launching position
         result[0] = y0;
 
@@ -50,21 +46,9 @@ public class ODESolver implements ODESolverInterface {
 
 
             if (i == ts.length - 1 && i != 0) {
-                if(THRUST){
-                    thrust.findParameters(ts[ts.length-1], ts[i]-ts[0], (State) result[i], ts[i] - ts[i-1],
-                            new Vector3d(19874.778572788367,-29886.7493006965,-941.4766655371209));
-                    result[i + 1] = step(f, ts[i], result[i], ts[i] - ts[i-1], thrust.getDirection(), thrust.getConsume());
-                }else{
-                    result[i + 1] = step(f, ts[i], result[i], ts[i] - ts[i-1]);
-                }
+                result[i + 1] = step(f, ts[i], result[i], ts[i] - ts[i-1]);
             } else {
-                if(THRUST){
-                    thrust.findParameters(ts[ts.length-1], ts[i]-ts[0], (State) result[i], ts[0],
-                            new Vector3d(19874.778572788367,-29886.7493006965,-941.4766655371209));
-                    result[i + 1] = step(f, ts[i], result[i], ts[0], thrust.getDirection(), thrust.getConsume());
-                }else {
-                    result[i + 1] = step(f, ts[i], result[i], ts[0]);
-                }
+                result[i + 1] = step(f, ts[i], result[i], ts[0]);
             }
         }
         return result;
@@ -119,6 +103,9 @@ public class ODESolver implements ODESolverInterface {
         if(x == clone)
             throw new RuntimeException("State Clone wasn't created");
 
+        if(THRUST)//Thrust
+            clone.activateThruster(h);
+
         //Step
         clone = solverStep(h, velocity_acceleration, clone, f, t, y);
 
@@ -148,9 +135,6 @@ public class ODESolver implements ODESolverInterface {
 
         if(x == clone)
             throw new RuntimeException("State Clone wasn't created");
-
-        //Thrust
-        clone.activateThruster(consume, direction, h);
 
         //Step
         clone = solverStep(h, velocity_acceleration, clone, f, t, y);
