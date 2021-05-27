@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.0.9'
+    id 'groovy'
 }
 
 javafx {
@@ -38,6 +39,12 @@ task runExperiments(type: JavaExec) {
 //Java doc
 task myJavadocs(type: Javadoc) {
     source = sourceSets.main.allJava
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'GUI.RunGui.Run'
+    }
 }
 
 dependencies {
