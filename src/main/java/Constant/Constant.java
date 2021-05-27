@@ -42,7 +42,7 @@ public class Constant {
     /**
      * Fuel for the probe
      */
-    public static double FUEL = 1800;
+    public static double FUEL = 99900;
 
     /**
      * Array VELOCITIES contains the initial velocity of the probe computed by the brute force for each solver

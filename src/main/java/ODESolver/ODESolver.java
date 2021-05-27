@@ -104,7 +104,7 @@ public class ODESolver implements ODESolverInterface {
             throw new RuntimeException("State Clone wasn't created");
 
         if(THRUST)//Thrust
-            clone.activateThruster(h);
+            clone.activateThruster(h, new Vector3d(5123.76070022583,-19016.060829162598,-1210.176944732666));
 
         //Step
         clone = solverStep(h, velocity_acceleration, clone, f, t, y);

@@ -9,6 +9,7 @@ import static Constant.Constant.*;
 public class CalculationOutput extends Thread{
     private Vector3d[] trajectoryOfProbe;
     private Body.State[] trajectoryOfAll;
+
     public void Solver() {
         ProbeSimulator simulator = new ProbeSimulator();
 
@@ -44,9 +45,19 @@ public class CalculationOutput extends Thread{
         //Distance between Titan and the probe
         System.out.println("Distance between titan and the probe = " + (trajectoryOfProbe[trajectoryOfProbe.length-1].dist(trajectoryOfAll[trajectoryOfAll.length-1].celestialBody.get(8).getPosition())-2575.5e3));
     }
+
+    /**
+     * Gets the final position of the probe
+     * @return vector with the final position of the probe
+     */
     public Vector3d getFinalPos(){
         return this.trajectoryOfProbe[trajectoryOfProbe.length-1];
     }
+
+    /**
+     * Gets the last position of the Titan
+     * @return vector with the last position of the Titan
+     */
     public Vector3d getTitanLastPos(){
         return this.trajectoryOfAll[trajectoryOfAll.length-1].celestialBody.get(8).getPosition();
     }

@@ -16,6 +16,7 @@ public class SolverTest {
     private final Rate zeroRateAcceleration;
     private final Rate RateAcceleration;
 
+    //Initialize variables
     {
         LinkedList<Vector3d> zeroAcceleration = new LinkedList<>();
         zeroAcceleration.add(new Vector3d(0, 0, 0));
