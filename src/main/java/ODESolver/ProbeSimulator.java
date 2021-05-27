@@ -6,7 +6,6 @@ import Body.State;
 import Body.Vector3d;
 import Interfaces.ProbeSimulatorInterface;
 import Interfaces.Vector3dInterface;
-import static Constant.Constant.THRUST;
 
 import java.util.LinkedList;
 

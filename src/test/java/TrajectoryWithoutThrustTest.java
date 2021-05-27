@@ -128,6 +128,10 @@ class TrajectoryWithoutThrustTest {
     }
 
 
+    /**
+     * Simulation one year of the solar system
+     * @return trajectory of the probe
+     */
     private static Vector3dInterface[] simulateOneYear() {
         Vector3dInterface probe_relative_position = new Vector3d(4301000.0,-4692000.0,-276000.0);
         Vector3dInterface probe_relative_velocity = new Vector3d(35760.650634765625,-48159.48486328125,-604.095458984375); // 12.0 months

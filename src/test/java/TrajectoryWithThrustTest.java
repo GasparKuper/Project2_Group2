@@ -100,7 +100,7 @@ class TrajectoryWithThrustTest {
     }
 
     private Vector3dInterface[] testSolverOutput() {
-        Vector3dInterface[] trajectory = simulateOneYear();
+        Vector3dInterface[] trajectory = simulate();
         try {
             String solverStr = null;
 
@@ -129,17 +129,20 @@ class TrajectoryWithThrustTest {
         return trajectory;
     }
 
-    private static Vector3dInterface[] simulateOneYear() {
+    /**
+     * Simulate the solar system and the probe has a thrust
+     * @return trajectory of the probe
+     */
+    private static Vector3dInterface[] simulate() {
         Vector3dInterface probe_relative_position = new Vector3d(4301000.0,-4692000.0,-276000.0);
         Vector3dInterface probe_relative_velocity = new Vector3d(0, 0, 0); // 12.0 months
         //Change parameters
         double day = 24*60*60;
-        double year = 365.25*day;
         double five_minutes = 60 * 5;
         //Change the fuel
-        FUEL = 100;
+        FUEL = 99000;
         ProbeSimulatorInterface simulator = new ProbeSimulator();
-        Vector3dInterface[] trajectory = simulator.trajectory(probe_relative_position, probe_relative_velocity, year, five_minutes);
+        Vector3dInterface[] trajectory = simulator.trajectory(probe_relative_position, probe_relative_velocity, 6.167E7, five_minutes);
 
         return trajectory;
     }

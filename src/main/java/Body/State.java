@@ -232,27 +232,30 @@ public class State implements StateInterface {
 		return new State(mass, position, velocity, cloneplanets, false, fuel);
 	}
 
-	public void activateThruster(double step){
+	/**
+	 * Thrust of the probe
+	 * @param step step size
+	 * @param thrusterVector the exhaust velocity vector
+	 */
+	public void activateThruster(double step, Vector3d thrusterVector){
 
-		Vector3d exhaustVector = new Vector3d(5123.76070022583,-19016.060829162598,-1210.176944732666);
 		int l = celestialBody.size() - 1;
+
+		//m(dot) Max = 30MN / 20km/s
 		double consumeMax = 1.5;
 		if (consumeMax*step <= this.fuel) {
-			Vector3d acceleration = (Vector3d) exhaustVector.mul(consumeMax/ (this.mass+this.fuel));
+
+			//Acceleration = (Vex * m(dot)) / mass of the probe
+			Vector3d acceleration = (Vector3d) thrusterVector.mul(consumeMax/ (this.mass+this.fuel));
+
+			//Acceleration = acceleration / delta T
 			acceleration = (Vector3d) acceleration.mul(step);
-			System.out.println("Velocity = " + acceleration);
+
 			this.velocity = this.velocity.add(acceleration);
 			this.celestialBody.get(l).setVelocity((Vector3d) this.velocity);
+
+			//Change the fuel
 			this.fuel = this.fuel - (consumeMax*step);
 		}
-
-//		System.out.println("Fuel remain = " + this.fuel);
-//		System.out.println("Speed = " + speed.norm());
-		double x = 1+1;
-	}
-
-	private boolean stopTheThrust(Vector3d probe, Vector3d exhaust){
-//		System.out.println(probe.norm() + "    " + exhaust.norm());
-		return probe.norm() < exhaust.norm();
 	}
 }

@@ -133,7 +133,7 @@ public class Vector3d implements Vector3dInterface{
 
     /**
      *
-     * @return
+     * @return the vector
      */
     public Vector3d Normalize(){
         double magnitude = this.norm();
