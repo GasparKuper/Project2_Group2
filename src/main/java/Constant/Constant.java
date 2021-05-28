@@ -3,9 +3,6 @@ package Constant;
 import Body.Vector3d;
 import Interfaces.Vector3dInterface;
 
-/**
- * Constant for the program
- */
 public class Constant {
 
     /**
@@ -16,6 +13,11 @@ public class Constant {
      * 4 = 4th order Runge-Kutta
      */
     public static int SOLVER = 3;
+
+    /**
+     * Flag for Verlet JUnit tests
+     */
+    public static boolean FLAG_VERLET_TEST = false;
 
     /**
      * Gravitational constant
@@ -30,7 +32,7 @@ public class Constant {
     /**
      * Final time used to calculate trajectories
      */
-    public static double[] FINALTIME = {1.9628455E7,1.9640623E7,1.9630238E7,31556952};
+    public static double[] FINALTIME = {3.154e+7, 3.154e+7, 6.167E7, 3.154e+7};
 
     /**
      * Thrust condition
@@ -46,21 +48,19 @@ public class Constant {
      * Array VELOCITIES contains the initial velocity of the probe computed by the brute force for each solver
      * The values inside the array are used to start the trajectory of the probe
      */
-    public static Vector3dInterface[] VELOCITIES = {new Vector3d(45754.49514230483,-38810.39783267506,-527.8779302246595),
-                                           new Vector3d(45653.49832969943,-38930.537266394975,-411.5923649919469),
-                                           new Vector3d(45767.13717953718,-38795.42429374674,-532.7219902108546),
-                                           new Vector3d(45767.13717953718,-38795.42429374674,-532.7219902108546)};
+    public static Vector3dInterface[] VELOCITIES = {new Vector3d(21879.822207944835,-32073.987587165077,-1064.792031059488),
+                                           new Vector3d(21744.742783895097,-31956.466390002974,-1113.868596091232),
+                                           new Vector3d(5123.76070022583,-19016.060829162598,-1210.176944732666),
+                                           new Vector3d(19892.578125,-29904.78515625,-935.05859375)};
 
-    /**
-     * Array TITANLASTPOS contains the result of the calculation of the last position of titan for each solver
-     * The values inside the array are used by the brute force
-     */
-    public static Vector3d[] TITANLASTPOS = {new Vector3d(8.792064226203754E11,-1.2040466447405679E12,-1.4284761255510523E10),
-                                             new Vector3d(8.751845348489886E11,-1.2082007407347507E12,-1.1752216332025648E10),
-                                             new Vector3d(8.792207314653517E11,-1.2042094620928135E12,-1.421029948775191E10),
-                                             new Vector3d(8.790389926264305E11,-1.2038031270354197E12,-1.4401675088069757E10)};
     /**
      * Start position of the probe
      */
-    public static final Vector3d STARTPOS = new Vector3d(-1.4718861838613153E11, -2.8615219147677864E10, 8174296.311571818);
+    public static final Vector3d STARTPOS = new Vector3d(4301000.0,-4692000.0,-276000.0);
+
+    /**
+     *
+     */
+    public static double EXHAUSTSPEED = 20000;
+
 }
