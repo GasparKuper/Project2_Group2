@@ -95,7 +95,7 @@
 |   | 1 day experiments | 1 year and 6 hours experiments |
 | ------------- | ------------- | ------------- |
 | The best step size  | 1 minutes  | 1 minutes  |
-| Average relative error  | 0.0000107%  | 0.02828209%  |
+| Average relative error  | 0.0000107%  | 0.02931843%  |
 |Run time|78.0ms|10218.0ms|
 ||
 |The worst step size|1 day|1 day|
