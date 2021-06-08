@@ -1,6 +1,6 @@
 package Constant;
 
-import Body.Vector3d;
+import Body.Vector.Vector3d;
 import Interfaces.Vector3dInterface;
 
 public class Constant {
@@ -12,7 +12,7 @@ public class Constant {
      * 3 = Velocity-Verlet
      * 4 = 4th order Runge-Kutta
      */
-    public static int SOLVER = 3;
+    public static int SOLVER = 4;
 
     /**
      * Flag for Verlet JUnit tests

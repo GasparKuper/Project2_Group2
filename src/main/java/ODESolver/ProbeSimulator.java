@@ -1,11 +1,12 @@
 package ODESolver;
 
-import Body.Data;
-import Body.PlanetBody;
-import Body.State;
-import Body.Vector3d;
+import Body.Planets.Data;
+import Body.Planets.PlanetBody;
+import Body.SpaceCrafts.State;
+import Body.Vector.Vector3d;
 import Interfaces.ProbeSimulatorInterface;
 import Interfaces.Vector3dInterface;
+import ODESolver.Function.ODEFunction;
 
 import java.util.LinkedList;
 

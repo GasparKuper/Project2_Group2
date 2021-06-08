@@ -1,7 +1,7 @@
 package Run;
 
-import Body.State;
-import Body.Vector3d;
+import Body.SpaceCrafts.State;
+import Body.Vector.Vector3d;
 import Interfaces.Vector3dInterface;
 import ODESolver.ProbeSimulator;
 

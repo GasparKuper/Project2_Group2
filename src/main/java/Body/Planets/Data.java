@@ -1,5 +1,7 @@
-package Body;
+package Body.Planets;
 
+
+import Body.Vector.Vector3d;
 
 import java.util.LinkedList;
 

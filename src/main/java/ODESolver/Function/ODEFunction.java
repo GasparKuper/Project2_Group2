@@ -1,9 +1,8 @@
-package ODESolver;
+package ODESolver.Function;
 
-import Body.PlanetBody;
-import Body.Rate;
-import Body.State;
-import Body.Vector3d;
+import Body.Planets.PlanetBody;
+import Body.SpaceCrafts.State;
+import Body.Vector.Vector3d;
 import Interfaces.ODEFunctionInterface;
 import Interfaces.RateInterface;
 import Interfaces.StateInterface;

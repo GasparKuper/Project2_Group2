@@ -1,11 +1,10 @@
-import Body.PlanetBody;
-import Body.Rate;
-import Body.State;
-import Body.Vector3d;
+import Body.Planets.PlanetBody;
+import ODESolver.Function.Rate;
+import Body.SpaceCrafts.State;
+import Body.Vector.Vector3d;
 import Interfaces.RateInterface;
 import Interfaces.Vector3dInterface;
-import ODESolver.ODEFunction;
-import org.junit.jupiter.api.Assertions;
+import ODESolver.Function.ODEFunction;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static Constant.Constant.G;
@@ -23,10 +22,10 @@ public class AccelerationFunctionTest {
         LinkedList<Vector3d> accelerationArray = acceleration.getAcceleration();
         Vector3d check = new Vector3d(0, 0, 0);
         Vector3d accelerationProbe = accelerationArray.get(0);
-        Assertions.assertAll(() -> assertEquals(accelerationArray.size(), 1),
-                () -> assertEquals(accelerationProbe.getX(), check.getX()),
-                        () -> assertEquals(accelerationProbe.getY(), check.getY()),
-                                () -> assertEquals(accelerationProbe.getZ(), check.getZ()));
+        assertEquals(accelerationArray.size(), 1);
+        assertEquals(accelerationProbe.getX(), check.getX());
+        assertEquals(accelerationProbe.getY(), check.getY());
+        assertEquals(accelerationProbe.getZ(), check.getZ());
     }
 
     private RateInterface accelerationWithoutCelestialBody(){
@@ -44,13 +43,13 @@ public class AccelerationFunctionTest {
         Vector3d earthByHand = earthByHand();
         Vector3d accelerationProbe = accelerationArray.get(1);
         Vector3d accelerationEarth = accelerationArray.get(0);
-        Assertions.assertAll(() -> assertEquals(accelerationArray.size(), 2),
-                () -> assertEquals(accelerationProbe.getX(), probeByHand.getX()),
-                () -> assertEquals(accelerationProbe.getY(), probeByHand.getY()),
-                () -> assertEquals(accelerationProbe.getZ(), probeByHand.getZ()),
-                () -> assertEquals(accelerationEarth.getX(), earthByHand.getX()),
-                () -> assertEquals(accelerationEarth.getY(), earthByHand.getY()),
-                () -> assertEquals(accelerationEarth.getZ(), earthByHand.getZ()));
+        assertEquals(accelerationArray.size(), 2);
+        assertEquals(accelerationProbe.getX(), probeByHand.getX());
+        assertEquals(accelerationProbe.getY(), probeByHand.getY());
+        assertEquals(accelerationProbe.getZ(), probeByHand.getZ());
+        assertEquals(accelerationEarth.getX(), earthByHand.getX());
+        assertEquals(accelerationEarth.getY(), earthByHand.getY());
+        assertEquals(accelerationEarth.getZ(), earthByHand.getZ());
     }
 
     private RateInterface accelerationWithCelestialBody(){

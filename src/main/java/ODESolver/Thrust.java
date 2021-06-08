@@ -1,7 +1,7 @@
 package ODESolver;
 
-import Body.State;
-import Body.Vector3d;
+import Body.SpaceCrafts.State;
+import Body.Vector.Vector3d;
 
 import static Constant.Constant.*;
 import static Constant.Constant.SOLVER;

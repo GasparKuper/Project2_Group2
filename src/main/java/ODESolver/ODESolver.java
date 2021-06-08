@@ -1,8 +1,9 @@
 package ODESolver;
 
-import Body.PlanetBody;
-import Body.State;
-import Body.Vector3d;
+import Body.Planets.PlanetBody;
+import Body.Solvers.RungeKutta;
+import Body.SpaceCrafts.State;
+import Body.Vector.Vector3d;
 import Interfaces.ODEFunctionInterface;
 import Interfaces.ODESolverInterface;
 import Interfaces.RateInterface;
@@ -106,16 +107,16 @@ public class ODESolver implements ODESolverInterface {
             clone.activateThruster(h, new Vector3d(5123.76070022583,-19016.060829162598,-1210.176944732666));
 
         //Step
-        if(SOLVER == 1) //Symplectic Euler Method
+        if(SOLVER >= 1 && SOLVER <= 3) { //Symplectic Euler, Implicit Euler, Verlet Velocity
             clone = (State) clone.addMul(h, velocity_acceleration);
-        else if(SOLVER == 2)//Implicit Euler Solver
-            clone = (State) clone.addMulImplicit(h, velocity_acceleration);
-        else if(SOLVER == 3) //Velocity-Verlet Solver
-            clone = (State) clone.addMulVerletVelocity(h, velocity_acceleration, f);
-        else if(SOLVER == 4) { // Runge-Kutta Solver
-            RungeKuttaSolver solver = new RungeKuttaSolver();
+
+        } else if(SOLVER == 4) { // Runge-Kutta Solver
+            RungeKutta solver = new RungeKutta();
             clone = (State) solver.step(f, t, y, h);
         }
+
+        if(clone == null)
+            throw new RuntimeException("State object is null");
 
         //Return a new state with a new position and velocity
         return clone;

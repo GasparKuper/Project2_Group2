@@ -1,4 +1,4 @@
-package Body;
+package Body.Vector;
 
 import Interfaces.Vector3dInterface;
 import java.lang.Math;

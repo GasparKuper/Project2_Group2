@@ -1,7 +1,6 @@
 package Run;
 
-import Body.State;
-import Body.Vector3d;
+import Body.Vector.Vector3d;
 import ODESolver.ProbeSimulator;
 
 import static Constant.Constant.*;
@@ -11,7 +10,7 @@ import static Constant.Constant.*;
  */
 public class CalculationOutput extends Thread{
     private Vector3d[] trajectoryOfProbe;
-    private Body.State[] trajectoryOfAll;
+    private Body.SpaceCrafts.State[] trajectoryOfAll;
 
     public void Solver() {
         ProbeSimulator simulator = new ProbeSimulator();

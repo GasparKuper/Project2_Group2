@@ -1,7 +1,8 @@
 package Run;
 
-import Body.PlanetBody;
-import Body.Vector3d;
+import Body.Planets.PlanetBody;
+import Body.SpaceCrafts.State;
+import Body.Vector.Vector3d;
 import ODESolver.ProbeSimulator;
 
 /**
@@ -72,7 +73,7 @@ public class BruteForcePosition {
         //Array the trajectory of the probe
         simulator.trajectory(pos, vel, day, day);
 
-        Body.State[] trajectoryOfAll = simulator.getTrajectory();
+        State[] trajectoryOfAll = simulator.getTrajectory();
 
         compare(trajectoryOfAll);
     }
@@ -81,7 +82,7 @@ public class BruteForcePosition {
      * Check distance between the probe and the Titan, and update the best shot
      * @param trajectory trajectories of each planets in the solar system
      */
-    private void compare(Body.State[] trajectory){
+    private void compare(State[] trajectory){
 
         //Check distance between the probe and the Titan
             Vector3d probe = trajectory[0].celestialBody.get(11).getPosition();

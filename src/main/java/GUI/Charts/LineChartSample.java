@@ -1,12 +1,12 @@
 package GUI.Charts;
 
-import Body.Data;
-import Body.PlanetBody;
-import Body.State;
-import Body.Vector3d;
+import Body.Planets.Data;
+import Body.Planets.PlanetBody;
+import Body.SpaceCrafts.State;
+import Body.Vector.Vector3d;
 import Interfaces.ODESolverInterface;
 import Interfaces.Vector3dInterface;
-import ODESolver.ODEFunction;
+import ODESolver.Function.ODEFunction;
 import ODESolver.ODESolver;
 import GUI.RunGui.Run;
 import javafx.application.Application;

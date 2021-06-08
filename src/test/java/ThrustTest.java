@@ -1,5 +1,5 @@
-import Body.State;
-import Body.Vector3d;
+import Body.SpaceCrafts.State;
+import Body.Vector.Vector3d;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,8 +34,8 @@ public class ThrustTest {
 
         Vector3d final_vector = v0;
 
-        Assertions.assertAll(() -> assertEquals(final_vector.getX(), probe.velocity.getX()),
-                () -> assertEquals(final_vector.getY(), probe.velocity.getY()),
-                () -> assertEquals(final_vector.getZ(), probe.velocity.getZ()));
+        assertEquals(final_vector.getX(), probe.velocity.getX());
+        assertEquals(final_vector.getY(), probe.velocity.getY());
+        assertEquals(final_vector.getZ(), probe.velocity.getZ());
     }
 }

@@ -2,8 +2,8 @@ package GUI.SolarSystem;
 // Scale x,y,z  - 1:1*10^(-9)
 // Scale volume - 1:1*10^(-6)
 
-import Body.State;
-import Body.Vector3d;
+import Body.SpaceCrafts.State;
+import Body.Vector.Vector3d;
 import Interfaces.Vector3dInterface;
 import ODESolver.ProbeSimulator;
 import javafx.animation.ParallelTransition;
@@ -242,7 +242,7 @@ public class UI extends Application{
 	 * Create a path for the planet, also scale coordinates
 	 * @param state Trajectories of the planets and the probe
 	 */
-	private void smoothUpdate(Body.State[] state){
+	private void smoothUpdate(State[] state){
 		UI f = new UI();
 		for(int i =0;i<f.getOrbit().length;i++) {
 			f.getOrbit()[i].getShape().translateZProperty().set(0);
