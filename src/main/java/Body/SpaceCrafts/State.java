@@ -32,6 +32,9 @@ public class State implements StateInterface {
 	//Fuel of the probe
 	public double fuel;
 
+	//Lander
+	private Lander lander;
+
 	//Planets data of the solar system, also here a data of the probe index=11
 	public LinkedList<PlanetBody> celestialBody;
 
@@ -43,10 +46,11 @@ public class State implements StateInterface {
 	 * @param celestialBody Data of the planets in the solar system
 	 * @param flag for cloning the object
 	 */
-	public State(double mass, Vector3dInterface position, Vector3dInterface velocity, LinkedList<PlanetBody> celestialBody, boolean flag) {
+	public State(double mass, Vector3dInterface position, Vector3dInterface velocity, LinkedList<PlanetBody> celestialBody, boolean flag, Lander lander) {
 		if(celestialBody == null)
 			throw new RuntimeException("Data of the solar system is empty");
 
+		this.lander = lander;
 		this.fuel = FUEL;
 		this.position = position;
 		this.velocity = velocity;
@@ -64,10 +68,11 @@ public class State implements StateInterface {
 	 * @param flag for cloning the object
 	 * @param fuel fuel fo the probe
 	 */
-	public State(double mass, Vector3dInterface position, Vector3dInterface velocity, LinkedList<PlanetBody> celestialBody, boolean flag, double fuel) {
+	public State(double mass, Vector3dInterface position, Vector3dInterface velocity, LinkedList<PlanetBody> celestialBody, boolean flag, double fuel, Lander lander) {
 		if(celestialBody == null)
 			throw new RuntimeException("Data of the solar system is empty");
 
+		this.lander = lander;
 		this.fuel = fuel;
 		this.position = position;
 		this.velocity = velocity;
@@ -122,7 +127,7 @@ public class State implements StateInterface {
 		for (int i = 0; i < celestialBody.size(); i++)
 			cloneplanets.add(celestialBody.get(i).clone());
 
-		return new State(mass, position, velocity, cloneplanets, false, fuel);
+		return new State(mass, position, velocity, cloneplanets, false, fuel, lander);
 	}
 
 	/**

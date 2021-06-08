@@ -12,7 +12,7 @@ public class Constant {
      * 3 = Velocity-Verlet
      * 4 = 4th order Runge-Kutta
      */
-    public static int SOLVER = 4;
+    public static int SOLVER = 3;
 
     /**
      * Flag for Verlet JUnit tests

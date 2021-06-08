@@ -414,7 +414,7 @@ public class LineChartSample extends Application {
         Vector3dInterface probe_relative_position = new Vector3d(35760.650634765625,-48159.48486328125,-604.095458984375);
         Vector3dInterface probe_relative_velocity = new Vector3d(4301000.0,-4692000.0,-276000.0);
 
-        State launchPosition = new State(15000, probe_relative_position, probe_relative_velocity, solarSystem, true);
+        State launchPosition = new State(15000, probe_relative_position, probe_relative_velocity, solarSystem, true, null);
         ODESolverInterface simulator = new ODESolver();
 
         return  (State[]) simulator.solve(odeFunction, launchPosition, year, day);

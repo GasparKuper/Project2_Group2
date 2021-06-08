@@ -43,7 +43,7 @@ public class ProbeSimulator implements ProbeSimulatorInterface {
         double mass = 78000;
 
         //Initial parameters for the probe
-        State launchPosition = new State(mass, p0.add(solarSystem.get(3).getPosition()), v0.add(solarSystem.get(3).getVelocity()), solarSystem, true);
+        State launchPosition = new State(mass, p0.add(solarSystem.get(3).getPosition()), v0.add(solarSystem.get(3).getVelocity()), solarSystem, true, null);
 
         //Array with positions and velocities of the probe and planets.
         trajectory = (State[]) odeSolver.solve(odeFunction, launchPosition, ts[ts.length-1], ts[0]);
