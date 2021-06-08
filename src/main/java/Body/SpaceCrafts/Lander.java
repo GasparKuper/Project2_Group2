@@ -23,5 +23,35 @@ public class Lander {
         this.fuel = fuel;
     }
 
+    public Vector2d getPosition() {
+        return position;
+    }
 
+    public void setPosition(Vector2d position) {
+        this.position = position;
+    }
+
+    public Vector2d getVelocity() {
+        return velocity;
+    }
+
+    public void setVelocity(Vector2d velocity) {
+        this.velocity = velocity;
+    }
+
+    public double getMass() {
+        return mass;
+    }
+
+    public void setMass(double mass) {
+        this.mass = mass;
+    }
+
+    public double getFuel() {
+        return fuel;
+    }
+
+    public void setFuel(double fuel) {
+        this.fuel = fuel;
+    }
 }
