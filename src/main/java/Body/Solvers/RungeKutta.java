@@ -28,10 +28,10 @@ public class RungeKutta {
 
         State state = ((State) y).clone();
 
-        state = (State) new ImplicitEuler().step(h/6, k1, state);
-        state = (State) new ImplicitEuler().step(2*h/6, k2, state);
-        state = (State) new ImplicitEuler().step(2*h/6, k3, state);
-        state = (State) new ImplicitEuler().step(h/6, k4, state);
+        state = (State) new ImplicitEuler().step(h /6.0, k1, state);
+        state = (State) new ImplicitEuler().step(2.0*h/6.0, k2, state);
+        state = (State) new ImplicitEuler().step(2.0*h/6.0, k3, state);
+        state = (State) new ImplicitEuler().step(h/6.0, k4, state);
 
         return state;
     }
@@ -43,16 +43,18 @@ public class RungeKutta {
 
     public RateInterface findK2(ODEFunctionInterface f, double t, double h, StateInterface y, RateInterface k1) {
         State clone = ((State) y).clone();
-        return f.call(t + h/2, new SymplecticEuler().step(1.0/2, k1, clone));
+        return f.call(t + h/2, new ImplicitEuler().step(h * 0.5, k1, clone));
     }
 
     public RateInterface findK3(ODEFunctionInterface f, double t, double h, StateInterface y, RateInterface k2) {
         State clone = ((State) y).clone();
-        return f.call(t + h/2, new SymplecticEuler().step(1.0/2, k2, clone));
+        return f.call(t + h/2, new ImplicitEuler().step(h * 0.5, k2, clone));
     }
 
     public RateInterface findK4(ODEFunctionInterface f, double t, double h, StateInterface y, RateInterface k3) {
         State clone = ((State) y).clone();
-        return f.call(t + h, new SymplecticEuler().step(1.0, k3, clone));
+        return f.call(t + h, new ImplicitEuler().step(h, k3, clone));
     }
+
 }
+
