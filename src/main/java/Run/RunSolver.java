@@ -30,19 +30,8 @@ public class RunSolver {
         }
         SOLVER = solver;
 
-        //Thrust
-        System.out.println("Do you want to use the thrust for the probe");
-        String thrust = "Q";
-        while (!(thrust.equals("Y") || thrust.equals("N"))) {
-            System.out.println("Y/N");
-            thrust = scan.nextLine();
-            thrust = thrust.toUpperCase();
-        }
+        Vector3d velocity;
 
-        THRUST = thrust.equals("Y");
-
-        Vector3d velocity = new Vector3d(0, 0, 0);
-        if(!THRUST) {
             //Initial Velocity
             System.out.println("\nLaunch Position: x= 4301000.0, y= -4692000.0, z= -276000.0");
             System.out.println("\nWrite your initial velocity: ");
@@ -69,17 +58,6 @@ public class RunSolver {
             } else {
                 velocity = new Vector3d(34127.250682276586, -45331.80455765947, -1860.62108143532);
             }
-        } else {
-            double fuel = 0;
-            while (!(fuel > 0)) {
-                //Fuel
-                System.out.println("How much fuel do you want to refuel in the rocket?");
-                fuel = scan.nextDouble();
-                if(fuel <= 0)
-                    System.out.println("Try again!");
-            }
-            FUEL = fuel;
-        }
 
         //Parameters
         System.out.println("Your initial speed is = " + velocity(velocity)/1000.0 + "km/s");
@@ -102,7 +80,6 @@ public class RunSolver {
             System.out.print("VELOCITY-VERLET SOLVER ");
         else if(SOLVER == 4)
             System.out.print("STORMER-VERLET SOLVER ");
-        System.out.println("\nThrust = " + THRUST);
         System.out.println("Fuel tank size = " + FUEL);
         System.out.println("Position of the probe = (" + pos.getX() + " " + pos.getY() + " " + pos.getZ() + ")");
         System.out.println("Initial velocity of the probe = (" + velocity.getX() + " " + velocity.getY() + " " + velocity.getZ() + ")");

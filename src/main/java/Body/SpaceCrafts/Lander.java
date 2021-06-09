@@ -23,6 +23,11 @@ public class Lander {
         this.fuel = fuel;
     }
 
+    public Lander(double mass, double fuel){
+        this.mass = mass;
+        this.fuel = fuel;
+    }
+
     public Vector2d getPosition() {
         return position;
     }

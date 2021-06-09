@@ -12,6 +12,7 @@ import static Constant.Constant.G;
 import java.util.LinkedList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class AccelerationFunctionTest {
 
@@ -29,7 +30,7 @@ public class AccelerationFunctionTest {
     }
 
     private RateInterface accelerationWithoutCelestialBody(){
-        State probe = new State(15000, new Vector3d(0, 0, 0), new Vector3d(100, 0, 0));
+        State probe = new State(new Vector3d(0, 0, 0), new Vector3d(100, 0, 0));
         ODEFunction odeFunction = new ODEFunction();
         return odeFunction.call(5, probe);
     }
@@ -63,7 +64,7 @@ public class AccelerationFunctionTest {
                 new Vector3d(-147192316663.54238892,  -28610002992.464771271, 8291942.4644112586975),
                 new Vector3d(5427.1933760188148881, -29310.566234715199244, 0.65751148935788705785)));
 
-        State state = new State(15000, p0.add(solarSystem.get(0).getPosition()),
+        State state = new State(p0.add(solarSystem.get(0).getPosition()),
                 v0.add(solarSystem.get(0).getVelocity()), solarSystem, true);
 
         ODEFunction odeFunction = new ODEFunction();
@@ -91,9 +92,10 @@ public class AccelerationFunctionTest {
         Vector3d pos_Earth = new Vector3d(-147192316663.54238892,  -28610002992.464771271, 8291942.4644112586975);
         pos_Probe = (Vector3d) pos_Probe.add(pos_Earth);
 
+        State tmp_Mass = new State(new Vector3d(0, 0, 0), new Vector3d(0, 0, 0));
         Vector3d b1b2 = (Vector3d) pos_Earth.sub(pos_Probe);
         double tmp = b1b2.norm();
-        double force = -G * 15000/ Math.pow(tmp, 3);
+        double force = -G * tmp_Mass.getMass()/ Math.pow(tmp, 3);
         return (Vector3d) b1b2.mul(force);
     }
 }

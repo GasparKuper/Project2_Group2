@@ -14,7 +14,7 @@ import java.util.LinkedList;
 
 public class SolverTest {
 
-    private final State probe = new State(15000, new Vector3d(0, 0, 0), new Vector3d(100, 0, 0));
+    private final State probe = new State(new Vector3d(0, 0, 0), new Vector3d(100, 0, 0));
     private final Rate zeroRateAcceleration;
     private final Rate RateAcceleration;
 

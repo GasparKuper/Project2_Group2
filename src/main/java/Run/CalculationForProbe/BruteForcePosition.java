@@ -1,4 +1,4 @@
-package Run;
+package Run.CalculationForProbe;
 
 import Body.Planets.PlanetBody;
 import Body.SpaceCrafts.State;

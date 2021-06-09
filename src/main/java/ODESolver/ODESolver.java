@@ -3,7 +3,6 @@ package ODESolver;
 import Body.Planets.PlanetBody;
 import Body.Solvers.RungeKutta;
 import Body.SpaceCrafts.State;
-import Body.Vector.Vector3d;
 import Interfaces.ODEFunctionInterface;
 import Interfaces.ODESolverInterface;
 import Interfaces.RateInterface;
@@ -12,7 +11,7 @@ import Interfaces.StateInterface;
 import java.util.LinkedList;
 
 import static Constant.Constant.SOLVER;
-import static Constant.Constant.THRUST;
+
 
 /**
  * A class for solving a general differential equation dy/dt = f(t,y)
@@ -102,9 +101,6 @@ public class ODESolver implements ODESolverInterface {
 
         if(x == clone)
             throw new RuntimeException("State Clone wasn't created");
-
-        if(THRUST)//Thrust
-            clone.activateThruster(h, new Vector3d(5123.76070022583,-19016.060829162598,-1210.176944732666));
 
         //Step
         if(SOLVER >= 1 && SOLVER <= 3) { //Symplectic Euler, Implicit Euler, Verlet Velocity

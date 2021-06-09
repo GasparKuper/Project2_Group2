@@ -14,7 +14,7 @@ import java.lang.System;
 
 import static Constant.Constant.SOLVER;
 
-class TrajectoryWithoutThrustTest {
+class TrajectoryTest {
 
     @Test
     @DisplayName("Test trajectory of Symplectic Euler")

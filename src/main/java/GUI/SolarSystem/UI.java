@@ -6,12 +6,18 @@ import Body.SpaceCrafts.State;
 import Body.Vector.Vector3d;
 import Interfaces.Vector3dInterface;
 import ODESolver.ProbeSimulator;
+import javafx.animation.Interpolator;
 import javafx.animation.ParallelTransition;
 import javafx.animation.PathTransition;
+import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.geometry.Pos;
+import javafx.geometry.Side;
 import javafx.scene.*;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polyline;
 import javafx.scene.transform.Rotate;
@@ -19,11 +25,11 @@ import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import static Constant.Constant.SOLVER;
-import static Constant.Constant.THRUST;
-
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Scanner;
+
+import static Constant.Constant.*;
 
 
 /**
@@ -52,56 +58,51 @@ public class UI extends Application{
 		//Icon
 		primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/Image/Logo.jpg")));
 
-		Group solarSystem = new Group();
+		Pane solarSystem = new Pane();
 		solarSystem.setCache(true);
 		solarSystem.setCacheHint(CacheHint.SPEED);
-
-		Scene scene = new Scene(solarSystem,800,500,true);
-		scene.setFill(Color.BLACK);
-
-
 
 		Orbit sun = new Orbit((double) 69634 / 1000);
 		sun.setLight("/Image/Textures/Sun.JPG");
 		solarSystem.getChildren().add(sun.getShape());
 
-		Orbit mercury = new Orbit( 24390.7 / 6000);
+		Orbit mercury = new Orbit( 24390.7 / 3000);
 		mercury.setImage("/Image/Textures/Mercury.JPG");
 		solarSystem.getChildren().add(mercury.getShape());
 
-		Orbit venus = new Orbit( 60510.8 / 6000);
+		Orbit venus = new Orbit( 60510.8 / 4000);
 		venus.setImage("/Image/Textures/Venus.JPG");
 		solarSystem.getChildren().add(venus.getShape());
 
-		Orbit earth = new Orbit((double) 63710 / 6000);
+		Orbit earth = new Orbit((double) 63710 / 3000);
 		earth.setImage("/Image/Textures/Earth.JPG");
 		solarSystem.getChildren().add(earth.getShape());
 
-		Orbit moon = new Orbit(17380.1 / 6000);
+		Orbit moon = new Orbit(17380.1 / 3000);
 		moon.setImage("/Image/Textures/Moon.JPG");
 		solarSystem.getChildren().add(moon.getShape());
 
-		Orbit mars = new Orbit( (double) 33962 / 5000);
+		Orbit mars = new Orbit( (double) 33962 / 2000);
 		mars.setImage("/Image/Textures/Mars.JPG");
 		solarSystem.getChildren().add(mars.getShape());
 
-		Orbit jupiter = new Orbit((double) 71492 / 6000);
+		Orbit jupiter = new Orbit((double) 71492 / 1500);
 		jupiter.setImage("/Image/Textures/Jupiter.JPG");
 		solarSystem.getChildren().add(jupiter.getShape());
 
-		Orbit saturn = new Orbit( (double) 60268 / 6000);
+		Orbit saturn = new Orbit( (double) 60268 / 1500);
 		saturn.setImage("/Image/Textures/Saturn.JPG");
 		solarSystem.getChildren().add(saturn.getShape());
 
-		Orbit titan = new Orbit(25750.5 / 6000);
+		Orbit titan = new Orbit(25750.5 / 3000);
 		titan.setImage("/Image/Textures/Titan.JPG");
 		solarSystem.getChildren().add(titan.getShape());
 
-		Orbit uranus = new Orbit((double) 25559 / 6000);
+		Orbit uranus = new Orbit((double) 25559 / 3000);
 		uranus.setImage("/Image/Textures/Uranus.JPG");
 		solarSystem.getChildren().add(uranus.getShape());
 
-		Orbit neptune = new Orbit( (double) 24764 / 6000);
+		Orbit neptune = new Orbit( (double) 24764 / 3000);
 		neptune.setImage("/Image/Textures/Neptune.JPG");
 		solarSystem.getChildren().add(neptune.getShape());
 
@@ -193,12 +194,12 @@ public class UI extends Application{
 				case T -> {
 					camera.translateXProperty().set(orbitArr[7].getShape().getTranslateX());
 					camera.translateYProperty().set(orbitArr[7].getShape().getTranslateY());
-					camera.translateZProperty().set(-500);
+					camera.translateZProperty().set(-3000);
 				}
 				case P -> {
 					camera.translateXProperty().set(orbitArr[11].getShape().getTranslateX());
 					camera.translateYProperty().set(orbitArr[11].getShape().getTranslateY());
-					camera.translateZProperty().set(0);
+					camera.translateZProperty().set(-3000);
 				}
 				case N -> {
 					camera.translateXProperty().set(0);
@@ -208,8 +209,15 @@ public class UI extends Application{
 			}
 		});
 
+		//Background
+		Group back = new Group();
+		back.getChildren().add(solarSystem);
+		back.getChildren().add(preImage());
 
-		scene.setCamera(camera);  // Setting the camera into the scene
+		Scene scene = new Scene(back, 0, 0,true);
+		scene.setFill(Color.BLACK);
+
+		scene.setCamera(camera);
 		primaryStage.setTitle("Flight to Titan - Group 10");
 		primaryStage.setScene(scene);
 		primaryStage.show();
@@ -220,17 +228,12 @@ public class UI extends Application{
 	 * Calculate a path for every planet
 	 */
 	 private void path() {
-	 THRUST = true;
 	 SOLVER = 3;
 	 Vector3dInterface probe_relative_position = new Vector3d(4301000.0,-4692000.0,-276000.0);
-	 Vector3dInterface probe_relative_velocity = new Vector3d(0, 0, 0); // 12.0 months
 	 //Change parameters
-	 double day = 246060;
-	 double year = 365.25*day;
-	 double ten_minutes = 60 * 10;
 
 	 ProbeSimulator simulator = new ProbeSimulator();
-	 simulator.trajectory(probe_relative_position, probe_relative_velocity, 6.167E7, ten_minutes);
+	 simulator.trajectory(probe_relative_position, VELOCITIES[2], FINALTIME[2], STEPSIZE);
 
 	 State[] trajectoryOfAll = simulator.getTrajectory();
 
@@ -259,13 +262,14 @@ public class UI extends Application{
 				if(i == 4 || i == 8) {
 					double yS = (state[j].celestialBody.get(0).getPosition().getX() - state[j].celestialBody.get(i-1).getPosition().getX());
 					double xS = (state[j].celestialBody.get(0).getPosition().getY() - state[j].celestialBody.get(i-1).getPosition().getY());
-					path.add((xS + 25.0*(x - xS)) / 600000000);
-					path.add((yS + 25.0*(y - yS)) / 600000000);
+					path.add((xS + 25.0*(x - xS)) / 550000000);
+					path.add((yS + 25.0*(y - yS)) / 550000000);
 				} else {
-					path.add(x / 600000000);
-					path.add(y / 600000000);
+					path.add(x / 550000000);
+					path.add(y / 550000000);
 				}
 			}
+
 
 			//Insert a path and start animation
 			polyline.getPoints().addAll(path);
@@ -274,8 +278,17 @@ public class UI extends Application{
 			transition.setDuration(Duration.seconds(60));
 			transition.setPath(polyline);
 			transition.setCycleCount(PathTransition.INDEFINITE);
+
 			ptr.getChildren().add(transition);
 		}
 		ptr.play();
+	}
+
+	private ImageView preImage(){
+		Image image = new Image(getClass().getResourceAsStream("/Image/star.jpg"));
+		ImageView imageView = new ImageView(image);
+		imageView.setPreserveRatio(true);
+		imageView.getTransforms().add(new Translate(-image.getWidth()/2, -image.getHeight()/2, 0));
+		return imageView;
 	}
 }

@@ -119,8 +119,6 @@ public class LineChartSample extends Application {
         exit1.setOnAction(e -> {
             Run run = new Run();
             SOLVER = 3;
-            THRUST = false;
-            FUEL = 0;
             try {
                 stage.close();
                 run.start(stage);
@@ -129,20 +127,6 @@ public class LineChartSample extends Application {
             }
         });
         exit.getItems().add(exit1);
-
-        //Thrust
-        Menu thrust = new Menu("Thrust");
-        MenuItem thrustOn = new MenuItem("On");
-        MenuItem thrustOff = new MenuItem("Off");
-
-        thrustOn.setOnAction(e -> {
-            THRUST = true;
-        });
-
-        thrustOff.setOnAction(e -> {
-            THRUST = false;
-        });
-        thrust.getItems().addAll(thrustOn, thrustOff);
 
         //LIST of the planets
         Menu sun = new Menu("Sun");
@@ -328,7 +312,7 @@ public class LineChartSample extends Application {
 
         //Adds of bars into a MenuBar
         menuBar.getMenus().addAll(sun, mercury, venus, earth, moon, mars,
-                jupiter, saturn, titan, uranus, neptune, probe, solver, thrust, exit);
+                jupiter, saturn, titan, uranus, neptune, probe, solver, exit);
 
         return menuBar;
     }
@@ -414,7 +398,7 @@ public class LineChartSample extends Application {
         Vector3dInterface probe_relative_position = new Vector3d(35760.650634765625,-48159.48486328125,-604.095458984375);
         Vector3dInterface probe_relative_velocity = new Vector3d(4301000.0,-4692000.0,-276000.0);
 
-        State launchPosition = new State(15000, probe_relative_position, probe_relative_velocity, solarSystem, true);
+        State launchPosition = new State(probe_relative_position, probe_relative_velocity, solarSystem, true);
         ODESolverInterface simulator = new ODESolver();
 
         return  (State[]) simulator.solve(odeFunction, launchPosition, year, day);

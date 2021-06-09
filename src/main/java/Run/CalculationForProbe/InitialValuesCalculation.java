@@ -1,4 +1,4 @@
-package Run;
+package Run.CalculationForProbe;
 
 import Body.SpaceCrafts.State;
 import Body.Vector.Vector3d;

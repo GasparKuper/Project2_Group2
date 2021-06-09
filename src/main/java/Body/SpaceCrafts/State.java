@@ -4,7 +4,6 @@ import Body.Planets.PlanetBody;
 import Body.Solvers.ImplicitEuler;
 import Body.Solvers.SymplecticEuler;
 import Body.Solvers.VerletVelocity;
-import Body.Vector.Vector3d;
 import Interfaces.RateInterface;
 import Interfaces.StateInterface;
 import Interfaces.Vector3dInterface;
@@ -12,8 +11,7 @@ import ODESolver.Function.ODEFunction;
 
 import java.util.LinkedList;
 
-import static Constant.Constant.FUEL;
-import static Constant.Constant.SOLVER;
+import static Constant.Constant.*;
 
 /**
  * The state of the solar system
@@ -24,13 +22,13 @@ public class State implements StateInterface {
 	public Vector3dInterface position;
 
 	//Velocity of the Probe
-	public Vector3dInterface velocity;
+	public  Vector3dInterface velocity;
 
 	//Mass of the probe
-	public double mass;
+	private final double mass;
 
 	//Fuel of the probe
-	public double fuel;
+	private final double fuel;
 
 	//Lander
 	private Lander lander;
@@ -40,58 +38,59 @@ public class State implements StateInterface {
 
 	/**
 	 * Constructor for the simulation of the solar system and the probe
-	 * @param mass Initial Mass of the probe
 	 * @param position Initial position of the probe
 	 * @param velocity Initial velocity of the probe
 	 * @param celestialBody Data of the planets in the solar system
 	 * @param flag for cloning the object
 	 */
-	public State(double mass, Vector3dInterface position, Vector3dInterface velocity, LinkedList<PlanetBody> celestialBody, boolean flag) {
+	public State(Vector3dInterface position, Vector3dInterface velocity, LinkedList<PlanetBody> celestialBody, boolean flag) {
 		if(celestialBody == null)
 			throw new RuntimeException("Data of the solar system is empty");
 
+		this.mass = MASS;
 		this.fuel = FUEL;
+		this.lander = LANDER;
 		this.position = position;
 		this.velocity = velocity;
 		this.celestialBody = celestialBody;
-		this.mass = mass;
-		if(flag) celestialBody.add(new PlanetBody(mass, position, velocity));
+		if(flag) celestialBody.add(new PlanetBody(getMass(), position, velocity));
 	}
 
 	/**
+	 * For clone object
 	 * Constructor for the simulation of the solar system and the probe
-	 * @param mass Initial Mass of the probe
 	 * @param position Initial position of the probe
 	 * @param velocity Initial velocity of the probe
 	 * @param celestialBody Data of the planets in the solar system
 	 * @param flag for cloning the object
-	 * @param fuel fuel fo the probe
 	 */
-	public State(double mass, Vector3dInterface position, Vector3dInterface velocity, LinkedList<PlanetBody> celestialBody, boolean flag, double fuel) {
+	public State(double mass, Vector3dInterface position, Vector3dInterface velocity, LinkedList<PlanetBody> celestialBody, boolean flag, double fuel, Lander lander) {
 		if(celestialBody == null)
 			throw new RuntimeException("Data of the solar system is empty");
 
+		this.lander = lander;
 		this.fuel = fuel;
+		this.mass = mass;
 		this.position = position;
 		this.velocity = velocity;
 		this.celestialBody = celestialBody;
-		this.mass = mass;
-		if(flag) celestialBody.add(new PlanetBody(mass, position, velocity));
+		if(flag) celestialBody.add(new PlanetBody(getMass(), position, velocity));
 	}
 
 	/**
 	 * Constructor for the solver only without planets of the solar system
-	 *  @param mass Initial Mass of the probe
 	 * 	@param position Initial position of the probe
 	 *  @param velocity Initial velocity of the probe
 	 */
-	public State(double mass, Vector3dInterface position, Vector3dInterface velocity) {
+	public State(Vector3dInterface position, Vector3dInterface velocity) {
+
+		this.mass = MASS;
 		this.fuel = FUEL;
+		this.lander = LANDER;
 		this.celestialBody = new LinkedList<>();
 		this.position = position;
 		this.velocity = velocity;
-		this.mass = mass;
-		celestialBody.add(new PlanetBody(mass, position, velocity));
+		celestialBody.add(new PlanetBody(getMass(), position, velocity));
 	}
 
 	public StateInterface addMul(double step, RateInterface rate) {
@@ -125,42 +124,18 @@ public class State implements StateInterface {
 		for (int i = 0; i < celestialBody.size(); i++)
 			cloneplanets.add(celestialBody.get(i).clone());
 
-		return new State(mass, position, velocity, cloneplanets, false, fuel);
-	}
-
-	/**
-	 * Thrust of the probe
-	 * @param step step size
-	 * @param thrusterVector the exhaust velocity vector
-	 */
-	public void activateThruster(double step, Vector3d thrusterVector){
-
-		int l = celestialBody.size() - 1;
-
-		//m(dot) Max = 30MN / 20km/s
-		double consumeMax = 1.5;
-		if (consumeMax*step <= this.fuel) {
-
-			//Acceleration = (Vex * m(dot)) / mass of the probe
-			Vector3d acceleration = (Vector3d) thrusterVector.mul(consumeMax/ (this.mass+this.fuel));
-
-			//Acceleration = acceleration / delta T
-			acceleration = (Vector3d) acceleration.mul(step);
-
-			this.velocity = this.velocity.add(acceleration);
-			this.celestialBody.get(l).setVelocity((Vector3d) this.velocity);
-
-			//Change the fuel
-			this.fuel = this.fuel - (consumeMax*step);
-		}
+		return new State(mass, position, velocity, cloneplanets, false, fuel, getLander());
 	}
 
 	public Lander getLander() {
 		return lander;
 	}
 
-	public void setLander(Lander lander) {
-		this.mass += lander.getMass() + lander.getFuel();
-		this.lander = lander;
+	public double getMass() {
+		return this.mass + this.fuel + this.lander.getMass() + this.lander.getFuel();
+	}
+
+	public double getFuel() {
+		return this.fuel;
 	}
 }
