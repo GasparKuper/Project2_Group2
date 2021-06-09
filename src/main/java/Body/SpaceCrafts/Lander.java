@@ -16,11 +16,19 @@ public class Lander {
     //Mass of fuel
     private double fuel;
 
-    public Lander(Vector2d position, Vector2d velocity, double mass, double fuel){
+    //Rotation
+    private Vector2d rotation;
+
+    //Rotation velocity
+    private Vector2d rotationVelocity;
+
+    public Lander(Vector2d position, Vector2d velocity, double mass, double fuel, Vector2d rotation, Vector2d rotationVelocity){
         this.position = position;
         this.velocity = velocity;
         this.mass = mass;
         this.fuel = fuel;
+        this.rotation = rotation;
+        this.rotationVelocity = rotationVelocity;
     }
 
     public Lander(double mass, double fuel){
@@ -59,4 +67,12 @@ public class Lander {
     public void setFuel(double fuel) {
         this.fuel = fuel;
     }
+
+    public Vector2d getRotation() { return this.rotation; }
+
+    public void setRotation(Vector2d rotation) { this.rotation = rotation; }
+
+    public Vector2d getRotationVelocity() { return this.rotationVelocity; }
+
+    public void setRotationVelocity(Vector2d rotationVelocity) { this.rotationVelocity = rotationVelocity; }
 }
