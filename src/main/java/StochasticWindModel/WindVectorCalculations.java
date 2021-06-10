@@ -13,9 +13,13 @@ import java.util.concurrent.ThreadLocalRandom;
 public class WindVectorCalculations extends JFrame {
 
     private Vector3d vector;
+    MoverObject movingObject;
 
     public WindVectorCalculations(double x, double y){
-        this.vector = new Vector3d(x,y,0);
+
+        this.vector = new Vector3d(x,y,0); // initialize Wind vector
+
+        this.movingObject = new MoverObject(); // initialize the moving object
     }
 
 
@@ -25,13 +29,14 @@ public class WindVectorCalculations extends JFrame {
         return windVectors;
     }
 
+    // Newtons Second Law
+    //public void applyForce(force) {
+    //    this.acc = force;
+    //}
+
 
     public void updateVector(){
-
-        System.out.println("Before manipulation: " + this.vector.toString());
-        // adding a random Number to the vector
         this.vector = addRandomNumber(vector);
-        System.out.println("After manipulation: " + this.vector.toString());
     }
 
     public void draw(){

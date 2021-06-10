@@ -14,9 +14,12 @@ import javax.swing.*;
 public class WindGraphics extends JPanel {
 
     private Vector3d vector;
+    private MoverObject drawMover;
 
     public WindGraphics(Vector3d vector){
         this.vector = vector;
+        this.drawMover = drawMover;
+
     }
 
     public void paintComponent(Graphics g){
@@ -33,7 +36,15 @@ public class WindGraphics extends JPanel {
         // the times 10 should be the magnitude of the vector!
         Shape vectorLine = new Line2D.Double(vector.getX(), vector.getY(), vector.getX()*10, vector.getY()*10);
         g2D.setStroke(new BasicStroke(2));
+
         g2D.draw(vectorLine);
+        g2D.draw(drawMover.show());
+
+        Vector3d wind = new Vector3d(4,2,0);
+
+
+
+
     }
 
 
