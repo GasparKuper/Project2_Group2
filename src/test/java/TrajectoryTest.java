@@ -1,6 +1,6 @@
 import static org.junit.jupiter.api.Assertions.*;
 
-import Body.Vector3d;
+import Body.Vector.Vector3d;
 import Interfaces.ProbeSimulatorInterface;
 import Interfaces.Vector3dInterface;
 import ODESolver.ProbeSimulator;
@@ -14,16 +14,17 @@ import java.lang.System;
 
 import static Constant.Constant.SOLVER;
 
-class TrajectoryWithoutThrustTest {
+class TrajectoryTest {
 
     @Test
     @DisplayName("Test trajectory of Symplectic Euler")
     public void testTrajectorySymplecticEuler(){
         SOLVER = 1;
         Vector3dInterface[] trajectory = testSolverOutput();
-        Assertions.assertAll(() -> assertTrue(testOnNan(trajectory)),
-                                () -> assertTrue(testOnPositiveInfinity(trajectory)),
-                                () -> assertTrue(testOnNagativeInfinity(trajectory)));
+
+        assertTrue(testOnNan(trajectory));
+        assertTrue(testOnPositiveInfinity(trajectory));
+        assertTrue(testOnNagativeInfinity(trajectory));
     }
 
     @Test
@@ -31,9 +32,10 @@ class TrajectoryWithoutThrustTest {
     public void testTrajectoryImplicitEuler(){
         SOLVER = 2;
         Vector3dInterface[] trajectory = testSolverOutput();
-        Assertions.assertAll(() -> assertTrue(testOnNan(trajectory)),
-                () -> assertTrue(testOnPositiveInfinity(trajectory)),
-                () -> assertTrue(testOnNagativeInfinity(trajectory)));
+
+        assertTrue(testOnNan(trajectory));
+        assertTrue(testOnPositiveInfinity(trajectory));
+        assertTrue(testOnNagativeInfinity(trajectory));
     }
 
     @Test
@@ -41,9 +43,10 @@ class TrajectoryWithoutThrustTest {
     public void testTrajectoryVelocityVerlet(){
         SOLVER = 3;
         Vector3dInterface[] trajectory = testSolverOutput();
-        Assertions.assertAll(() -> assertTrue(testOnNan(trajectory)),
-                () -> assertTrue(testOnPositiveInfinity(trajectory)),
-                () -> assertTrue(testOnNagativeInfinity(trajectory)));
+
+        assertTrue(testOnNan(trajectory));
+        assertTrue(testOnPositiveInfinity(trajectory));
+        assertTrue(testOnNagativeInfinity(trajectory));
     }
 
     @Test
@@ -51,9 +54,10 @@ class TrajectoryWithoutThrustTest {
     public void testTrajectoryRungeKutta(){
         SOLVER = 4;
         Vector3dInterface[] trajectory = testSolverOutput();
-        Assertions.assertAll(() -> assertTrue(testOnNan(trajectory)),
-                () -> assertTrue(testOnPositiveInfinity(trajectory)),
-                () -> assertTrue(testOnNagativeInfinity(trajectory)));
+
+        assertTrue(testOnNan(trajectory));
+        assertTrue(testOnPositiveInfinity(trajectory));
+        assertTrue(testOnNagativeInfinity(trajectory));
     }
 
     private boolean testOnNan(Vector3dInterface[] trajectory){

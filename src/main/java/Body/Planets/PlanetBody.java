@@ -1,5 +1,6 @@
-package Body;
+package Body.Planets;
 
+import Body.Vector.Vector3d;
 import Interfaces.Vector3dInterface;
 
 /**

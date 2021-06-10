@@ -1,7 +1,6 @@
 package Run;
 
-import Body.State;
-import Body.Vector3d;
+import Body.Vector.Vector3d;
 import ODESolver.ProbeSimulator;
 
 import static Constant.Constant.*;
@@ -11,26 +10,17 @@ import static Constant.Constant.*;
  */
 public class CalculationOutput extends Thread{
     private Vector3d[] trajectoryOfProbe;
-    private Body.State[] trajectoryOfAll;
+    private Body.SpaceCrafts.State[] trajectoryOfAll;
 
     public void Solver() {
         ProbeSimulator simulator = new ProbeSimulator();
 
-        double day = 24*60*60;
-        double year = 365.25*day;
-        double ten_minutes = 60 * 10;
-
         //Array the trajectory of the probe
-        if(THRUST){
-            this.trajectoryOfProbe = (Vector3d[]) simulator.trajectory(STARTPOS, new Vector3d(0, 0, 0), 6.167E7, ten_minutes);
-        } else {
-            this.trajectoryOfProbe = (Vector3d[]) simulator.trajectory(STARTPOS, VELOCITIES[SOLVER-1], FINALTIME[SOLVER-1], STEPSIZE);
-        }
+        this.trajectoryOfProbe = (Vector3d[]) simulator.trajectory(STARTPOS, VELOCITIES[SOLVER-1], FINALTIME[SOLVER-1], STEPSIZE);
 
 
         trajectoryOfAll = simulator.getTrajectory();
 
-        System.out.println("Thrust = " + THRUST);
         System.out.println("Fuel = " + FUEL);
 
         if(SOLVER == 1)

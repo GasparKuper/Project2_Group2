@@ -1,6 +1,6 @@
 import static org.junit.jupiter.api.Assertions.*;
 
-import Body.Vector3d;
+import Body.Vector.Vector3d;
 import Interfaces.Vector3dInterface;
 import org.junit.jupiter.api.Test;
 

@@ -1,6 +1,6 @@
-package Run;
+package Run.CalculationForProbe;
 
-import Body.Vector3d;
+import Body.Vector.Vector3d;
 
 /**
  * Generate Vector

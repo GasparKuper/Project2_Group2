@@ -52,7 +52,7 @@ public class Experiments extends Thread{
                 double time = (double) endTime - startTime;
 
 
-                Body.State[] trajectoryOfAll = simulator.getTrajectory();
+                Body.SpaceCrafts.State[] trajectoryOfAll = simulator.getTrajectory();
 
                 //CHANGE ARRAY *CA, it depends on which time, you want check
                 //earth1year = 1 year 6 hours (NASA Coordinates)

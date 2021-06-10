@@ -1,5 +1,6 @@
-package Body;
+package ODESolver.Function;
 
+import Body.Vector.Vector3d;
 import Interfaces.RateInterface;
 
 import java.util.LinkedList;

@@ -1,6 +1,7 @@
 package Constant;
 
-import Body.Vector3d;
+import Body.SpaceCrafts.Lander;
+import Body.Vector.Vector3d;
 import Interfaces.Vector3dInterface;
 
 public class Constant {
@@ -34,15 +35,19 @@ public class Constant {
      */
     public static double[] FINALTIME = {3.154e+7, 3.154e+7, 6.167E7, 3.154e+7};
 
-    /**
-     * Thrust condition
-     */
-    public static boolean THRUST = false;
-
+    //////////////////Configurator for the probe///////////////////////
     /**
      * Fuel for the probe
      */
-    public static double FUEL = 99900;
+    public static double FUEL = 99000;
+    /**
+     * Mass of the probe
+     */
+    public static final double MASS = 78000;
+    /**
+     * Lander for the probe
+     */
+    public static final Lander LANDER = new Lander(6000, 0);
 
     /**
      * Array VELOCITIES contains the initial velocity of the probe computed by the brute force for each solver
@@ -57,10 +62,5 @@ public class Constant {
      * Start position of the probe
      */
     public static final Vector3d STARTPOS = new Vector3d(4301000.0,-4692000.0,-276000.0);
-
-    /**
-     *
-     */
-    public static double EXHAUSTSPEED = 20000;
 
 }
