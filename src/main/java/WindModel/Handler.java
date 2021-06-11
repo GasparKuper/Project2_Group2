@@ -3,7 +3,12 @@ package WindModel;
 import java.awt.*;
 import java.util.LinkedList;
 
-// will update objects in the room, update and render them
+/*
+ * handles all the objects rendered in the frame
+ * updates and renders them
+*/
+
+
 public class Handler {
 
     LinkedList<Object> object = new LinkedList<Object>();

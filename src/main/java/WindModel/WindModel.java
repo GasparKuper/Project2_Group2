@@ -4,13 +4,12 @@ import Body.Vector.Vector2d;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
-import java.util.Random;
 
 public class WindModel extends Canvas implements Runnable{
 
     private static final long serialVersionUID = 1;
 
-    public static final int HEIGHT = 600, WIDTH = 450;
+    public static final int HEIGHT = 600, WIDTH = 900;
     private Thread thread;
 
     private boolean running = false;
@@ -19,17 +18,19 @@ public class WindModel extends Canvas implements Runnable{
     public WindModel(){
         handler = new Handler();
 
+        new RandomWind(handler); // initializing the random wind
+
         new Window(WIDTH,HEIGHT,"Let's Start the Wind!", this);
 
-        handler.addObject(new LandingModule(new Vector2d(100,0),new Vector2d(0,1.352),0,new Vector2d(0,0),new Vector2d(0,0)));
+        // adding the Landing Module
+        handler.addObject(new LandingModule(new Vector2d(225,600),new Vector2d(1,-1.352),0,new Vector2d(0,0),new Vector2d(0,0),ID.LandingModule));
 
+        // adding the Wind Flags
         double count = 0;
         for(int i = 0; i < 14; i++){
-            handler.addObject(new windFlag(new Vector2d(10,10+count)));
+            handler.addObject(new windFlag(new Vector2d(20,10+count)));
             count = count + 40;
         }
-
-
     }
 
     // starting the thread
@@ -70,7 +71,7 @@ public class WindModel extends Canvas implements Runnable{
 
             if(System.currentTimeMillis() - timer > 1000){
                 timer += 1000;
-                System.out.println("FPS: " + frames);
+                //System.out.println("FPS: " + frames);
                 frames = 0;
             }
         }
@@ -100,7 +101,7 @@ public class WindModel extends Canvas implements Runnable{
 
     }
 
-    public static void main(String args[]){
+    public static void main(String []args){
         new WindModel();
 
     }

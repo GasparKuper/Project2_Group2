@@ -21,6 +21,7 @@ public class windFlag extends Object{
         this.rotationVelocity = new Vector2d(0,0);
         this.rotation = new Vector2d(0,0);
         this.movingPoint = new Point2D.Double(position.getX(),position.getY()+20);
+        this.id = ID.WindFlag; // stimmt das?
     }
 
     @Override

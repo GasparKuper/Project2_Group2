@@ -2,6 +2,6 @@ package WindModel;
 
 public enum ID {
 
-    Player(),
-    Enemy();
+    LandingModule(),
+    WindFlag();
 }
