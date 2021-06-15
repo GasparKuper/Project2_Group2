@@ -5,6 +5,7 @@ import Body.Planets.PlanetBody;
 import Body.Vector.Vector3d;
 import Interfaces.Vector3dInterface;
 
+import java.sql.SQLOutput;
 import java.util.LinkedList;
 import static Constant.Constant.FUEL;
 import static Constant.Constant.STEPSIZE;
@@ -33,23 +34,14 @@ public class FuelCalculation {
 
         Data data = new Data();
         LinkedList<PlanetBody> planets = data.getPlanets();
-
-        final int radiusEarth = 6371000;
-        final double radiusTitan = 2575.5e3;
         final double MASS_PROBE = 78000+6000;
 
-        //If u wanna check how many fuel we need to reach the titan
-//        System.out.println(new FuelCalculation().findMassFuel(new Vector3d(5123.76070022583,-19016.060829162598,-1210.176944732666), planets.get(3).getVelocity(), STEPSIZE, MASS_PROBE));
+        //If u wanna check how many fuel we need to reach the tita
 
-        Vector3dInterface initialVelocityToTitan = new NewtonRaphson().initialVel(planets.get(8).getPosition(), radiusTitan, 300000, new Vector3d(0, 0, 0), planets.get(3).getPosition());
+        FUEL = new FuelCalculation().findMassFuel(new Vector3d(5123.76070022583,-19016.060829162598,-1210.176944732666),
+                planets.get(3).getVelocity(), STEPSIZE, MASS_PROBE);
 
-        FUEL = new FuelCalculation().findMassFuel(initialVelocityToTitan, planets.get(3).getVelocity(), STEPSIZE, MASS_PROBE);
-        //TODO here calculate trajectory with initial velocity
 
-        Vector3dInterface initialVelocityBack = new NewtonRaphson().initialVel(planets.get(3).getPosition(), radiusEarth,
-                0, new Vector3d(0, 0, 0), new Vector3d(0, 0, 0)); //TODO change the vector velocity with zeros
-
-        FUEL = new FuelCalculation().findMassFuel(initialVelocityBack, new Vector3d(0, 0, 0), STEPSIZE, MASS_PROBE+FUEL); //TODO change vector velocity with zeros
 
         //TODO here we calculate enter to the orbit or above)))
 

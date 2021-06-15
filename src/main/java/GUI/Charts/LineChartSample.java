@@ -9,6 +9,7 @@ import Interfaces.Vector3dInterface;
 import ODESolver.Function.ODEFunction;
 import ODESolver.ODESolver;
 import GUI.RunGui.Run;
+import Run.CalculationForProbe.OrbitPlanet;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
@@ -65,6 +66,7 @@ public class LineChartSample extends Application {
      *  trajectory Data of the trajectories of the all planets and the probe
      */
     private State[] trajectory = trajectory();
+    private State[] trajectoryProbe = trajectoryProbeCalculation();
 
     /**
      * Create MenuBar in the GUI
@@ -301,11 +303,11 @@ public class LineChartSample extends Application {
         MenuItem probeP = new MenuItem("Probe Position");
         probeV.setOnAction(e -> {
             lineChart.getData().clear();
-            lineChart.getData().addAll(createSeries(null, 11, trajectory, false));
+            lineChart.getData().addAll(createSeriesProbe(trajectoryProbe, false));
         });
         probeP.setOnAction(e -> {
             lineChart.getData().clear();
-            lineChart.getData().addAll(createSeries(null, 11, trajectory, true));
+            lineChart.getData().addAll(createSeriesProbe(trajectoryProbe, true));
         });
         probe.getItems().add(probeP);
         probe.getItems().add(probeV);
@@ -384,7 +386,7 @@ public class LineChartSample extends Application {
 
     /**
      * Calculate Trajectories
-     * @return Trajectories of all planets and the probe
+     * @return Trajectories of all planets
      */
     private State[] trajectory(){
         double day = 24*60*60;
@@ -395,12 +397,94 @@ public class LineChartSample extends Application {
 
         LinkedList<PlanetBody> solarSystem = data.getPlanets();
 
-        Vector3dInterface probe_relative_position = new Vector3d(35760.650634765625,-48159.48486328125,-604.095458984375);
-        Vector3dInterface probe_relative_velocity = new Vector3d(4301000.0,-4692000.0,-276000.0);
+        Vector3dInterface probe_relative_position = new Vector3d(4301000.0,-4692000.0,-276000.0);
+        Vector3dInterface probe_relative_velocity = new Vector3d(5123.76070022583,-19016.060829162598,-1210.176944732666);
 
         State launchPosition = new State(probe_relative_position, probe_relative_velocity, solarSystem, true);
         ODESolverInterface simulator = new ODESolver();
 
         return  (State[]) simulator.solve(odeFunction, launchPosition, year, day);
+    }
+
+    /**
+     * Calculate Trajectories
+     * @return Trajectories of the probe
+     */
+    private State[] trajectoryProbeCalculation(){
+
+        double day = 24*60*60;
+        double year = 100 * day;
+        PlanetBody earth = new Data().getPlanets().get(3);
+        Vector3dInterface probe_relative_position = new Vector3d(4301000.0,-4692000.0,-276000.0)
+                .add(earth.getPosition());
+        Vector3dInterface probe_relative_velocity = new Vector3d(5123.761101742686,-19016.061777347,-1210.1771491269928)
+                .add(earth.getVelocity());
+
+        State launchPosition = new State(probe_relative_position, probe_relative_velocity, new Data().getPlanets(), true);
+        ODESolverInterface simulator = new ODESolver();
+
+        State[] state = (State[]) simulator.solve(new ODEFunction(), launchPosition, 61670000, 600);
+        int length = state.length - 1;
+
+        Vector3d orbitVelocity = new OrbitPlanet().orbitSpeed((Vector3d) state[length].position, state[length].celestialBody.get(8).getVelocity());
+
+        state[length].velocity = orbitVelocity.add(state[length].celestialBody.get(8).getVelocity());
+
+        State[] state2 = (State[]) simulator.solve(new ODEFunction(), state[length], year, 600);
+
+        int maxLength = state.length + state2.length;
+        State[] result = new State[maxLength];
+
+        for (int i = 0; i < state.length; i++) {
+            result[i] = state[i];
+        }
+
+        int point = 0;
+        for (int i = state.length; i < state2.length + state.length; i++) {
+            result[i] = state2[point++];
+        }
+
+        return result;
+    }
+
+    /**
+     * @param trajectory Data of trajectories
+     * @param flag TRUE = Position, FALSE = VEloicty
+     * @return array of the series for the line chart
+     */
+    private ArrayList<XYChart.Series<Number, Number>> createSeriesProbe(State[] trajectory, boolean flag){
+        ArrayList<XYChart.Series<Number, Number>> arrayList = new ArrayList<>();
+
+
+
+        final XYChart.Series<Number, Number> series4 = new XYChart.Series<>();
+        series4.setName("X");
+
+        final XYChart.Series<Number, Number> series5 = new XYChart.Series<>();
+        series5.setName("Y");
+
+        final XYChart.Series<Number, Number> series6 = new XYChart.Series<>();
+        series6.setName("Z");
+
+        int scaleOneDay = trajectory.length/(6*24);
+        for (int i = 0; i < scaleOneDay; i++) {
+            int point = (i+1);
+            //Solver
+            Vector3d body;
+            if(flag) {
+                body = (Vector3d) trajectory[(6*24)*i].position;
+            } else {
+                body = (Vector3d) trajectory[(6*24)*i].velocity;
+            }
+            series4.getData().add(new XYChart.Data<Number, Number>(point, body.getX()));
+            series5.getData().add(new XYChart.Data<Number, Number>(point, body.getY()));
+            series6.getData().add(new XYChart.Data<Number, Number>(point, body.getZ()));
+        }
+
+        arrayList.add(series4);
+        arrayList.add(series5);
+        arrayList.add(series6);
+
+        return arrayList;
     }
 }
