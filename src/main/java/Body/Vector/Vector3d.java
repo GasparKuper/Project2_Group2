@@ -142,4 +142,29 @@ public class Vector3d implements Vector3dInterface{
         double magnitude = this.norm();
         return new Vector3d(this.getX()/magnitude, this.getY()/magnitude,this.getZ()/magnitude);
     }
+
+    public Vector3dInterface mulMatrix(double[][] g) {
+        double[] result = {0,0,0};
+        Vector3dInterface vec = new Vector3d(0,0,0);
+        double mul =0;
+        for(int i=0;i<result.length;i++){
+            for(int j =0;j<g[0].length;j++){
+                 if(j==0){
+                     mul = this.getX();
+                 }else if(j==1){
+                     mul = this.getY();
+                 }else{
+                     mul = this.getZ();
+                 }
+                 if(i==0){
+                     vec.setX(Math.round((vec.getX()+g[i][j]*mul) * 1E14) / 1E14);
+                 }else if(i==1){
+                     vec.setY(Math.round((vec.getY()+g[i][j]*mul) * 1E14) / 1E14);
+                 }else{
+                     vec.setZ(Math.round((vec.getZ()+g[i][j]*mul) * 1E14) / 1E14);
+                 }
+            }
+        }
+        return vec;
+    }
 }
