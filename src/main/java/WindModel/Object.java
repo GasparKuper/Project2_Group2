@@ -1,40 +1,40 @@
-package Body.SpaceCrafts;
+package WindModel;
 
 import Body.Vector.Vector2d;
 
-public class Lander {
+import java.awt.*;
 
-    //Position
-    private Vector2d position;
+public abstract class Object {
 
-    //Velocity
-    private Vector2d velocity;
+    protected ID id;
+    protected Vector2d position;
+    protected Vector2d velocity;
+    protected double mass;
+    protected double fuel;
+    protected Vector2d rotation;
+    protected Vector2d rotationVelocity;
 
-    //Mass without fuel
-    private double mass;
-
-    //Mass of fuel
-    private double fuel;
-
-    //Rotation
-    private Vector2d rotation;
-
-    //Rotation velocity
-    private Vector2d rotationVelocity;
-
-    public Lander(Vector2d position, Vector2d velocity, double mass, double fuel, Vector2d rotation, Vector2d rotationVelocity){
+    public Object(Vector2d position, Vector2d velocity, double fuel, Vector2d rotation, Vector2d rotationVelocity, ID id){
         this.position = position;
         this.velocity = velocity;
         this.mass = mass;
         this.fuel = fuel;
         this.rotation = rotation;
         this.rotationVelocity = rotationVelocity;
+        this.id = id;
     }
 
-    public Lander(double mass, double fuel){
-        this.mass = mass;
-        this.fuel = fuel;
+    // constructor for the wind speed flag tester
+    public Object(Vector2d position){
+        this.position = position;
     }
+
+
+
+
+    public abstract void tick();
+    public abstract void render(Graphics2D g);
+
 
     public Vector2d getPosition() {
         return position;
@@ -75,4 +75,6 @@ public class Lander {
     public Vector2d getRotationVelocity() { return this.rotationVelocity; }
 
     public void setRotationVelocity(Vector2d rotationVelocity) { this.rotationVelocity = rotationVelocity; }
+
+
 }
