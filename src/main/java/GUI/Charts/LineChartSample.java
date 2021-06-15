@@ -8,6 +8,7 @@ import Interfaces.ODESolverInterface;
 import Interfaces.Vector3dInterface;
 import ODESolver.Function.ODEFunction;
 import ODESolver.ODESolver;
+import ODESolver.ProbeSimulator;
 import GUI.RunGui.Run;
 import Run.CalculationForProbe.OrbitPlanet;
 import javafx.application.Application;
@@ -414,23 +415,26 @@ public class LineChartSample extends Application {
 
         double day = 24*60*60;
         double year = 100 * day;
-        PlanetBody earth = new Data().getPlanets().get(3);
-        Vector3dInterface probe_relative_position = new Vector3d(4301000.0,-4692000.0,-276000.0)
-                .add(earth.getPosition());
-        Vector3dInterface probe_relative_velocity = new Vector3d(5123.761101742686,-19016.061777347,-1210.1771491269928)
-                .add(earth.getVelocity());
 
-        State launchPosition = new State(probe_relative_position, probe_relative_velocity, new Data().getPlanets(), true);
-        ODESolverInterface simulator = new ODESolver();
 
-        State[] state = (State[]) simulator.solve(new ODEFunction(), launchPosition, 61670000, 600);
+        ProbeSimulator simulator = new ProbeSimulator();
+
+        simulator.trajectory(STARTPOS, VELOCITIES[SOLVER-1], FINALTIME[SOLVER-1], STEPSIZE);
+
+        State[] state = simulator.getTrajectory();
         int length = state.length - 1;
 
         Vector3d orbitVelocity = new OrbitPlanet().orbitSpeed((Vector3d) state[length].position, state[length].celestialBody.get(8).getPosition());
 
-        state[length].velocity = orbitVelocity.add(state[length].celestialBody.get(8).getVelocity());
+        orbitVelocity = (Vector3d) orbitVelocity.add(state[length].celestialBody.get(8).getVelocity());
 
-        State[] state2 = (State[]) simulator.solve(new ODEFunction(), state[length], year, 600);
+        State cloneState = state[length].clone();
+        cloneState.velocity = orbitVelocity;
+        cloneState.celestialBody.get(11).setVelocity(orbitVelocity);
+
+        ODESolver simulateODE = new ODESolver();
+
+        State[] state2 = (State[]) simulateODE.solve(new ODEFunction(), cloneState, year, 600);
 
         int maxLength = state.length + state2.length;
         State[] result = new State[maxLength];
@@ -438,9 +442,11 @@ public class LineChartSample extends Application {
         for (int i = 0; i < state.length; i++) {
             result[i] = state[i];
         }
+        System.out.println(state[state.length-1].celestialBody.get(8).getPosition().dist(state[state.length-1].celestialBody.get(11).getPosition())-2575.5e3);
 
         int point = 0;
         for (int i = state.length; i < state2.length + state.length; i++) {
+            System.out.println(state2[point].celestialBody.get(8).getPosition().dist(state2[point].celestialBody.get(11).getPosition())-2575.5e3);
             result[i] = state2[point++];
         }
 
