@@ -218,10 +218,10 @@ public class UI extends Application{
 		//Background
 		Group back = new Group();
 		back.getChildren().add(solarSystem);
-//		back.getChildren().add(preImage());
+		back.getChildren().add(preImage());
 
 		Scene scene = new Scene(back, 0, 0,true);
-//		scene.setFill(Color.BLACK);
+		scene.setFill(Color.BLACK);
 
 		scene.setCamera(camera);
 		primaryStage.setTitle("Flight to Titan - Group 10");
@@ -250,7 +250,7 @@ public class UI extends Application{
 		 State[] state = (State[]) simulator.solve(new ODEFunction(), launchPosition, 61670000, 600);
 		 int length = state.length - 1;
 
-		 Vector3d orbitVelocity = new OrbitPlanet().orbitSpeed((Vector3d) state[length].position, state[length].celestialBody.get(8).getVelocity());
+		 Vector3d orbitVelocity = new OrbitPlanet().orbitSpeed((Vector3d) state[length].position, state[length].celestialBody.get(8).getPosition());
 
 		 state[length].velocity = orbitVelocity.add(state[length].celestialBody.get(8).getVelocity());
 

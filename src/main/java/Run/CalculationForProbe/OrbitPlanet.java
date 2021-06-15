@@ -42,7 +42,7 @@ public class OrbitPlanet {
         State[] state = (State[]) simulator.solve(new ODEFunction(), launchPosition, 61670000, 600);
         int length = state.length - 1;
 
-        Vector3d orbitVelocity = new OrbitPlanet().orbitSpeed((Vector3d) state[length].position, state[length].celestialBody.get(8).getVelocity());
+        Vector3d orbitVelocity = new OrbitPlanet().orbitSpeed((Vector3d) state[length].position, state[length].celestialBody.get(8).getPosition());
 
         System.out.println(orbitVelocity);
         System.out.println(orbitVelocity.norm());
