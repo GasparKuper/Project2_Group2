@@ -20,10 +20,6 @@ import static Constant.Constant.SOLVER;
  */
 public class ODESolver implements ODESolverInterface {
 
-
-    LinkedList<PlanetBody> solarSystem;
-
-
     /**
      * Solve the differential equation by taking multiple steps.
      *
@@ -41,8 +37,6 @@ public class ODESolver implements ODESolverInterface {
         result[0] = y0;
 
         for (int i = 0; i < ts.length; i++) {
-
-            solarSystem = ((State) y0).celestialBody;
 
             if (i == ts.length - 1 && i != 0) {
                 result[i + 1] = step(f, ts[i], result[i], ts[i] - ts[i-1]);
