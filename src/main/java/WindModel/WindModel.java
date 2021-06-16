@@ -11,16 +11,16 @@ public class WindModel extends Canvas implements Runnable{
 
     public static final int HEIGHT = 600, WIDTH = 900;
     private Thread thread;
+    private HUD hud;
 
     private boolean running = false;
     private Handler handler;
 
     public WindModel(){
         handler = new Handler();
+        this.addKeyListener(new KeyInput(handler));
 
         new RandomWind(handler); // initializing the random wind
-
-        new Window(WIDTH,HEIGHT,"Let's Start the Wind!", this);
 
         // adding the Landing Module
         handler.addObject(new LandingModule(new Vector2d(225,600),new Vector2d(1,-1.352),0,new Vector2d(0,0),new Vector2d(0,0),ID.LandingModule));
@@ -28,9 +28,13 @@ public class WindModel extends Canvas implements Runnable{
         // adding the Wind Flags
         double count = 0;
         for(int i = 0; i < 14; i++){
-            handler.addObject(new windFlag(new Vector2d(20,10+count)));
+            handler.addObject(new WindFlag(new Vector2d(20,10+count)));
             count = count + 40;
         }
+
+        new Window(WIDTH,HEIGHT,"Let's Start the Wind!", this);
+
+        //hud = new HUD();
     }
 
     // starting the thread
@@ -80,8 +84,10 @@ public class WindModel extends Canvas implements Runnable{
 
     private void tick(){
         handler.tick();
+        //hud.tick();
     }
 
+    // renders the window
     private void render(){
         BufferStrategy bs = this.getBufferStrategy();
         if(bs == null){
@@ -95,11 +101,22 @@ public class WindModel extends Canvas implements Runnable{
         g.fillRect(0,0,WIDTH,HEIGHT);
 
         handler.render(g);
+        //hud.render(g);
 
         g.dispose();
         bs.show();
 
     }
+
+    public static int clamp(int var, int min, int max){
+        if(var >= max)
+                return var = max;
+            else if(var <= min)
+                return var = min;
+            else
+                return var;
+            }
+
 
     public static void main(String []args){
         new WindModel();
