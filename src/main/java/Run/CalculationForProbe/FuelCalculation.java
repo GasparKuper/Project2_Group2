@@ -5,7 +5,6 @@ import Body.Planets.PlanetBody;
 import Body.Vector.Vector3d;
 import Interfaces.Vector3dInterface;
 
-import java.sql.SQLOutput;
 import java.util.LinkedList;
 import static Constant.Constant.FUEL;
 import static Constant.Constant.STEPSIZE;
@@ -36,16 +35,9 @@ public class FuelCalculation {
         LinkedList<PlanetBody> planets = data.getPlanets();
         final double MASS_PROBE = 78000+6000;
 
-        //If u wanna check how many fuel we need to reach the tita
 
         FUEL = new FuelCalculation().findMassFuel(new Vector3d(5123.76070022583,-19016.060829162598,-1210.176944732666),
                 planets.get(3).getVelocity(), STEPSIZE, MASS_PROBE);
 
-
-
-        //TODO here we calculate enter to the orbit or above)))
-
-
-        //TODO calculate all path of the probe TO Titan -> ORBIT Titan -> BACK to home
     }
 }

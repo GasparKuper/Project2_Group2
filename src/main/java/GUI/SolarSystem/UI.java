@@ -225,30 +225,30 @@ public class UI extends Application{
 	 * Calculate a path for every planet
 	 */
 	 private void path() {
-	 SOLVER = 3;
-
-		 double day = 24*60*60;
-		 double year = 100 * day;
-
+	 	SOLVER = 3;
 
 		 ProbeSimulator simulator = new ProbeSimulator();
 
 		 simulator.trajectory(STARTPOS, VELOCITIES[SOLVER-1], FINALTIME[SOLVER-1], STEPSIZE);
 
 		 State[] state = simulator.getTrajectory();
-		 int length = state.length - 1;
 
-		 Vector3d orbitVelocity = new OrbitPlanet().orbitSpeed((Vector3d) state[length].position, state[length].celestialBody.get(8).getPosition());
+		 double day = 24*60*60;
+		 double year = 30 * day;
 
-		 orbitVelocity = (Vector3d) orbitVelocity.add(state[length].celestialBody.get(8).getVelocity());
+		 State cloneState = state[state.length-1].clone();
 
-		 State cloneState = state[length].clone();
+
+		 Vector3d orbitVelocity = new OrbitPlanet().orbitSpeed((Vector3d) cloneState.position, cloneState.celestialBody.get(8).getPosition());
+
+		 orbitVelocity = (Vector3d) orbitVelocity.add(cloneState.celestialBody.get(8).getVelocity());
+
 		 cloneState.velocity = orbitVelocity;
 		 cloneState.celestialBody.get(11).setVelocity(orbitVelocity);
 
 		 ODESolver simulateODE = new ODESolver();
 
-		 State[] state2 = (State[]) simulateODE.solve(new ODEFunction(), cloneState, year, 600);
+		 State[] state2 = (State[]) simulateODE.solve(new ODEFunction(), cloneState, year, 60);
 
 		 int maxLength = state.length + state2.length;
 		 State[] result = new State[maxLength];
@@ -303,7 +303,7 @@ public class UI extends Application{
 
 			PathTransition transition = new PathTransition();
 			transition.setNode(f.getOrbit()[i].getShape());
-			transition.setDuration(Duration.seconds(60));
+			transition.setDuration(Duration.seconds(90));
 			transition.setPath(polyline);
 			transition.setCycleCount(PathTransition.INDEFINITE);
 

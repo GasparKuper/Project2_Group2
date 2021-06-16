@@ -47,6 +47,7 @@ public class LineChartSample extends Application {
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/Image/Logo.jpg")));
         final NumberAxis xAxis = new NumberAxis();
         final NumberAxis yAxis = new NumberAxis();
+        yAxis.setLabel("Meters");
         xAxis.setLabel("Days");
         lineChart = new LineChart<Number,Number>(xAxis,yAxis);
 
@@ -67,7 +68,8 @@ public class LineChartSample extends Application {
      *  trajectory Data of the trajectories of the all planets and the probe
      */
     private State[] trajectory = trajectory();
-    private State[] trajectoryProbe = trajectoryProbeCalculation();
+    private final State[] trajectoryProbeToTitan = trajectoryProbeCalculationToTitan();
+    private final State[] trajectoryProbeOrbitTitan = trajectoryProbeCalculationOrbitTitan(trajectoryProbeToTitan[trajectoryProbeToTitan.length-1]);
 
     /**
      * Create MenuBar in the GUI
@@ -75,6 +77,7 @@ public class LineChartSample extends Application {
      * @return MenuBars
      */
     private MenuBar createMenuBar(Stage stage){
+
         MenuBar menuBar = new MenuBar();
 
         Menu solver = new Menu("Solvers");
@@ -85,28 +88,28 @@ public class LineChartSample extends Application {
 
         //Symplectic Euler
         eulerSymplectic_solver.setOnAction(e -> {
-            lineChart.getData().clear();
+            update("Days");
             SOLVER = 1;
             this.trajectory = trajectory();
         });
 
         //Implicit Euler
         eulerImplicit_solver.setOnAction(e -> {
-            lineChart.getData().clear();
+            update("Days");
             SOLVER = 2;
             this.trajectory = trajectory();
         });
 
         //Velocity-Verlet
         verletVelocity_solver.setOnAction(e -> {
-            lineChart.getData().clear();
+            update("Days");
             SOLVER = 3;
             this.trajectory = trajectory();
         });
 
         //4th-Runge-Kutta
         runge_solver.setOnAction(e -> {
-            lineChart.getData().clear();
+            update("Days");
             SOLVER = 4;
             this.trajectory = trajectory();
         });
@@ -149,11 +152,11 @@ public class LineChartSample extends Application {
         MenuItem sunV = new MenuItem("Sun Velocity");
         MenuItem sunP = new MenuItem("Sun Position");
         sunV.setOnAction(e -> {
-            lineChart.getData().clear();
+            update("Days");
             lineChart.getData().addAll(createSeries("Vel_Sun", 0, trajectory, false));
         });
         sunP.setOnAction(e -> {
-            lineChart.getData().clear();
+            update("Days");
             lineChart.getData().addAll(createSeries("Pos_Sun", 0, trajectory, true));
         });
         sun.getItems().add(sunP);
@@ -163,11 +166,11 @@ public class LineChartSample extends Application {
         MenuItem mercuryV = new MenuItem("Mercury Velocity");
         MenuItem mercuryP = new MenuItem("Mercury Position");
         mercuryV.setOnAction(e -> {
-            lineChart.getData().clear();
+            update("Days");
             lineChart.getData().addAll(createSeries("Vel_Mercury", 1, trajectory, false));
         });
         mercuryP.setOnAction(e -> {
-            lineChart.getData().clear();
+            update("Days");
             lineChart.getData().addAll(createSeries("Pos_Mercury", 1, trajectory, true));
         });
         mercury.getItems().add(mercuryP);
@@ -177,11 +180,11 @@ public class LineChartSample extends Application {
         MenuItem venusV = new MenuItem("Venus Velocity");
         MenuItem venusP = new MenuItem("Venus Position");
         venusV.setOnAction(e -> {
-            lineChart.getData().clear();
+            update("Days");
             lineChart.getData().addAll(createSeries("Vel_Venus", 2, trajectory, false));
         });
         venusP.setOnAction(e -> {
-            lineChart.getData().clear();
+            update("Days");
             lineChart.getData().addAll(createSeries("Pos_Venus", 2, trajectory, true));
         });
         venus.getItems().add(venusP);
@@ -191,11 +194,11 @@ public class LineChartSample extends Application {
         MenuItem earthV = new MenuItem("Earth Velocity");
         MenuItem earthP = new MenuItem("Earth Position");
         earthV.setOnAction(e -> {
-            lineChart.getData().clear();
+            update("Days");
             lineChart.getData().addAll(createSeries("Vel_Earth", 3, trajectory, false));
         });
         earthP.setOnAction(e -> {
-            lineChart.getData().clear();
+            update("Days");
             lineChart.getData().addAll(createSeries("Pos_Earth", 3, trajectory, true));
         });
         earth.getItems().add(earthP);
@@ -205,11 +208,11 @@ public class LineChartSample extends Application {
         MenuItem moonV = new MenuItem("Moon Velocity");
         MenuItem moonP = new MenuItem("Moon Position");
         moonV.setOnAction(e -> {
-            lineChart.getData().clear();
+            update("Days");
             lineChart.getData().addAll(createSeries("Vel_Moon", 4, trajectory, false));
         });
         moonP.setOnAction(e -> {
-            lineChart.getData().clear();
+            update("Days");
             lineChart.getData().addAll(createSeries("Pos_Moon", 4, trajectory, true));
         });
         moon.getItems().add(moonP);
@@ -219,11 +222,11 @@ public class LineChartSample extends Application {
         MenuItem marsV = new MenuItem("Mars Velocity");
         MenuItem marsP = new MenuItem("Mars Position");
         marsV.setOnAction(e -> {
-            lineChart.getData().clear();
+            update("Days");
             lineChart.getData().addAll(createSeries("Vel_Mars", 5, trajectory, false));
         });
         marsP.setOnAction(e -> {
-            lineChart.getData().clear();
+            update("Days");
             lineChart.getData().addAll(createSeries("Pos_Mars", 5, trajectory, true));
         });
         mars.getItems().add(marsP);
@@ -233,11 +236,11 @@ public class LineChartSample extends Application {
         MenuItem jupiterV = new MenuItem("Jupiter Velocity");
         MenuItem jupiterP = new MenuItem("Jupiter Position");
         jupiterV.setOnAction(e -> {
-            lineChart.getData().clear();
+            update("Days");
             lineChart.getData().addAll(createSeries("Vel_Jupiter", 6, trajectory, false));
         });
         jupiterP.setOnAction(e -> {
-            lineChart.getData().clear();
+            update("Days");
             lineChart.getData().addAll(createSeries("Pos_Jupiter", 6, trajectory, true));
         });
         jupiter.getItems().add(jupiterP);
@@ -247,11 +250,11 @@ public class LineChartSample extends Application {
         MenuItem saturnV = new MenuItem("Saturn Velocity");
         MenuItem saturnP = new MenuItem("Saturn Position");
         saturnV.setOnAction(e -> {
-            lineChart.getData().clear();
+            update("Days");
             lineChart.getData().addAll(createSeries("Vel_Saturn", 7, trajectory, false));
         });
         saturnP.setOnAction(e -> {
-            lineChart.getData().clear();
+            update("Days");
             lineChart.getData().addAll(createSeries("Pos_Saturn", 7, trajectory, true));
         });
         saturn.getItems().add(saturnP);
@@ -261,11 +264,11 @@ public class LineChartSample extends Application {
         MenuItem titanV = new MenuItem("Titan Velocity");
         MenuItem titanP = new MenuItem("Titan Position");
         titanV.setOnAction(e -> {
-            lineChart.getData().clear();
+            update("Days");
             lineChart.getData().addAll(createSeries("Vel_Titan", 8, trajectory, false));
         });
         titanP.setOnAction(e -> {
-            lineChart.getData().clear();
+            update("Days");
             lineChart.getData().addAll(createSeries("Pos_Titan", 8, trajectory, true));
         });
         titan.getItems().add(titanP);
@@ -275,11 +278,11 @@ public class LineChartSample extends Application {
         MenuItem uranusV = new MenuItem("Uranus Velocity");
         MenuItem uranusP = new MenuItem("Uranus Position");
         uranusV.setOnAction(e -> {
-            lineChart.getData().clear();
+            update("Days");
             lineChart.getData().addAll(createSeries("Vel_Uranus", 9, trajectory, false));
         });
         uranusP.setOnAction(e -> {
-            lineChart.getData().clear();
+            update("Days");
             lineChart.getData().addAll(createSeries("Pos_Uranus", 9, trajectory, true));
         });
         uranus.getItems().add(uranusP);
@@ -289,29 +292,48 @@ public class LineChartSample extends Application {
         MenuItem neptuneV = new MenuItem("Neptune Velocity");
         MenuItem neptuneP = new MenuItem("Neptune Position");
         neptuneV.setOnAction(e -> {
-            lineChart.getData().clear();
+            update("Days");
             lineChart.getData().addAll(createSeries("Vel_Neptune", 10, trajectory, false));
         });
         neptuneP.setOnAction(e -> {
-            lineChart.getData().clear();
+            update("Days");
             lineChart.getData().addAll(createSeries("Pos_Neptune", 10, trajectory, true));
         });
         neptune.getItems().add(neptuneP);
         neptune.getItems().add(neptuneV);
 
         //PROBE BAR
-        MenuItem probeV = new MenuItem("Probe Velocity");
-        MenuItem probeP = new MenuItem("Probe Position");
-        probeV.setOnAction(e -> {
-            lineChart.getData().clear();
-            lineChart.getData().addAll(createSeriesProbe(trajectoryProbe, false));
+        //To Titan
+        Menu toTitan = new Menu("To Titan");
+        MenuItem probeVToTitan = new MenuItem("Probe Velocity");
+        MenuItem probePToTitan = new MenuItem("Probe Position");
+        probeVToTitan.setOnAction(e -> {
+            update("Days");
+            lineChart.getData().addAll(createSeriesProbe(trajectoryProbeToTitan, false, 6*24));
         });
-        probeP.setOnAction(e -> {
-            lineChart.getData().clear();
-            lineChart.getData().addAll(createSeriesProbe(trajectoryProbe, true));
+        probePToTitan.setOnAction(e -> {
+            update("Days");
+            lineChart.getData().addAll(createSeriesProbe(trajectoryProbeToTitan, true, 6*24));
         });
-        probe.getItems().add(probeP);
-        probe.getItems().add(probeV);
+        toTitan.getItems().add(probePToTitan);
+        toTitan.getItems().add(probeVToTitan);
+        probe.getItems().add(toTitan);
+
+        //Orbit Titan
+        Menu orbitTitan = new Menu("Orbit Titan");
+        MenuItem probeVOrbitTitan = new MenuItem("Probe Velocity");
+        MenuItem probePOrbitTitan = new MenuItem("Probe Position");
+        probeVOrbitTitan.setOnAction(e -> {
+            update("1 point = 2 hours 24 minutes");
+            lineChart.getData().addAll(createSeriesProbe(trajectoryProbeOrbitTitan, false, 6*24));
+        });
+        probePOrbitTitan.setOnAction(e -> {
+            update("1 point = 2 hours 24 minutes");
+            lineChart.getData().addAll(createSeriesProbe(trajectoryProbeOrbitTitan, true, 6*24));
+        });
+        orbitTitan.getItems().add(probePOrbitTitan);
+        orbitTitan.getItems().add(probeVOrbitTitan);
+        probe.getItems().add(orbitTitan);
 
         //Adds of bars into a MenuBar
         menuBar.getMenus().addAll(sun, mercury, venus, earth, moon, mars,
@@ -320,12 +342,17 @@ public class LineChartSample extends Application {
         return menuBar;
     }
 
+    private void update(String duration){
+        lineChart.getData().clear();
+        lineChart.getXAxis().setLabel(duration);
+    }
+
     /**
      *
      * @param planet Name of the planet
      * @param numberPlanet index of the planet
      * @param trajectory Data of trajectories
-     * @param flag TRUE = Position, FALSE = VEloicty
+     * @param flag TRUE = Position, FALSE = Velocity
      * @return array of the series for the line chart
      */
     private ArrayList<XYChart.Series<Number, Number>> createSeries(String planet, int numberPlanet, State[] trajectory, boolean flag){
@@ -411,54 +438,45 @@ public class LineChartSample extends Application {
      * Calculate Trajectories
      * @return Trajectories of the probe
      */
-    private State[] trajectoryProbeCalculation(){
-
-        double day = 24*60*60;
-        double year = 100 * day;
-
+    private State[] trajectoryProbeCalculationToTitan(){
 
         ProbeSimulator simulator = new ProbeSimulator();
 
         simulator.trajectory(STARTPOS, VELOCITIES[SOLVER-1], FINALTIME[SOLVER-1], STEPSIZE);
 
-        State[] state = simulator.getTrajectory();
-        int length = state.length - 1;
+        return simulator.getTrajectory();
+    }
 
-        Vector3d orbitVelocity = new OrbitPlanet().orbitSpeed((Vector3d) state[length].position, state[length].celestialBody.get(8).getPosition());
+    /**
+     * Calculate Trajectories
+     * @return Trajectories of the probe
+     */
+    private State[] trajectoryProbeCalculationOrbitTitan(State currentState){
 
-        orbitVelocity = (Vector3d) orbitVelocity.add(state[length].celestialBody.get(8).getVelocity());
+        double day = 24*60*60;
+        double year = 30 * day;
 
-        State cloneState = state[length].clone();
+        State cloneState = currentState.clone();
+
+
+        Vector3d orbitVelocity = new OrbitPlanet().orbitSpeed((Vector3d) cloneState.position, cloneState.celestialBody.get(8).getPosition());
+
+        orbitVelocity = (Vector3d) orbitVelocity.add(cloneState.celestialBody.get(8).getVelocity());
+
         cloneState.velocity = orbitVelocity;
         cloneState.celestialBody.get(11).setVelocity(orbitVelocity);
 
         ODESolver simulateODE = new ODESolver();
 
-        State[] state2 = (State[]) simulateODE.solve(new ODEFunction(), cloneState, year, 600);
-
-        int maxLength = state.length + state2.length;
-        State[] result = new State[maxLength];
-
-        for (int i = 0; i < state.length; i++) {
-            result[i] = state[i];
-        }
-        System.out.println(state[state.length-1].celestialBody.get(8).getPosition().dist(state[state.length-1].celestialBody.get(11).getPosition())-2575.5e3);
-
-        int point = 0;
-        for (int i = state.length; i < state2.length + state.length; i++) {
-            System.out.println(state2[point].celestialBody.get(8).getPosition().dist(state2[point].celestialBody.get(11).getPosition())-2575.5e3);
-            result[i] = state2[point++];
-        }
-
-        return result;
+        return (State[]) simulateODE.solve(new ODEFunction(), cloneState, year, 60);
     }
 
     /**
      * @param trajectory Data of trajectories
-     * @param flag TRUE = Position, FALSE = VEloicty
+     * @param flag TRUE = Position, FALSE = Velocity
      * @return array of the series for the line chart
      */
-    private ArrayList<XYChart.Series<Number, Number>> createSeriesProbe(State[] trajectory, boolean flag){
+    private ArrayList<XYChart.Series<Number, Number>> createSeriesProbe(State[] trajectory, boolean flag, int scaleData){
         ArrayList<XYChart.Series<Number, Number>> arrayList = new ArrayList<>();
 
 
@@ -472,20 +490,24 @@ public class LineChartSample extends Application {
         final XYChart.Series<Number, Number> series6 = new XYChart.Series<>();
         series6.setName("Z");
 
-        int scaleOneDay = trajectory.length/(6*24);
+        int scaleOneDay = trajectory.length/(scaleData);
         for (int i = 0; i < scaleOneDay; i++) {
             int point = (i+1);
             //Solver
             Vector3d body;
+
             if(flag) {
-                body = (Vector3d) trajectory[(6*24)*i].position;
+                body = (Vector3d) trajectory[(scaleData)*i].position;
             } else {
-                body = (Vector3d) trajectory[(6*24)*i].velocity;
+                body = (Vector3d) trajectory[(scaleData)*i].velocity;
             }
+
+
             series4.getData().add(new XYChart.Data<Number, Number>(point, body.getX()));
             series5.getData().add(new XYChart.Data<Number, Number>(point, body.getY()));
             series6.getData().add(new XYChart.Data<Number, Number>(point, body.getZ()));
         }
+
 
         arrayList.add(series4);
         arrayList.add(series5);
