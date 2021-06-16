@@ -133,25 +133,17 @@ public class UI extends Application{
 
 
 		PerspectiveCamera camera = new PerspectiveCamera(true);
-		camera.setFieldOfView(25); // setting the camera to be telephoto
 		camera.translateXProperty().set(0); // setting the camera in the solar system
 		camera.translateYProperty().set(0);  // setting the camera in the solar system
 		camera.translateZProperty().set(-7000); // moving the camera back in the scene
-		camera.setRotationAxis(Rotate.Y_AXIS);
-		camera.setRotate(0);
 		camera.setNearClip(1);
 		camera.setFarClip(100000);
 
-		Rotate yRotate = new Rotate(0, Rotate.Y_AXIS); // Lets the camera rotate around the Y Axis
-
-		Rotate cameraRotate = new Rotate(0, Rotate.Y_AXIS);
 		Translate pivot = new Translate();
 
 
 		camera.getTransforms().addAll(
 				pivot,
-				yRotate,
-				cameraRotate,
 				new Translate(0,0,-500)
 		);
 
@@ -170,10 +162,6 @@ public class UI extends Application{
 
 		primaryStage.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
 			switch (event.getCode()) {
-				case V -> yRotate.angleProperty().set(yRotate.getAngle() + 10);
-
-				case B -> yRotate.setAngle(yRotate.getAngle() - 10);
-
 				case F -> {
 					camera.translateYProperty().set(camera.getTranslateY() + 500);
 				}
@@ -226,9 +214,12 @@ public class UI extends Application{
 		scene.setCamera(camera);
 		primaryStage.setTitle("Flight to Titan - Group 10");
 		primaryStage.setScene(scene);
-		primaryStage.show();
 		path();
+		primaryStage.show();
+		ptr.play();
 	}
+
+	private ParallelTransition ptr = new ParallelTransition();
 
 	/**
 	 * Calculate a path for every planet
@@ -286,7 +277,7 @@ public class UI extends Application{
 			f.getOrbit()[i].getShape().translateZProperty().set(0);
 		}
 
-		ParallelTransition ptr = new ParallelTransition();
+
 		//Create a path for the planet (also here we scale coordinates)
 		for (int i = 0; i < state[0].celestialBody.size(); i++) {
 			Polyline polyline = new Polyline();
@@ -308,6 +299,8 @@ public class UI extends Application{
 
 			//Insert a path and start animation
 			polyline.getPoints().addAll(path);
+			polyline.setStroke(Color.BLACK);
+
 			PathTransition transition = new PathTransition();
 			transition.setNode(f.getOrbit()[i].getShape());
 			transition.setDuration(Duration.seconds(60));
@@ -316,7 +309,6 @@ public class UI extends Application{
 
 			ptr.getChildren().add(transition);
 		}
-		ptr.play();
 	}
 
 	private ImageView preImage(){
