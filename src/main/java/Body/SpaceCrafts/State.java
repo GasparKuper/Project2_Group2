@@ -138,4 +138,6 @@ public class State implements StateInterface {
 	public double getFuel() {
 		return this.fuel;
 	}
+
+	public void updateLander(Lander newLander) { this.lander = newLander; }
 }
