@@ -7,6 +7,8 @@ import Body.Vector.Vector2d;
 import Body.Vector.Vector3d;
 import Run.CalculationForProbe.OpenLoopBruteForce;
 
+import static Constant.Constant.STEPSIZE;
+
 public class OpenLoopController {
 
     private final double DISTANCE_TO_CENTER = 2.0;
@@ -47,8 +49,8 @@ public class OpenLoopController {
 
         // TODO: Set solarSystem.length to time of landing
         for (int i = landing + 1; i < solarSystem.length; i++) {
-            solarSystem[i].updateLander(step(t, solarSystem[i-1].getLander()));
-            t++;
+            solarSystem[i].updateLander(step(t, FORCE, solarSystem[i-1].getLander()));
+            t = t + STEPSIZE;
         }
 
         return solarSystem;
@@ -60,7 +62,7 @@ public class OpenLoopController {
      * @return movement of the probe at step t
      **/
     // TODO: implement fuel use
-    public Lander step(double t, Lander lander) {
+    public Lander step(double t, double force, Lander lander) {
 
         Lander newLander = new Lander(lander.getPosition(), lander.getVelocity(), lander.getMass(), lander.getFuel(), lander.getRotation(), lander.getRotationVelocity());
 
