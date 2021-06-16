@@ -106,8 +106,8 @@ public class OpenLoopController {
         INIT_ANG_VEL = 0;
 
         Vector2d velocity = new Vector2d();
-        velocity.setX(FORCE * Math.sin(lander.getRotation()));
-        velocity.setY(FORCE * Math.cos(lander.getRotation()) - G);
+        velocity.setX(lander.getVelocity().getY());
+        velocity.setY(lander.getVelocity().getX());
         lander.setVelocity(velocity);
         INIT_VEL = velocity;
 
