@@ -13,6 +13,8 @@ public abstract class Object {
     protected double fuel;
     protected Vector2d rotation;
     protected Vector2d rotationVelocity;
+    protected boolean falling = true;
+    protected boolean jumping = false;
 
     public Object(Vector2d position, Vector2d velocity, double fuel, Vector2d rotation, Vector2d rotationVelocity, ID id){
         this.position = position;
@@ -30,7 +32,7 @@ public abstract class Object {
     }
 
 
-
+    public abstract Rectangle getBounds();
 
     public abstract void tick();
     public abstract void render(Graphics2D g);
@@ -75,6 +77,26 @@ public abstract class Object {
     public Vector2d getRotationVelocity() { return this.rotationVelocity; }
 
     public void setRotationVelocity(Vector2d rotationVelocity) { this.rotationVelocity = rotationVelocity; }
+
+    public ID getId(){
+        return this.id;
+    }
+
+    public void setXVelocity(double velocity) {
+        this.velocity.setX(velocity);
+    }
+
+    public double getXVelocity() {
+        return this.velocity.getX();
+    }
+
+    public void setYVelocity(double velocity) {
+        this.velocity.setY(velocity);
+    }
+
+    public double getYVelocity() {
+        return this.velocity.getY();
+    }
 
 
 }

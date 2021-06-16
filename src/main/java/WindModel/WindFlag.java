@@ -8,20 +8,25 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 
 
-public class windFlag extends Object{
+public class WindFlag extends Object{
 
     private int rotationAngle;
     private Point2D movingPoint;
     private Point2D fixedPoint;
 
 
-    public windFlag(Vector2d position) {
+    public WindFlag(Vector2d position) {
         super(position);
         this.velocity = new Vector2d(0,0);
         this.rotationVelocity = new Vector2d(0,0);
         this.rotation = new Vector2d(0,0);
         this.movingPoint = new Point2D.Double(position.getX(),position.getY()+20);
-        this.id = ID.WindFlag; // stimmt das?
+        this.id = ID.WindFlag;
+    }
+
+    @Override
+    public Rectangle getBounds() {
+        return null;
     }
 
     @Override
