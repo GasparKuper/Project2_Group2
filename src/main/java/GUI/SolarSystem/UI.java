@@ -277,9 +277,6 @@ public class UI extends Application{
 			 result[i] = state3[point++];
 		 }
 
-		 OpenLoopController controller = new OpenLoopController();
-		 controller.land(result);
-
 
 	 //start animation
 	 this.smoothUpdate(result);
