@@ -44,21 +44,21 @@ public class OpenLoopBruteForce {
     public double findThrust() {
         OpenLoopController controller = new OpenLoopController();
         double t = 0;
-        double force = (maximumThrust + minimumThrust) / i;
+        double u_mainThrust = (maximumThrust + minimumThrust) / i;
 
         Lander testLander = lander;
         while (testLander.getPosition().getY() > 0) {
-            testLander = controller.step(t, force, testLander);
+            testLander = controller.step(t, u_mainThrust, 0, testLander);
             t = t + STEPSIZE;
         }
 
         if (isSafeLanding(testLander))
-            return force;
+            return u_mainThrust;
 
         if (testLander.getVelocity().getY() > 0)
-            maximumThrust = force;
+            maximumThrust = u_mainThrust;
 
-        else minimumThrust = force;
+        else minimumThrust = u_mainThrust;
 
         System.out.println("Velocity at landing: " + testLander.getVelocity().getY() + "\n" + "Thrust between: " + minimumThrust + " and " + maximumThrust);
 
@@ -67,5 +67,6 @@ public class OpenLoopBruteForce {
 
         return findThrust();
     }
+
 
 }

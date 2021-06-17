@@ -20,7 +20,7 @@ public class OpenLoopController {
     public final double G = 1.352;
     private final double RADIUS_TITAN = 2575.5e3;
     private double t = 0;
-    private double FORCE;
+    private double U_MainThrust;
     private static Vector2d INIT_POS;
     private static Vector2d INIT_VEL;
     private static double INIT_ANG_POS;
@@ -50,11 +50,11 @@ public class OpenLoopController {
         solarSystem[landing].updateLander(setLander(solarSystem[landing], solarSystem[landing].getLander(), solarSystem[landing].celestialBody.get(8).getPosition(), (Vector3d) solarSystem[landing].position));
 
         OpenLoopBruteForce calculator = new OpenLoopBruteForce(solarSystem[landing].getLander());
-        FORCE = calculator.findThrust();
+        U_MainThrust = calculator.findThrust();
 
         // TODO: Set solarSystem.length to time of landing
         for (int i = landing + 1; i < solarSystem.length; i++) {
-            solarSystem[i].updateLander(step(t, FORCE, solarSystem[i-1].getLander()));
+            solarSystem[i].updateLander(step(t, U_MainThrust, 0, solarSystem[i-1].getLander()));
             t = t + STEPSIZE;
         }
 
@@ -67,31 +67,44 @@ public class OpenLoopController {
      * @return movement of the probe at step t
      **/
     // TODO: implement fuel use
-    public Lander step(double t, double force, Lander lander) {
+    public Lander step(double t, double u_mainThrust, double v_sideThrust, Lander lander) {
+
+        //todo Temporary
+        int step = 1;
 
         Lander newLander = new Lander(lander.getPosition(), lander.getVelocity(), lander.getMass(), lander.getFuel(), lander.getRotation(), lander.getRotationVelocity());
 
         Vector2d position = new Vector2d();
         //position.setX(- force * Math.sin(lander.getRotation() + INIT_VEL.getX() * t + INIT_POS.getX()));
         //position.setY(- force * Math.cos(lander.getRotation()) - Math.sqrt(t) * G / 2 + INIT_VEL.getY() * t + INIT_POS.getY());
-        position.setX(lander.getPosition().getX() + lander.getVelocity().getX() / STEPSIZE);
-        position.setY(lander.getPosition().getY() + lander.getVelocity().getY() / STEPSIZE);
+
+        //todo multiply step size
+        //TODO IMPORTANT: V(t+1) = V + V_old * stepsize + 1/2 * V_acc * stepsize^2
+        position.setX(lander.getPosition().getX() + lander.getVelocity().getX() * step + 0.5 * u_mainThrust * Math.sin(lander.getRotation()));
+
+        position.setY(lander.getPosition().getY() + lander.getVelocity().getY() * step + 0.5 * u_mainThrust * Math.cos(lander.getRotation()) - G);
+
         newLander.setPosition(position);
 
         Vector2d velocity = new Vector2d();
         //velocity.setX(- force * Math.cos(lander.getRotation()) + INIT_VEL.getX());
         //velocity.setY(- force * Math.sin(lander.getRotation()) - G * t + INIT_VEL.getY());
-        velocity.setX(lander.getVelocity().getX() + force * Math.sin(lander.getRotation()));
-        velocity.setY(lander.getVelocity().getY() + force * Math.cos(lander.getRotation()) - G);
+
+        //todo multiply step size
+        velocity.setX(lander.getVelocity().getX() + u_mainThrust * Math.sin(lander.getRotation()));
+
+        velocity.setY(lander.getVelocity().getY() + u_mainThrust * Math.cos(lander.getRotation()) - G);
 
         //Wind
 //        velocity = velocity.add(lander.generateRandomWind());
 
         newLander.setVelocity(velocity);
 
-        newLander.setRotation(Math.sqrt(t) * force / 2 + INIT_ANG_VEL * t + INIT_ANG_POS );
+        //Todo correct force should be V not U
+        newLander.setRotation(Math.sqrt(t) * v_sideThrust / 2 + INIT_ANG_VEL * t + INIT_ANG_POS );
 
-        newLander.setRotationVelocity(force * t + INIT_ANG_VEL);
+        //Todo correct force should be V not U
+        newLander.setRotationVelocity(v_sideThrust * t + INIT_ANG_VEL);
 
         return newLander;
     }
