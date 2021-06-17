@@ -74,15 +74,15 @@ public class OpenLoopController {
         Vector2d position = new Vector2d();
         //position.setX(- force * Math.sin(lander.getRotation() + INIT_VEL.getX() * t + INIT_POS.getX()));
         //position.setY(- force * Math.cos(lander.getRotation()) - Math.sqrt(t) * G / 2 + INIT_VEL.getY() * t + INIT_POS.getY());
-        position.setX(lander.getPosition().getX() + lander.getVelocity().getX() / STEPSIZE);
-        position.setY(lander.getPosition().getY() + lander.getVelocity().getY() / STEPSIZE);
+        position.setX(lander.getPosition().getX() + lander.getVelocity().getX() * STEPSIZE);
+        position.setY(lander.getPosition().getY() + lander.getVelocity().getY() * STEPSIZE);
         newLander.setPosition(position);
 
         Vector2d velocity = new Vector2d();
         //velocity.setX(- force * Math.cos(lander.getRotation()) + INIT_VEL.getX());
         //velocity.setY(- force * Math.sin(lander.getRotation()) - G * t + INIT_VEL.getY());
-        velocity.setX(lander.getVelocity().getX() + force * Math.sin(lander.getRotation()));
-        velocity.setY(lander.getVelocity().getY() + force * Math.cos(lander.getRotation()) - G);
+        velocity.setX(lander.getVelocity().getX() + force * Math.sin(lander.getRotation()) * STEPSIZE);
+        velocity.setY(lander.getVelocity().getY() + force * (Math.cos(lander.getRotation()) - G) * STEPSIZE);
 
         //Wind
 //        velocity = velocity.add(lander.generateRandomWind());
