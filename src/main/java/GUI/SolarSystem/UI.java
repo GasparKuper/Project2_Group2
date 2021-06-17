@@ -6,6 +6,7 @@ import Body.Planets.Data;
 import Body.Planets.PlanetBody;
 import Body.SpaceCrafts.State;
 import Body.Vector.Vector3d;
+import Controller.OpenLoopController;
 import Interfaces.ODESolverInterface;
 import Interfaces.Vector3dInterface;
 import ODESolver.Function.ODEFunction;
@@ -275,6 +276,9 @@ public class UI extends Application{
 		 for (int i = state2.length + state.length; i < maxLength; i++) {
 			 result[i] = state3[point++];
 		 }
+
+		 //OpenLoopController controller = new OpenLoopController();
+		 //controller.land(result);
 
 
 	 //start animation
