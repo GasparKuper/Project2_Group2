@@ -14,12 +14,14 @@ public class WindFlag extends Object{
     private Point2D movingPoint;
     private Point2D fixedPoint;
 
+    private double SCALE = 1000;
+
 
     public WindFlag(Vector2d position) {
         super(position);
         this.velocity = new Vector2d(0,0);
-        this.rotationVelocity = new Vector2d(0,0);
-        this.rotation = new Vector2d(0,0);
+        this.rotationVelocity = 0;
+        this.rotation = 0;
         this.movingPoint = new Point2D.Double(position.getX(),position.getY()+20);
         this.id = ID.WindFlag;
     }
@@ -38,7 +40,7 @@ public class WindFlag extends Object{
     public void render(Graphics2D g2d) {
 
         g2d.setColor(Color.WHITE);
-        this.fixedPoint = new Point2D.Double(position.getX(),position.getY());
+        this.fixedPoint = new Point2D.Double(position.getX() , position.getY()/SCALE);
         Line2D line = new Line2D.Double(fixedPoint.getX(),fixedPoint.getY(),movingPoint.getX(),movingPoint.getY());
         g2d.draw(line);
 

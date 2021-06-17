@@ -7,11 +7,8 @@ import java.awt.image.BufferStrategy;
 
 public class WindModel extends Canvas implements Runnable{
 
-    private static final long serialVersionUID = 1;
-
     public static final int HEIGHT = 600, WIDTH = 900;
     private Thread thread;
-    private HUD hud;
 
     private boolean running = false;
     private Handler handler;
@@ -20,10 +17,8 @@ public class WindModel extends Canvas implements Runnable{
         handler = new Handler();
         this.addKeyListener(new KeyInput(handler));
 
-        new RandomWind(handler); // initializing the random wind
-
         // adding the Landing Module
-        handler.addObject(new LandingModule(new Vector2d(225,600),new Vector2d(1,-1.352),0,new Vector2d(0,0),new Vector2d(0,0),ID.LandingModule));
+        handler.addObject(new LandingModule(new Vector2d(225,600),new Vector2d(1,-1.352),0,0,0,ID.LandingModule));
 
         // adding the Wind Flags
         double count = 0;
@@ -84,7 +79,6 @@ public class WindModel extends Canvas implements Runnable{
 
     private void tick(){
         handler.tick();
-        //hud.tick();
     }
 
     // renders the window
@@ -101,7 +95,6 @@ public class WindModel extends Canvas implements Runnable{
         g.fillRect(0,0,WIDTH,HEIGHT);
 
         handler.render(g);
-        //hud.render(g);
 
         g.dispose();
         bs.show();
@@ -110,12 +103,12 @@ public class WindModel extends Canvas implements Runnable{
 
     public static int clamp(int var, int min, int max){
         if(var >= max)
-                return var = max;
-            else if(var <= min)
-                return var = min;
-            else
-                return var;
-            }
+            return var = max;
+        else if(var <= min)
+            return var = min;
+        else
+            return var;
+    }
 
 
     public static void main(String []args){

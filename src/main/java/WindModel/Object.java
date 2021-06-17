@@ -11,12 +11,10 @@ public abstract class Object {
     protected Vector2d velocity;
     protected double mass;
     protected double fuel;
-    protected Vector2d rotation;
-    protected Vector2d rotationVelocity;
-    protected boolean falling = true;
-    protected boolean jumping = false;
+    protected double rotation;
+    protected double rotationVelocity;
 
-    public Object(Vector2d position, Vector2d velocity, double fuel, Vector2d rotation, Vector2d rotationVelocity, ID id){
+    public Object(Vector2d position, Vector2d velocity, double fuel, double rotation, double rotationVelocity, ID id){
         this.position = position;
         this.velocity = velocity;
         this.mass = mass;
@@ -30,7 +28,6 @@ public abstract class Object {
     public Object(Vector2d position){
         this.position = position;
     }
-
 
     public abstract Rectangle getBounds();
 
@@ -70,13 +67,13 @@ public abstract class Object {
         this.fuel = fuel;
     }
 
-    public Vector2d getRotation() { return this.rotation; }
+    public double getRotation() { return this.rotation; }
 
-    public void setRotation(Vector2d rotation) { this.rotation = rotation; }
+    public void setRotation(double rotation) { this.rotation = rotation; }
 
-    public Vector2d getRotationVelocity() { return this.rotationVelocity; }
+    public double getRotationVelocity() { return this.rotationVelocity; }
 
-    public void setRotationVelocity(Vector2d rotationVelocity) { this.rotationVelocity = rotationVelocity; }
+    public void setRotationVelocity(double rotationVelocity) { this.rotationVelocity = rotationVelocity; }
 
     public ID getId(){
         return this.id;
