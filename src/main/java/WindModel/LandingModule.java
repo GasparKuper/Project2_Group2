@@ -6,12 +6,12 @@ import java.awt.*;
 
 public class LandingModule extends Object{
 
-    Vector2d gravityTitan = new Vector2d(0,-0.1325);
+    Vector2d gravityTitan = new Vector2d(0,-1.352);
 
-    public LandingModule(Vector2d position, Vector2d velocity, double fuel, Vector2d rotation, Vector2d rotationVelocity, ID id){
+    public LandingModule(Vector2d position, Vector2d velocity, double fuel, double rotation, double rotationVelocity, ID id){
         super(position, velocity, fuel, rotation, rotationVelocity, id);
         setMass(6000);
-        this.rotationVelocity = new Vector2d(1,0);
+        this.rotationVelocity = 1;
     }
 
     public void tick() {
@@ -20,8 +20,10 @@ public class LandingModule extends Object{
 
         // updating the position, I think this is Euler Solver (not sure to be honest)
         position = position.add(velocity);
+
         // Velocity influenced by wind
         velocity = velocity.add(generateRandomWind());
+
         // Velocity influenced by gravity
         velocity = velocity.add(gravityTitan);
 
@@ -42,6 +44,10 @@ public class LandingModule extends Object{
 
     }
 
+
+    //TODO We launch the lander at the distance approximately 200.000 meters from Titan
+    //todo Do wind force in meter per seconds
+    //todo Scale the data only for representation in the GUI (No kilometers in the calculation)
     public Vector2d generateRandomWind(){
 
         int MAX_DEVIATION_WIND = 12;
@@ -49,6 +55,7 @@ public class LandingModule extends Object{
 
         // creating a random number between the max and min Deviation constants
         int random_int = (int)Math.floor(Math.random()*(MAX_DEVIATION_WIND - MIN_DEVIATION_WIND +1)+ MIN_DEVIATION_WIND);
+
         double randomDeviation = random_int * 0.01;
 
         // once the lander is below 300 km the wind changes the direction ! Wow !
