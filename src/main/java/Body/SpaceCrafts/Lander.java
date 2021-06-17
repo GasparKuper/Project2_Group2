@@ -36,6 +36,37 @@ public class Lander {
         this.fuel = fuel;
     }
 
+    public Vector2d generateRandomWind(){
+
+        int MAX_DEVIATION_WIND = 12;
+        int MIN_DEVIATION_WIND = 8;
+
+        // creating a random number between the max and min Deviation constants
+        int random_int = (int)Math.floor(Math.random()*(MAX_DEVIATION_WIND - MIN_DEVIATION_WIND +1)+ MIN_DEVIATION_WIND);
+
+        double randomDeviation = random_int * 0.01;
+
+        // once the lander is below 300 km the wind changes the direction ! Wow !
+        if (this.position.getY() < 300){
+            randomDeviation = randomDeviation * -1;
+        }
+
+        // implementing the function of wind strength according to height
+        double yScalar = 0.004 * position.getY() * position.getY() + 0.173 * position.getY();
+        yScalar = yScalar * 0.0001;
+
+        // adding the yScalar to the randomDeviation
+        randomDeviation = randomDeviation + (randomDeviation * yScalar);
+
+        Vector2d randomWindVector = new Vector2d(randomDeviation, 0);
+
+        return randomWindVector;
+    }
+
+    public Lander clone(){
+        return new Lander(position, velocity, mass, fuel, rotation, rotationVelocity);
+    }
+
     public Vector2d getPosition() {
         return position;
     }

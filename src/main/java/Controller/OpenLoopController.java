@@ -5,9 +5,14 @@ import Body.SpaceCrafts.Lander;
 import Body.SpaceCrafts.State;
 import Body.Vector.Vector2d;
 import Body.Vector.Vector3d;
+import ODESolver.Function.ODEFunction;
+import ODESolver.ODESolver;
+import ODESolver.ProbeSimulator;
 import Run.CalculationForProbe.OpenLoopBruteForce;
+import Run.CalculationForProbe.OrbitPlanet;
 
-import static Constant.Constant.STEPSIZE;
+import static Constant.Constant.*;
+import static Constant.Constant.SOLVER;
 
 public class OpenLoopController {
 
@@ -78,6 +83,10 @@ public class OpenLoopController {
         //velocity.setY(- force * Math.sin(lander.getRotation()) - G * t + INIT_VEL.getY());
         velocity.setX(lander.getVelocity().getX() + force * Math.sin(lander.getRotation()));
         velocity.setY(lander.getVelocity().getY() + force * Math.cos(lander.getRotation()) - G);
+
+        //Wind
+        velocity = velocity.add(lander.generateRandomWind());
+
         newLander.setVelocity(velocity);
 
         newLander.setRotation(Math.sqrt(t) * force / 2 + INIT_ANG_VEL * t + INIT_ANG_POS );
@@ -116,5 +125,38 @@ public class OpenLoopController {
         INIT_VEL = velocity;
 
         return lander;
+    }
+
+    /**
+     * Simulation of the solar system
+     * @return The State with the minimal distance between Titan and Probe
+     */
+    public State[] probeOnTheOrbitTitan(){
+        ProbeSimulator simulator = new ProbeSimulator();
+
+        simulator.trajectory(STARTPOS, VELOCITIES[SOLVER-1], FINALTIME[SOLVER-1], STEPSIZE);
+
+        State[] toTitanTrajectory = simulator.getTrajectory();
+
+        double day = 24*60*60;
+        double year = 30 * day;
+
+        State cloneState = toTitanTrajectory[toTitanTrajectory.length - 1].clone();
+
+        Vector3d orbitVelocity = new OrbitPlanet().orbitSpeed((Vector3d) cloneState.position, cloneState.celestialBody.get(8).getPosition());
+
+        orbitVelocity = (Vector3d) orbitVelocity.add(cloneState.celestialBody.get(8).getVelocity());
+
+        cloneState.velocity = orbitVelocity;
+        cloneState.celestialBody.get(11).setVelocity(orbitVelocity);
+
+        State[] orbitTitan = (State[]) new ODESolver().solve(new ODEFunction(), cloneState, year, 60);
+
+        return orbitTitan;
+    }
+
+    public static void main(String[] args) {
+        OpenLoopController mission = new OpenLoopController();
+        mission.land(mission.probeOnTheOrbitTitan());
     }
 }
