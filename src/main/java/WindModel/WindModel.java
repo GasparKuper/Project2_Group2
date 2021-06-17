@@ -11,7 +11,6 @@ public class WindModel extends Canvas implements Runnable{
 
     public static final int HEIGHT = 600, WIDTH = 900;
     private Thread thread;
-    private HUD hud;
 
     private boolean running = false;
     private Handler handler;
@@ -84,7 +83,6 @@ public class WindModel extends Canvas implements Runnable{
 
     private void tick(){
         handler.tick();
-        //hud.tick();
     }
 
     // renders the window
@@ -101,7 +99,6 @@ public class WindModel extends Canvas implements Runnable{
         g.fillRect(0,0,WIDTH,HEIGHT);
 
         handler.render(g);
-        //hud.render(g);
 
         g.dispose();
         bs.show();
