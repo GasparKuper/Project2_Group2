@@ -33,8 +33,6 @@ public class WindFlag extends Object{
 
     @Override
     public void tick() {
-        this.fixedPoint = new Point2D.Double(position.getX(), position.getY()/SCALE);
-
         movingPoint = rotateLineClockWise(fixedPoint, movingPoint, -1);
     }
 
