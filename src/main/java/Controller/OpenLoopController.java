@@ -30,10 +30,10 @@ public class OpenLoopController {
     public State[] land(State[] solarSystem) {
 
         int landing = 0;
-        double distanceTitanToProbe = solarSystem[0].celestialBody.get(11).getPosition().dist(solarSystem[0].position);
+        double distanceTitanToProbe = solarSystem[0].celestialBody.get(8).getPosition().dist(solarSystem[0].position);
 
         for (int i = 0; i < solarSystem.length; i++) {
-            PlanetBody titan = solarSystem[i].celestialBody.get(11);
+            PlanetBody titan = solarSystem[i].celestialBody.get(8);
 
             if (solarSystem[i].position.dist(titan.getPosition()) < distanceTitanToProbe) {
                 distanceTitanToProbe = solarSystem[i].position.dist(titan.getPosition());
@@ -42,7 +42,7 @@ public class OpenLoopController {
         }
 
         // TODO: Find time of landing and use this for position Titan
-        solarSystem[landing].updateLander(setLander(solarSystem[landing], solarSystem[landing].getLander(), solarSystem[landing].celestialBody.get(11).getPosition(), (Vector3d) solarSystem[landing].position));
+        solarSystem[landing].updateLander(setLander(solarSystem[landing], solarSystem[landing].getLander(), solarSystem[landing].celestialBody.get(8).getPosition(), (Vector3d) solarSystem[landing].position));
 
         OpenLoopBruteForce calculator = new OpenLoopBruteForce(solarSystem[landing].getLander());
         FORCE = calculator.findThrust();
