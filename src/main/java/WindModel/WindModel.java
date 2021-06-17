@@ -13,12 +13,12 @@ public class WindModel extends Canvas implements Runnable{
     private boolean running = false;
     private Handler handler;
 
-    public WindModel(LandingModule lander){
+    public WindModel(){
         handler = new Handler();
         this.addKeyListener(new KeyInput(handler));
 
         // adding the Landing Module
-        handler.addObject(lander);
+        handler.addObject(new LandingModule(new Vector2d(225,600),new Vector2d(1,-1.352),0,0,0,ID.LandingModule));
 
         // adding the Wind Flags
         double count = 0;
@@ -103,11 +103,17 @@ public class WindModel extends Canvas implements Runnable{
 
     public static int clamp(int var, int min, int max){
         if(var >= max)
-                return max;
-            else if(var <= min)
-                return min;
-            else
-                return var;
-            }
+            return var = max;
+        else if(var <= min)
+            return var = min;
+        else
+            return var;
+    }
+
+
+    public static void main(String []args){
+        new WindModel();
+
+    }
 
 }
