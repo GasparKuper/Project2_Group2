@@ -85,7 +85,7 @@ public class OpenLoopController {
         velocity.setY(lander.getVelocity().getY() + force * Math.cos(lander.getRotation()) - G);
 
         //Wind
-        velocity = velocity.add(lander.generateRandomWind());
+//        velocity = velocity.add(lander.generateRandomWind());
 
         newLander.setVelocity(velocity);
 
