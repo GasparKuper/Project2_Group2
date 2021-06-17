@@ -6,6 +6,7 @@ import Body.Planets.Data;
 import Body.Planets.PlanetBody;
 import Body.SpaceCrafts.State;
 import Body.Vector.Vector3d;
+import Controller.OpenLoopController;
 import Interfaces.ODESolverInterface;
 import Interfaces.Vector3dInterface;
 import ODESolver.Function.ODEFunction;
@@ -220,6 +221,7 @@ public class UI extends Application{
 	}
 
 	private ParallelTransition ptr = new ParallelTransition();
+	private OpenLoopController controller = new OpenLoopController();
 
 	/**
 	 * Calculate a path for every planet
@@ -261,6 +263,8 @@ public class UI extends Application{
 		 for (int i = state.length; i < state2.length + state.length; i++) {
 			 result[i] = state2[point++];
 		 }
+
+		 //result = controller.land(result);
 
 
 	 //start animation

@@ -22,7 +22,7 @@ public class Lander {
     //Rotation velocity
     private double rotationVelocity;
 
-    public Lander(Vector2d position, Vector2d velocity, double mass, double fuel, Vector2d rotation, Vector2d rotationVelocity){
+    public Lander(Vector2d position, Vector2d velocity, double mass, double fuel, double rotation, double rotationVelocity){
         this.position = position;
         this.velocity = velocity;
         this.mass = mass;
