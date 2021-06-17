@@ -70,6 +70,7 @@ public class LineChartSample extends Application {
     private State[] trajectory = trajectory();
     private final State[] trajectoryProbeToTitan = trajectoryProbeCalculationToTitan();
     private final State[] trajectoryProbeOrbitTitan = trajectoryProbeCalculationOrbitTitan(trajectoryProbeToTitan[trajectoryProbeToTitan.length-1]);
+    private final State[] trajectoryProbeToEarth = trajectoryProbeCalculationToEarth(trajectoryProbeOrbitTitan[trajectoryProbeOrbitTitan.length-1]);
 
     /**
      * Create MenuBar in the GUI
@@ -335,6 +336,22 @@ public class LineChartSample extends Application {
         orbitTitan.getItems().add(probeVOrbitTitan);
         probe.getItems().add(orbitTitan);
 
+        //To Earth
+        Menu toEarth = new Menu("To Earth");
+        MenuItem probeVToEarth = new MenuItem("Probe Velocity");
+        MenuItem probePToEarth = new MenuItem("Probe Position");
+        probeVToEarth.setOnAction(e -> {
+            update("Days");
+            lineChart.getData().addAll(createSeriesProbe(trajectoryProbeToEarth, false, 6*24));
+        });
+        probePToEarth.setOnAction(e -> {
+            update("Days");
+            lineChart.getData().addAll(createSeriesProbe(trajectoryProbeToEarth, true, 6*24));
+        });
+        toEarth.getItems().add(probePToEarth);
+        toEarth.getItems().add(probeVToEarth);
+        probe.getItems().add(toEarth);
+
         //Adds of bars into a MenuBar
         menuBar.getMenus().addAll(sun, mercury, venus, earth, moon, mars,
                 jupiter, saturn, titan, uranus, neptune, probe, solver, exit);
@@ -466,9 +483,25 @@ public class LineChartSample extends Application {
         cloneState.velocity = orbitVelocity;
         cloneState.celestialBody.get(11).setVelocity(orbitVelocity);
 
-        ODESolver simulateODE = new ODESolver();
 
-        return (State[]) simulateODE.solve(new ODEFunction(), cloneState, year, 60);
+        return (State[]) new ODESolver().solve(new ODEFunction(), cloneState, year, 60);
+    }
+
+    /**
+     * Calculate Trajectories
+     * @return Trajectories of the probe
+     */
+    private State[] trajectoryProbeCalculationToEarth(State currentState){
+
+        State cloneState = currentState.clone();
+
+        Vector3d backToHome = new Vector3d(-19457.51190185663,8694.88542609827800331,1332.7261805534363);
+
+        cloneState.velocity = backToHome;
+        cloneState.celestialBody.get(11).setVelocity(backToHome);
+
+
+        return (State[]) new ODESolver().solve(new ODEFunction(), cloneState, 6.167E7-84, STEPSIZE);
     }
 
     /**

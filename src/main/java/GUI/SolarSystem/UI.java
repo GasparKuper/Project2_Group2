@@ -6,7 +6,6 @@ import Body.Planets.Data;
 import Body.Planets.PlanetBody;
 import Body.SpaceCrafts.State;
 import Body.Vector.Vector3d;
-import Controller.OpenLoopController;
 import Interfaces.ODESolverInterface;
 import Interfaces.Vector3dInterface;
 import ODESolver.Function.ODEFunction;
@@ -221,7 +220,6 @@ public class UI extends Application{
 	}
 
 	private ParallelTransition ptr = new ParallelTransition();
-	private OpenLoopController controller = new OpenLoopController();
 
 	/**
 	 * Calculate a path for every planet
@@ -252,7 +250,16 @@ public class UI extends Application{
 
 		 State[] state2 = (State[]) simulateODE.solve(new ODEFunction(), cloneState, year, 60);
 
-		 int maxLength = state.length + state2.length;
+		 State cloneState2 = state2[state2.length-1].clone();
+
+		 Vector3d backToHome = new Vector3d(-19457.51190185663,8694.88542609827800331,1332.7261805534363);
+
+		 cloneState2.velocity = backToHome;
+		 cloneState2.celestialBody.get(11).setVelocity(backToHome);
+
+		 State[] state3 = (State[]) simulateODE.solve(new ODEFunction(), cloneState2, 6.167E7-84, STEPSIZE);
+
+		 int maxLength = state.length + state2.length + state3.length;
 		 State[] result = new State[maxLength];
 
 		 for (int i = 0; i < state.length; i++) {
@@ -264,7 +271,10 @@ public class UI extends Application{
 			 result[i] = state2[point++];
 		 }
 
-		 //result = controller.land(result);
+		 point = 0;
+		 for (int i = state2.length + state.length; i < maxLength; i++) {
+			 result[i] = state3[point++];
+		 }
 
 
 	 //start animation
@@ -307,7 +317,7 @@ public class UI extends Application{
 
 			PathTransition transition = new PathTransition();
 			transition.setNode(f.getOrbit()[i].getShape());
-			transition.setDuration(Duration.seconds(90));
+			transition.setDuration(Duration.seconds(150));
 			transition.setPath(polyline);
 			transition.setCycleCount(PathTransition.INDEFINITE);
 
