@@ -2,7 +2,6 @@ package WindModel;
 
 import Body.Vector.Vector2d;
 import java.awt.*;
-import java.util.Random;
 
 
 public class LandingModule extends Object{
@@ -17,7 +16,6 @@ public class LandingModule extends Object{
 
     public void tick() {
 
-        //velocity = velocity.add(positionWind(position));
         //rotation = rotation.add(rotationVelocity);
 
         // updating the position, I think this is Euler Solver (not sure to be honest)
@@ -31,24 +29,27 @@ public class LandingModule extends Object{
         position.setX(WindModel.clamp((int)position.getX(),0,WindModel.WIDTH-32));
         position.setY(WindModel.clamp((int)position.getY(),0,WindModel.HEIGHT-32));
 
-
+        // once the probe is at the ground the velocity is at zero
         if(position.getY() <= 0) {
-            hitTheGround();
+            stopVelocity();
         }
+
+        // if the probe is at the landing position its done!
+        if(position.getY() < 10 && position.getX() <= 240 && position.getX() >= 210 ){
+            System.out.println("Success!!!!");}
+
         //printPosition();
 
     }
 
-    // scaled down by 10^-1
-    private int maxDeviationWind = 12;
-    private int minDeviationWind = 8;
-
     public Vector2d generateRandomWind(){
 
-        int random_int = (int)Math.floor(Math.random()*(maxDeviationWind-minDeviationWind+1)+minDeviationWind);
+        int MAX_DEVIATION_WIND = 12;
+        int MIN_DEVIATION_WIND = 8;
+
+        // creating a random number between the max and min Deviation constants
+        int random_int = (int)Math.floor(Math.random()*(MAX_DEVIATION_WIND - MIN_DEVIATION_WIND +1)+ MIN_DEVIATION_WIND);
         double randomDeviation = random_int * 0.01;
-        //System.out.println(randomDeviation);
-        // It has to be longer at one value before fluctuating again - HOW ?
 
         // once the lander is below 300 km the wind changes the direction ! Wow !
         if (this.position.getY() < 300){
@@ -93,7 +94,7 @@ public class LandingModule extends Object{
         return new Rectangle((int)position.getX(),(int)position.getY(),12,24);
     }
 
-    public  void hitTheGround(){
+    public  void stopVelocity(){
         velocity.setY(0);
         velocity.setX(0);
     }
@@ -103,11 +104,8 @@ public class LandingModule extends Object{
         System.out.println("Position of lander Y: " + position.getY());
         System.out.println("Velocity of lander X: " + velocity.getX());
         System.out.println("Velocity of lander Y: " + velocity.getY());
-
-        if(position.getY() < 10 && position.getX() < 10){
-            System.out.println("Success!!!!");
-        }
     }
+
 
 
 

@@ -13,8 +13,6 @@ public abstract class Object {
     protected double fuel;
     protected Vector2d rotation;
     protected Vector2d rotationVelocity;
-    protected boolean falling = true;
-    protected boolean jumping = false;
 
     public Object(Vector2d position, Vector2d velocity, double fuel, Vector2d rotation, Vector2d rotationVelocity, ID id){
         this.position = position;
@@ -30,7 +28,6 @@ public abstract class Object {
     public Object(Vector2d position){
         this.position = position;
     }
-
 
     public abstract Rectangle getBounds();
 

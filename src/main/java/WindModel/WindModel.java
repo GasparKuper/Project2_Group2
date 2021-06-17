@@ -7,8 +7,6 @@ import java.awt.image.BufferStrategy;
 
 public class WindModel extends Canvas implements Runnable{
 
-    private static final long serialVersionUID = 1;
-
     public static final int HEIGHT = 600, WIDTH = 900;
     private Thread thread;
 
@@ -18,8 +16,6 @@ public class WindModel extends Canvas implements Runnable{
     public WindModel(){
         handler = new Handler();
         this.addKeyListener(new KeyInput(handler));
-
-        new RandomWind(handler); // initializing the random wind
 
         // adding the Landing Module
         handler.addObject(new LandingModule(new Vector2d(225,600),new Vector2d(1,-1.352),0,new Vector2d(0,0),new Vector2d(0,0),ID.LandingModule));
