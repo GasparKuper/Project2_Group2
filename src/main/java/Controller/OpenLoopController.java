@@ -11,6 +11,10 @@ import ODESolver.ProbeSimulator;
 import Run.CalculationForProbe.OpenLoopBruteForce;
 import Run.CalculationForProbe.OrbitPlanet;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+
 import static Constant.Constant.*;
 import static Constant.Constant.SOLVER;
 
@@ -32,7 +36,7 @@ public class OpenLoopController {
      * @param solarSystem state of the planets and the probe for each step
      * @return updated solarSystem with correct state of the lander
      */
-    public State[] land(State[] solarSystem) {
+    public ArrayList<Lander> land(State[] solarSystem) {
 
         int landing = 0;
         double distanceTitanToProbe = solarSystem[0].celestialBody.get(8).getPosition().dist(solarSystem[0].position);
@@ -49,16 +53,31 @@ public class OpenLoopController {
         // TODO: Find time of landing and use this for position Titan
         solarSystem[landing].updateLander(setLander(solarSystem[landing], solarSystem[landing].getLander(), solarSystem[landing].celestialBody.get(8).getPosition(), (Vector3d) solarSystem[landing].position));
 
-        OpenLoopBruteForce calculator = new OpenLoopBruteForce(solarSystem[landing].getLander());
-        U_MainThrust = calculator.findThrust();
+        //Phase 1 = rotate our lander to 90 degree (Horizontal state), depends on which X we have minus or plus V_rotation = 0
+        ArrayList<Lander> phase1 = new Phase1().phase1(solarSystem[landing].getLander());
 
-        // TODO: Set solarSystem.length to time of landing
-        for (int i = landing + 1; i < solarSystem.length; i++) {
-            solarSystem[i].updateLander(step(t, U_MainThrust, 0, solarSystem[i-1].getLander()));
-            t = t + STEPSIZE;
-        }
+        //todo below each phase we can write System.out.print to check how we cope with this phase
 
-        return solarSystem;
+        //Phase 2 = run the main thruster to reach X position = 0 Vx = 0
+        ArrayList<Lander> phase2 = new Phase2().phase2(phase1.get(phase1.size()-1));
+
+        //Phase 3 = rotate our lander to 0 degree (Vertical state) V_rotation = 0
+        ArrayList<Lander> phase3 = new Phase3().phase3(phase2.get(phase2.size()-1));
+
+        //Phase 4 = final phase, run the main thruster like to reach Y position = 0 and Vy = 0
+        ArrayList<Lander> phase4 = new Phase4().phase4(phase3.get(phase3.size()-1));
+
+
+        //Write all data into one array
+        ArrayList<Lander> result = new ArrayList<>(phase1);
+
+        result.addAll(phase2);
+
+        result.addAll(phase3);
+
+        result.addAll(phase4);
+
+        return result;
     }
 
     /**
@@ -69,20 +88,16 @@ public class OpenLoopController {
     // TODO: implement fuel use
     public Lander step(double t, double u_mainThrust, double v_sideThrust, Lander lander) {
 
-        //todo Temporary
-        int step = 1;
-
         Lander newLander = new Lander(lander.getPosition(), lander.getVelocity(), lander.getMass(), lander.getFuel(), lander.getRotation(), lander.getRotationVelocity());
 
         Vector2d position = new Vector2d();
         //position.setX(- force * Math.sin(lander.getRotation() + INIT_VEL.getX() * t + INIT_POS.getX()));
         //position.setY(- force * Math.cos(lander.getRotation()) - Math.sqrt(t) * G / 2 + INIT_VEL.getY() * t + INIT_POS.getY());
 
-        //todo multiply step size
         //TODO IMPORTANT: V(t+1) = V + V_old * stepsize + 1/2 * V_acc * stepsize^2
-        position.setX(lander.getPosition().getX() + lander.getVelocity().getX() * step + 0.5 * u_mainThrust * Math.sin(lander.getRotation()));
+        position.setX(lander.getPosition().getX() + lander.getVelocity().getX() * STEPSIZE + 0.5 * u_mainThrust * Math.sin(lander.getRotation()));
 
-        position.setY(lander.getPosition().getY() + lander.getVelocity().getY() * step + 0.5 * u_mainThrust * Math.cos(lander.getRotation()) - G);
+        position.setY(lander.getPosition().getY() + lander.getVelocity().getY() * STEPSIZE + 0.5 * u_mainThrust * Math.cos(lander.getRotation()) - G);
 
         newLander.setPosition(position);
 
@@ -90,10 +105,9 @@ public class OpenLoopController {
         //velocity.setX(- force * Math.cos(lander.getRotation()) + INIT_VEL.getX());
         //velocity.setY(- force * Math.sin(lander.getRotation()) - G * t + INIT_VEL.getY());
 
-        //todo multiply step size
-        velocity.setX(lander.getVelocity().getX() + u_mainThrust * Math.sin(lander.getRotation()));
+        velocity.setX(lander.getVelocity().getX() + (u_mainThrust * Math.sin(lander.getRotation())) * STEPSIZE);
 
-        velocity.setY(lander.getVelocity().getY() + u_mainThrust * Math.cos(lander.getRotation()) - G);
+        velocity.setY(lander.getVelocity().getY() + (u_mainThrust * Math.cos(lander.getRotation()) - G) * STEPSIZE);
 
         //Wind
 //        velocity = velocity.add(lander.generateRandomWind());
