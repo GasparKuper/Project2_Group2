@@ -59,7 +59,8 @@ public class OpenLoopController {
         //todo below each phase we can write System.out.print to check how we cope with this phase
 
         //Phase 2 = run the main thruster to reach X position = 0 Vx = 0
-        ArrayList<Lander> phase2 = new Phase2().phase2(phase1.get(phase1.size()-1));
+        ArrayList<Lander> phase2 = new Phase2().phase2(phase1.get(phase1.size()-1), 60, 1);
+
 
         //Phase 3 = rotate our lander to 0 degree (Vertical state) V_rotation = 0
         ArrayList<Lander> phase3 = new Phase3().phase3(phase2.get(phase2.size()-1));
@@ -69,7 +70,8 @@ public class OpenLoopController {
 
 
         //Write all data into one array
-        ArrayList<Lander> result = new ArrayList<>(phase1);
+//        ArrayList<Lander> result = new ArrayList<>(phase1);
+        ArrayList<Lander> result = new ArrayList<>();
 
         result.addAll(phase2);
 
@@ -146,8 +148,8 @@ public class OpenLoopController {
         INIT_ANG_VEL = 0;
 
         Vector2d velocity = new Vector2d();
-        velocity.setX(solarSystem.velocity.getY());
-        velocity.setY(solarSystem.velocity.getX());
+        velocity.setX(0);
+        velocity.setY(0);
         lander.setVelocity(velocity);
         INIT_VEL = velocity;
 
