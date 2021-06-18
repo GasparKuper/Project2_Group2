@@ -95,9 +95,9 @@ public class OpenLoopController {
         //position.setY(- force * Math.cos(lander.getRotation()) - Math.sqrt(t) * G / 2 + INIT_VEL.getY() * t + INIT_POS.getY());
 
         //TODO IMPORTANT: V(t+1) = V + V_old * stepsize + 1/2 * V_acc * stepsize^2
-        position.setX(lander.getPosition().getX() + lander.getVelocity().getX() * STEPSIZE + 0.5 * u_mainThrust * Math.sin(lander.getRotation()));
+        position.setX(lander.getPosition().getX() + lander.getVelocity().getX() * STEPSIZE + (0.5 * u_mainThrust * Math.sin(lander.getRotation())) * Math.pow(STEPSIZE, 2));
 
-        position.setY(lander.getPosition().getY() + lander.getVelocity().getY() * STEPSIZE + 0.5 * u_mainThrust * Math.cos(lander.getRotation()) - G);
+        position.setY(lander.getPosition().getY() + lander.getVelocity().getY() * STEPSIZE + (0.5 * u_mainThrust * Math.cos(lander.getRotation()) - G) * Math.pow(STEPSIZE, 2));
 
         newLander.setPosition(position);
 
