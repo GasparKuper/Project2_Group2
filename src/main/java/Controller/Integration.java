@@ -13,7 +13,7 @@ public class Integration {
 
         Lander lander = state.clone();
 
-        Vector2d wind = state.generateRandomWind();
+        Vector2d wind = state.generateRandomWind().mul(step);
 
         double inRadians = Math.toRadians(lander.getRotation());
 
