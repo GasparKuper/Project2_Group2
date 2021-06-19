@@ -17,15 +17,7 @@ import static Constant.Constant.SOLVER;
 
 public class OpenLoopController {
 
-    private final double DISTANCE_TO_CENTER = 2.0;
-    public final double G = 1.352;
     private final double RADIUS_TITAN = 2575.5e3;
-    private double t = 0;
-    private double U_MainThrust;
-    private static Vector2d INIT_POS;
-    private static Vector2d INIT_VEL;
-    private static double INIT_ANG_POS;
-    private static double INIT_ANG_VEL;
 
     /**
      * Determines the best time for release of the landing module
@@ -48,7 +40,7 @@ public class OpenLoopController {
         }
 
         // TODO: Find time of landing and use this for position Titan
-        solarSystem[landing].updateLander(setLander(solarSystem[landing], solarSystem[landing].getLander(), solarSystem[landing].celestialBody.get(8).getPosition(), (Vector3d) solarSystem[landing].position));
+        solarSystem[landing].updateLander(setLander(solarSystem[landing].getLander(), solarSystem[landing].celestialBody.get(8).getPosition(), (Vector3d) solarSystem[landing].position));
 
 
         solarSystem[landing].getLander().setPosition(new Vector2d(-34355, solarSystem[landing].getLander().getPosition().getY()));
@@ -121,49 +113,6 @@ public class OpenLoopController {
     }
 
     /**
-     * Updates the lander for one step
-     * @param t time after release of the landing module
-     * @return movement of the probe at step t
-     **/
-    // TODO: implement fuel use
-    public Lander step(double t, double u_mainThrust, double v_sideThrust, Lander lander) {
-
-        Lander newLander = new Lander(lander.getPosition(), lander.getVelocity(), lander.getMass(), lander.getFuel(), lander.getRotation(), lander.getRotationVelocity());
-
-        Vector2d position = new Vector2d();
-        //position.setX(- force * Math.sin(lander.getRotation() + INIT_VEL.getX() * t + INIT_POS.getX()));
-        //position.setY(- force * Math.cos(lander.getRotation()) - Math.sqrt(t) * G / 2 + INIT_VEL.getY() * t + INIT_POS.getY());
-
-        //TODO IMPORTANT: V(t+1) = V + V_old * stepsize + 1/2 * V_acc * stepsize^2
-        position.setX(lander.getPosition().getX() + lander.getVelocity().getX() * STEPSIZE + (0.5 * u_mainThrust * Math.sin(lander.getRotation())) * Math.pow(STEPSIZE, 2));
-
-        position.setY(lander.getPosition().getY() + lander.getVelocity().getY() * STEPSIZE + (0.5 * u_mainThrust * Math.cos(lander.getRotation()) - G) * Math.pow(STEPSIZE, 2));
-
-        newLander.setPosition(position);
-
-        Vector2d velocity = new Vector2d();
-        //velocity.setX(- force * Math.cos(lander.getRotation()) + INIT_VEL.getX());
-        //velocity.setY(- force * Math.sin(lander.getRotation()) - G * t + INIT_VEL.getY());
-
-        velocity.setX(lander.getVelocity().getX() + (u_mainThrust * Math.sin(lander.getRotation())) * STEPSIZE);
-
-        velocity.setY(lander.getVelocity().getY() + (u_mainThrust * Math.cos(lander.getRotation()) - G) * STEPSIZE);
-
-        //Wind
-//        velocity = velocity.add(lander.generateRandomWind());
-
-        newLander.setVelocity(velocity);
-
-        //Todo correct force should be V not U
-        newLander.setRotation(Math.sqrt(t) * v_sideThrust / 2 + INIT_ANG_VEL * t + INIT_ANG_POS );
-
-        //Todo correct force should be V not U
-        newLander.setRotationVelocity(v_sideThrust * t + INIT_ANG_VEL);
-
-        return newLander;
-    }
-
-    /**
      * Sets the state of a lander at time of release
      * @param lander lander of which to set position, velocity, rotation and rotationVelocity
      * @param posTitan position of Titan at time of landing
@@ -172,24 +121,21 @@ public class OpenLoopController {
      **/
     // TODO: Set fuel
     // TODO: Change posTitan to its position at time of landing
-    public Lander setLander(State solarSystem, Lander lander, Vector3d posTitan, Vector3d posProbe) {
+    public Lander setLander(Lander lander, Vector3d posTitan, Vector3d posProbe) {
         Vector2d position = new Vector2d();
         position.setX(0);
+
         position.setY(posTitan.dist(posProbe) - RADIUS_TITAN);
         lander.setPosition(position);
-        INIT_POS = position;
 
         lander.setRotation(0);
-        INIT_ANG_POS = 0;
 
         lander.setRotationVelocity(0);
-        INIT_ANG_VEL = 0;
 
         Vector2d velocity = new Vector2d();
         velocity.setX(0);
         velocity.setY(0);
         lander.setVelocity(velocity);
-        INIT_VEL = velocity;
 
         return lander;
     }

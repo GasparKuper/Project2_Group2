@@ -31,10 +31,8 @@ public class Integration {
 
         lander.setVelocity(velocity);
 
-        //Todo correct force should be V not U
         lander.setRotation(lander.getRotation() + lander.getRotationVelocity() * step + (0.5 * v_sideThrust) * Math.pow(step, 2));
 
-        //Todo correct force should be V not U
         lander.setRotationVelocity(lander.getRotationVelocity() + v_sideThrust * step);
 
         return lander;
