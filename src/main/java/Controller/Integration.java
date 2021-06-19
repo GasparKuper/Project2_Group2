@@ -10,7 +10,7 @@ public class Integration {
 
     private final double G = 1.352;
 
-    public Lander step(Lander state, double u_mainThrust, double step){
+    public Lander step(Lander state, double u_mainThrust, double v_sideThrust, double step){
 
         Lander lander = state.clone();
 
@@ -30,6 +30,12 @@ public class Integration {
         velocity.setY(lander.getVelocity().getY() + (u_mainThrust * Math.cos(inRadians) - G) * step);
 
         lander.setVelocity(velocity);
+
+        //Todo correct force should be V not U
+        lander.setRotation(lander.getRotation() + lander.getRotationVelocity() * step + (0.5 * v_sideThrust) * Math.pow(step, 2));
+
+        //Todo correct force should be V not U
+        lander.setRotationVelocity(lander.getRotationVelocity() + v_sideThrust * step);
 
         return lander;
     }
