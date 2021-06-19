@@ -45,7 +45,7 @@ public class Phase2 {
         Integration update = new Integration();
 
         int point = 0;
-        for (int i = 0; i < time; i+=step) {
+        for (double i = 0; i < time; i+=step) {
             Lander tmp = update.step(result.get(point++), u, step);
             result.add(tmp);
         }
@@ -65,14 +65,16 @@ public class Phase2 {
 
         int iterationTime = (int) timeToSlowDown;
 
-        for (int i = 0; i < iterationTime; i+=step) {
+        for (double i = 0; i < iterationTime; i+=step) {
             Lander tmp = update.step(result.get(point++), u_ToSlowDown, step);
             result.add(tmp);
         }
 
         //Final iteration
-        Lander tmp = update.step(result.get(point), u_ToSlowDown, remainTime);
-        result.add(tmp);
+        if(result.get(point).getPosition().getX() > 0.001) {
+            Lander tmp = update.step(result.get(point), u_ToSlowDown, remainTime);
+            result.add(tmp);
+        }
 
         return result;
     }

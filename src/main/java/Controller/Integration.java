@@ -8,7 +8,7 @@ import static Constant.Constant.STEPSIZE;
 
 public class Integration {
 
-    public final double G = 1.352;
+    private final double G = 1.352;
 
     public Lander step(Lander state, double u_mainThrust, double step){
 
