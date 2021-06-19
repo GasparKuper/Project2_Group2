@@ -9,6 +9,7 @@ import ODESolver.Function.ODEFunction;
 import ODESolver.ODESolver;
 import ODESolver.ProbeSimulator;
 import Run.CalculationForProbe.OrbitPlanet;
+import Run.MissionProbe;
 
 import java.util.ArrayList;
 
@@ -100,6 +101,7 @@ public class OpenLoopController {
 //            System.out.println("Degree velocity = " + t.getRotationVelocity());
 //        }
 
+        System.out.println("FUEL need for this landing = " + phase4.get(phase4.size() - 1).getFuel());
         //Write all data into one array
         ArrayList<Lander> result = new ArrayList<>(phase1);
 
@@ -145,27 +147,11 @@ public class OpenLoopController {
      * @return The State with the minimal distance between Titan and Probe
      */
     public State[] probeOnTheOrbitTitan(){
-        ProbeSimulator simulator = new ProbeSimulator();
+        MissionProbe probe = new MissionProbe();
 
-        simulator.trajectory(STARTPOS, VELOCITIES[SOLVER-1], FINALTIME[SOLVER-1], STEPSIZE);
+        State[] toTitanTrajectory = probe.trajectoryProbeCalculationToTitan();
 
-        State[] toTitanTrajectory = simulator.getTrajectory();
-
-        double day = 24*60*60;
-        double year = 30 * day;
-
-        State cloneState = toTitanTrajectory[toTitanTrajectory.length - 1].clone();
-
-        Vector3d orbitVelocity = new OrbitPlanet().orbitSpeed((Vector3d) cloneState.position, cloneState.celestialBody.get(8).getPosition());
-
-        orbitVelocity = (Vector3d) orbitVelocity.add(cloneState.celestialBody.get(8).getVelocity());
-
-        cloneState.velocity = orbitVelocity;
-        cloneState.celestialBody.get(11).setVelocity(orbitVelocity);
-
-        State[] orbitTitan = (State[]) new ODESolver().solve(new ODEFunction(), cloneState, year, 60);
-
-        return orbitTitan;
+        return probe.trajectoryProbeCalculationOrbitTitan(toTitanTrajectory[toTitanTrajectory.length - 1]);
     }
 
     public static void main(String[] args) {

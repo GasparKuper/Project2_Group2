@@ -17,6 +17,7 @@ public class Phase4 {
 
         //todo What you know about rollin' down in the deep?
         Integration update = new Integration();
+        FuelCalculationLander fuel = new FuelCalculationLander();
         int point = 0;
         //Free fall on the half distance
         if(distance_half > 50000.0) {
@@ -56,6 +57,10 @@ public class Phase4 {
             result.add(tmp);
 
             lastState = result.get(point);
+
+            //Feul
+            fuel.calculateFuel(result.get(point), step,u_ToSlowDown, 0);
+
             //Distance from titan
             distance = lastState.getPosition().getY();
 

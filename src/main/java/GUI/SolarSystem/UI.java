@@ -13,6 +13,7 @@ import ODESolver.Function.ODEFunction;
 import ODESolver.ODESolver;
 import ODESolver.ProbeSimulator;
 import Run.CalculationForProbe.OrbitPlanet;
+import Run.MissionProbe;
 import javafx.animation.Interpolator;
 import javafx.animation.ParallelTransition;
 import javafx.animation.PathTransition;
@@ -228,37 +229,13 @@ public class UI extends Application{
 	 private void path() {
 	 	SOLVER = 3;
 
-		 ProbeSimulator simulator = new ProbeSimulator();
+		 MissionProbe probe = new MissionProbe();
 
-		 simulator.trajectory(STARTPOS, VELOCITIES[SOLVER-1], FINALTIME[SOLVER-1], STEPSIZE);
+		 State[] state = probe.trajectoryProbeCalculationToTitan();
 
-		 State[] state = simulator.getTrajectory();
+		 State[] state2 = probe.trajectoryProbeCalculationOrbitTitan(state[state.length - 1]);
 
-		 double day = 24*60*60;
-		 double year = 30 * day;
-
-		 State cloneState = state[state.length-1].clone();
-
-
-		 Vector3d orbitVelocity = new OrbitPlanet().orbitSpeed((Vector3d) cloneState.position, cloneState.celestialBody.get(8).getPosition());
-
-		 orbitVelocity = (Vector3d) orbitVelocity.add(cloneState.celestialBody.get(8).getVelocity());
-
-		 cloneState.velocity = orbitVelocity;
-		 cloneState.celestialBody.get(11).setVelocity(orbitVelocity);
-
-		 ODESolver simulateODE = new ODESolver();
-
-		 State[] state2 = (State[]) simulateODE.solve(new ODEFunction(), cloneState, year, 60);
-
-		 State cloneState2 = state2[state2.length-1].clone();
-
-		 Vector3d backToHome = new Vector3d(-19457.51190185663,8694.88542609827800331,1332.7261805534363);
-
-		 cloneState2.velocity = backToHome;
-		 cloneState2.celestialBody.get(11).setVelocity(backToHome);
-
-		 State[] state3 = (State[]) simulateODE.solve(new ODEFunction(), cloneState2, 6.167E7-84, STEPSIZE);
+		 State[] state3 = probe.trajectoryProbeCalculationToEarth(state2[state2.length - 1]);
 
 		 int maxLength = state.length + state2.length + state3.length;
 		 State[] result = new State[maxLength];

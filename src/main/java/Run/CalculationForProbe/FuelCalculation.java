@@ -2,12 +2,17 @@ package Run.CalculationForProbe;
 
 import Body.Planets.Data;
 import Body.Planets.PlanetBody;
+import Body.SpaceCrafts.State;
 import Body.Vector.Vector3d;
 import Interfaces.Vector3dInterface;
+import ODESolver.Function.ODEFunction;
+import ODESolver.ODESolver;
+import ODESolver.ProbeSimulator;
+import Run.MissionProbe;
 
 import java.util.LinkedList;
-import static Constant.Constant.FUEL;
-import static Constant.Constant.STEPSIZE;
+
+import static Constant.Constant.*;
 
 public class FuelCalculation {
 
@@ -33,11 +38,25 @@ public class FuelCalculation {
 
         Data data = new Data();
         LinkedList<PlanetBody> planets = data.getPlanets();
-        final double MASS_PROBE = 78000+6000;
+        MissionProbe probe = new MissionProbe();
 
+        State[] state = probe.trajectoryProbeCalculationToTitan();
 
-        FUEL = new FuelCalculation().findMassFuel(new Vector3d(5123.76070022583,-19016.060829162598,-1210.176944732666),
-                planets.get(3).getVelocity(), STEPSIZE, MASS_PROBE);
+        State[] state2 = probe.trajectoryProbeCalculationOrbitTitan(state[state.length - 1]);
+
+        FuelCalculation fuel = new FuelCalculation();
+        double FuelNeeded = 0;
+
+        FuelNeeded += fuel.findMassFuel(new Vector3d(-19457.51190185663,8694.88542609827800331,1332.7261805534363),
+                state2[state2.length - 1].velocity, 600, 78000);
+
+        FuelNeeded += fuel.findMassFuel(new Vector3d(-1365.4485587266402,1117.4249977106176,0.0),
+                state[state.length - 1].velocity, 60, 78000+FuelNeeded+6000);
+
+        FuelNeeded += fuel.findMassFuel(new Vector3d(5123.76070022583,-19016.060829162598,-1210.176944732666),
+                planets.get(3).getVelocity(), 600, 78000+FuelNeeded+6000);
+
+        System.out.println("Fuel need for this mission = " + FuelNeeded);
 
     }
 }

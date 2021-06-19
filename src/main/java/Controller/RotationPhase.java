@@ -12,6 +12,7 @@ public class RotationPhase {
         result.add(state);
 
         Integration update = new Integration();
+        FuelCalculationLander fuel = new FuelCalculationLander();
 
         //todo Speed up the angle velocity
         int point = 0;
@@ -32,6 +33,7 @@ public class RotationPhase {
 
             Lander tmp = update.step(result.get(point++), 0, v, step);
             result.add(tmp);
+            fuel.calculateFuel(result.get(point), step, 0, v);
         }
 
         //todo Slow down the angle velocity
@@ -61,6 +63,8 @@ public class RotationPhase {
             result.add(tmp);
 
             lastState = result.get(point);
+            //Fuel
+            fuel.calculateFuel(lastState, step, 0, v_ToSlowDown);
 
             //Angle
             angleLander = lastState.getRotation();

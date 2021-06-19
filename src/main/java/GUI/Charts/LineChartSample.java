@@ -11,9 +11,8 @@ import Interfaces.ODESolverInterface;
 import Interfaces.Vector3dInterface;
 import ODESolver.Function.ODEFunction;
 import ODESolver.ODESolver;
-import ODESolver.ProbeSimulator;
 import GUI.RunGui.Run;
-import Run.CalculationForProbe.OrbitPlanet;
+import Run.MissionProbe;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
@@ -71,9 +70,10 @@ public class LineChartSample extends Application {
      *  trajectory Data of the trajectories of the all planets and the probe
      */
     private State[] trajectory = trajectory();
-    private final State[] trajectoryProbeToTitan = trajectoryProbeCalculationToTitan();
-    private final State[] trajectoryProbeOrbitTitan = trajectoryProbeCalculationOrbitTitan(trajectoryProbeToTitan[trajectoryProbeToTitan.length-1]);
-    private final State[] trajectoryProbeToEarth = trajectoryProbeCalculationToEarth(trajectoryProbeOrbitTitan[trajectoryProbeOrbitTitan.length-1]);
+    private final State[] trajectoryProbeToTitan = new MissionProbe().trajectoryProbeCalculationToTitan();
+    private final State[] trajectoryProbeOrbitTitan = new MissionProbe().trajectoryProbeCalculationOrbitTitan(trajectoryProbeToTitan[trajectoryProbeToTitan.length-1]);
+    private final State[] trajectoryProbeToEarth = new MissionProbe().trajectoryProbeCalculationToEarth(trajectoryProbeOrbitTitan[trajectoryProbeOrbitTitan.length-1]);
+    private final ArrayList<Lander> trajectoryLander = getTrajectoryOpenLoop();
 
     /**
      * Create MenuBar in the GUI
@@ -384,19 +384,19 @@ public class LineChartSample extends Application {
         //Vacuum
         openVacuumP.setOnAction(e -> {
             update("Seconds", "Meters");
-            lineChart.getData().addAll(createSeriesLander(getTrajectoryOpenLoop(), true, 10));
+            lineChart.getData().addAll(createSeriesLander(trajectoryLander, true, 10));
         });
         openVacuumV.setOnAction(e -> {
             update("Seconds", "Meters");
-            lineChart.getData().addAll(createSeriesLander(getTrajectoryOpenLoop(), false, 10));
+            lineChart.getData().addAll(createSeriesLander(trajectoryLander, false, 10));
         });
         openVacuumRD.setOnAction(e -> {
             update("Seconds", "Degree");
-            lineChart.getData().addAll(createSeriesLanderRotation(getTrajectoryOpenLoop(), true, 10, "Degree"));
+            lineChart.getData().addAll(createSeriesLanderRotation(trajectoryLander, true, 10, "Degree"));
         });
         openVacuumRV.setOnAction(e -> {
             update("Seconds", "Meters per second");
-            lineChart.getData().addAll(createSeriesLanderRotation(getTrajectoryOpenLoop(), false, 10, "Angle Velocity"));
+            lineChart.getData().addAll(createSeriesLanderRotation(trajectoryLander, false, 10, "Angle Velocity"));
         });
         openLoop.getItems().add(openWind);
         openLoop.getItems().add(openVacuum);
@@ -506,59 +506,6 @@ public class LineChartSample extends Application {
         ODESolverInterface simulator = new ODESolver();
 
         return  (State[]) simulator.solve(odeFunction, launchPosition, year, day);
-    }
-
-    /**
-     * Calculate Trajectories
-     * @return Trajectories of the probe
-     */
-    private State[] trajectoryProbeCalculationToTitan(){
-
-        ProbeSimulator simulator = new ProbeSimulator();
-
-        simulator.trajectory(STARTPOS, VELOCITIES[SOLVER-1], FINALTIME[SOLVER-1], STEPSIZE);
-
-        return simulator.getTrajectory();
-    }
-
-    /**
-     * Calculate Trajectories
-     * @return Trajectories of the probe
-     */
-    private State[] trajectoryProbeCalculationOrbitTitan(State currentState){
-
-        double day = 24*60*60;
-        double year = 30 * day;
-
-        State cloneState = currentState.clone();
-
-
-        Vector3d orbitVelocity = new OrbitPlanet().orbitSpeed((Vector3d) cloneState.position, cloneState.celestialBody.get(8).getPosition());
-
-        orbitVelocity = (Vector3d) orbitVelocity.add(cloneState.celestialBody.get(8).getVelocity());
-
-        cloneState.velocity = orbitVelocity;
-        cloneState.celestialBody.get(11).setVelocity(orbitVelocity);
-
-
-        return (State[]) new ODESolver().solve(new ODEFunction(), cloneState, year, 60);
-    }
-
-    /**
-     * Calculate Trajectories
-     * @return Trajectories of the probe
-     */
-    private State[] trajectoryProbeCalculationToEarth(State currentState){
-
-        State cloneState = currentState.clone();
-
-        Vector3d backToHome = new Vector3d(-19457.51190185663,8694.88542609827800331,1332.7261805534363);
-
-        cloneState.velocity = backToHome;
-        cloneState.celestialBody.get(11).setVelocity(backToHome);
-
-
-        return (State[]) new ODESolver().solve(new ODEFunction(), cloneState, 6.167E7-84, STEPSIZE);
     }
 
     /**

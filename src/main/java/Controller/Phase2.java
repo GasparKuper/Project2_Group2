@@ -19,6 +19,7 @@ public class Phase2 {
         result.add(state);
 
         Integration update = new Integration();
+        FuelCalculationLander fuel = new FuelCalculationLander();
 
         //todo Speed up Velocity X
         int point = 0;
@@ -43,6 +44,9 @@ public class Phase2 {
 
             Lander tmp = update.step(result.get(point++), u, 0, step);
             result.add(tmp);
+
+            //Fuel
+            fuel.calculateFuel(result.get(point), step, u, 0);
         }
 
         //todo Slow down Velocity X
@@ -72,6 +76,9 @@ public class Phase2 {
             result.add(tmp);
 
             lastState = result.get(point);
+            //Fuel Calculate
+            fuel.calculateFuel(result.get(point), step,u_ToSlowDown, 0);
+
             angleLander = lastState.getRotation();
 
             distance = lastState.getPosition().getX();
