@@ -1,6 +1,7 @@
 package Controller;
 
 import Body.SpaceCrafts.Lander;
+import Body.Vector.Vector2d;
 
 import java.util.ArrayList;
 
@@ -81,6 +82,9 @@ public class Phase4 {
             //U = |Acceleration_y / cos(theta)| + G
             u_ToSlowDown = Math.abs(y_Acceleration_ToSlowDown / cos) + G;
         }
+
+        if (lastState.getVelocity().getY() > 0 && lastState.getVelocity().getY() < G*2)
+            lastState.setVelocity(new Vector2d(lastState.getVelocity().getX(), 0));
 
         return result;
     }

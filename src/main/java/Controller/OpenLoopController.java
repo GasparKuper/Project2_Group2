@@ -44,9 +44,13 @@ public class OpenLoopController {
         solarSystem[landing].updateLander(setLander(solarSystem[landing].getLander(), solarSystem[landing].celestialBody.get(8).getPosition(), (Vector3d) solarSystem[landing].position));
 
 
-        solarSystem[landing].getLander().setPosition(new Vector2d(-346355, solarSystem[landing].getLander().getPosition().getY()));
+        solarSystem[landing].getLander().setPosition(new Vector2d(-288000, solarSystem[landing].getLander().getPosition().getY()));
         //Phase 1 = rotate our lander to 90 degree (Horizontal state), depends on which X we have minus or plus V_rotation = 0
-        ArrayList<Lander> phase1 = new RotationPhase().rotationPhase(solarSystem[landing].getLander(), 20, 0.1, 90.0);
+        double theta = 90.0;
+        if(solarSystem[landing].getLander().getPosition().getX() > 0.0)
+            theta = -90.0;
+
+        ArrayList<Lander> phase1 = new RotationPhase().rotationPhase(solarSystem[landing].getLander(), 20, 0.1, theta);
 
 //        for (int i = 0; i < phase1.size(); i++) {
 //            Lander t = phase1.get(i);
@@ -59,11 +63,9 @@ public class OpenLoopController {
 //        if(true)
 //            throw new RuntimeException("stop");
 
-        //todo below each phase we can write System.out.print to check how we cope with this phase
-
         //Phase 2 = run the main thruster to reach X position = 0 Vx = 0
-        //todo implement calculate time depends on distance (IMPORTANT)
-        ArrayList<Lander> phase2 = new Phase2().phase2(phase1.get(phase1.size() - 1), 90, 0.1);
+        double distance = Math.abs(phase1.get(phase1.size() - 1).getPosition().getX())/1000.0;
+        ArrayList<Lander> phase2 = new Phase2().phase2(phase1.get(phase1.size() - 1), distance, 0.1);
 
 //        for (int i = 0; i < phase2.size(); i++) {
 //            Lander t = phase2.get(i);
@@ -72,7 +74,7 @@ public class OpenLoopController {
 //            System.out.println("Degree = " + t.getRotation());
 //            System.out.println("Degree velocity = " + t.getRotationVelocity());
 //        }
-
+////
 //        if(true)
 //            throw new RuntimeException("stop");
 

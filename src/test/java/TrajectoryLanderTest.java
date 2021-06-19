@@ -8,15 +8,36 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class TrajectoryLanderTest {
 
+    private final double accuracy = 0.1;
+
+    private final Lander result = testOutput();
+
     @Test
-    @DisplayName("Test trajectory of the lander")
-    public void testTrajectoryLander(){
-        testOutput();
+    @DisplayName("Test position")
+    public void testTrajectoryLanderPosition(){
+        assertEquals(0, result.getPosition().getX(), accuracy);
+        assertEquals(0, result.getPosition().getY(), accuracy);
     }
 
-    private void testOutput() {
+    @Test
+    @DisplayName("Test velocity")
+    public void testTrajectoryLanderVelocity(){
+        assertEquals(0, result.getVelocity().getX(), accuracy);
+        assertEquals(0, result.getVelocity().getY(), accuracy);
+    }
+
+    @Test
+    @DisplayName("Test rotation")
+    public void testTrajectoryLanderRotation(){
+        assertEquals(0, result.getRotation(), accuracy);
+        assertEquals(0, result.getRotationVelocity(), accuracy);
+    }
+
+    private Lander testOutput() {
         OpenLoopController lander = new OpenLoopController();
         ArrayList<Lander> trajectory = lander.land(lander.probeOnTheOrbitTitan());
         try {
@@ -27,6 +48,7 @@ public class TrajectoryLanderTest {
             BigDecimal a = new BigDecimal("0.1");
             for (int i = 0; i < trajectory.size(); i++) {
                 String row = a + "," + trajectory.get(i).getPosition().getX() + "," + trajectory.get(i).getPosition().getY() + "," + trajectory.get(i).getVelocity().getX() + "," + trajectory.get(i).getVelocity().getY() + "," + trajectory.get(i).getRotation() + "," + trajectory.get(i).getRotationVelocity();
+                System.out.println(row);
                 writer.write(row + "\n");
                 a = a.add(new BigDecimal("0.1"));
             }
@@ -35,5 +57,6 @@ public class TrajectoryLanderTest {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
+        return trajectory.get(trajectory.size()-1);
     }
 }
