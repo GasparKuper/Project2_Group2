@@ -43,7 +43,7 @@ public class OpenLoopController {
         solarSystem[landing].updateLander(setLander(solarSystem[landing].getLander(), solarSystem[landing].celestialBody.get(8).getPosition(), (Vector3d) solarSystem[landing].position));
 
 
-        solarSystem[landing].getLander().setPosition(new Vector2d(-34355, solarSystem[landing].getLander().getPosition().getY()));
+        solarSystem[landing].getLander().setPosition(new Vector2d(-346355, solarSystem[landing].getLander().getPosition().getY()));
         //Phase 1 = rotate our lander to 90 degree (Horizontal state), depends on which X we have minus or plus V_rotation = 0
         ArrayList<Lander> phase1 = new RotationPhase().rotationPhase(solarSystem[landing].getLander(), 20, 0.1, 90.0);
 
