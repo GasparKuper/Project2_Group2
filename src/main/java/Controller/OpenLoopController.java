@@ -8,12 +8,9 @@ import Body.Vector.Vector3d;
 import ODESolver.Function.ODEFunction;
 import ODESolver.ODESolver;
 import ODESolver.ProbeSimulator;
-import Run.CalculationForProbe.OpenLoopBruteForce;
 import Run.CalculationForProbe.OrbitPlanet;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 
 import static Constant.Constant.*;
 import static Constant.Constant.SOLVER;
@@ -56,7 +53,7 @@ public class OpenLoopController {
 
         solarSystem[landing].getLander().setPosition(new Vector2d(-34355, solarSystem[landing].getLander().getPosition().getY()));
         //Phase 1 = rotate our lander to 90 degree (Horizontal state), depends on which X we have minus or plus V_rotation = 0
-        ArrayList<Lander> phase1 = new Phase1().phase1(solarSystem[landing].getLander(), 20, 0.1);
+        ArrayList<Lander> phase1 = new RotationPhase().rotationPhase(solarSystem[landing].getLander(), 20, 0.1, 90.0);
 
         for (int i = 0; i < phase1.size(); i++) {
             Lander t = phase1.get(i);
@@ -87,7 +84,7 @@ public class OpenLoopController {
 //            throw new RuntimeException("stop");
 
         //Phase 3 = rotate our lander to 0 degree (Vertical state) V_rotation = 0
-        ArrayList<Lander> phase3 = new Phase3().phase3(phase2.get(phase2.size()-1), 20, 0.1);
+        ArrayList<Lander> phase3 = new RotationPhase().rotationPhase(phase2.get(phase2.size()-1), 20, 0.1, 0.0);
 
         for (int i = 0; i < phase3.size(); i++) {
             Lander t = phase3.get(i);

@@ -10,15 +10,12 @@ public class Phase4 {
 
     public ArrayList<Lander> phase4(Lander state, double step){
 
-        //angle of the lander
-        double angleLander = state.getRotation();
-
-
         ArrayList<Lander> result = new ArrayList<>();
         result.add(state);
 
         double distance_half = state.getPosition().getY()/2.0;
 
+        //todo What you know about rollin' down in the deep?
         Integration update = new Integration();
         int point = 0;
         //Free fall on the half distance
@@ -29,6 +26,7 @@ public class Phase4 {
             }
         }
 
+        //todo Slow down Velocity Y
         Lander lastState = result.get(point);
 
         //Distance from titan
@@ -44,7 +42,7 @@ public class Phase4 {
         double y_Acceleration_ToSlowDown = Vy_last / timeLanding;
 
         //Cos
-        angleLander = lastState.getRotation();
+        double angleLander = lastState.getRotation();
         double degreeInRadians = Math.toRadians(angleLander);
         double cos = Math.cos(degreeInRadians);
 

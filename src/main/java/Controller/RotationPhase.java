@@ -4,59 +4,45 @@ import Body.SpaceCrafts.Lander;
 
 import java.util.ArrayList;
 
-public class Phase3 {
+public class RotationPhase {
 
-    public ArrayList<Lander> phase3(Lander state, double time, double step){
-        double thetaRequire = 0.0;
+    public ArrayList<Lander> rotationPhase(Lander state, double time, double step, double thetaRequire){
 
         ArrayList<Lander> result = new ArrayList<>();
         result.add(state);
 
-        Lander lastState = state;
+        Integration update = new Integration();
+
+        //todo Speed up the angle velocity
+        int point = 0;
+        for (double i = 0; i < time; i+=step) {
+            Lander lastState = result.get(point);
+
+            //Angle
+            double angleLander = lastState.getRotation();
+
+            //Angle Velocity
+            double angleVelocity = lastState.getRotationVelocity();
+
+            //V_maxRotation = 2.0 * ((0.5 * (theta_require - current_angle)/time) - angle velocity)
+            double max_angleVelocity = 2.0 * (0.5 * (((thetaRequire - angleLander)/time)) - angleVelocity);
+
+            //V = V_maxRotation / time
+            double v = max_angleVelocity/time;
+
+            Lander tmp = update.step(result.get(point++), 0, v, step);
+            result.add(tmp);
+        }
+
+        //todo Slow down the angle velocity
+
+        Lander lastState = result.get(point);
 
         //Angle
         double angleLander = lastState.getRotation();
 
         //Angle Velocity
         double angleVelocity = lastState.getRotationVelocity();
-
-        //V_maxRotation = 2.0 * ((0.5 * (theta_require - current_angle)/time) - angle velocity)
-        double max_angleVelocity = 2.0 * (0.5 * (((thetaRequire - angleLander)/time)) - angleVelocity);
-
-        //V = V_maxRotation / time
-        double v = max_angleVelocity/time;
-
-        Integration update = new Integration();
-
-        int point = 0;
-        for (double i = 0; i < time; i+=step) {
-            Lander tmp = update.step(result.get(point++), 0, v, step);
-            result.add(tmp);
-
-            lastState = result.get(point);
-
-            //Angle
-            angleLander = lastState.getRotation();
-
-            //Angle Velocity
-            angleVelocity = lastState.getRotationVelocity();
-
-            //V_maxRotation = 2.0 * ((0.5 * (theta_require - current_angle)/time) - angle velocity)
-            max_angleVelocity = 2.0 * (0.5 * (((thetaRequire - angleLander)/time)) - angleVelocity);
-
-            //V = V_maxRotation / time
-            v = max_angleVelocity/time;
-        }
-
-        //Slow down the angle velocity
-
-        lastState = result.get(point);
-
-        //Angle
-        angleLander = lastState.getRotation();
-
-        //Angle Velocity
-        angleVelocity = lastState.getRotationVelocity();
 
         double tmp_theta = thetaRequire - angleLander;
 
