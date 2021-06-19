@@ -2,9 +2,8 @@ package Controller;
 
 import Body.SpaceCrafts.Lander;
 import Body.Vector.Vector2d;
-import Body.Vector.Vector3d;
 
-import static Constant.Constant.STEPSIZE;
+import static Constant.Constant.WIND;
 
 public class Integration {
 
@@ -14,6 +13,8 @@ public class Integration {
 
         Lander lander = state.clone();
 
+        Vector2d wind = state.generateRandomWind();
+
         double inRadians = Math.toRadians(lander.getRotation());
 
         //TODO IMPORTANT: V(t+1) = V + V_old * stepsize + 1/2 * V_acc * stepsize^2
@@ -22,12 +23,18 @@ public class Integration {
 
         position.setY(lander.getPosition().getY() + lander.getVelocity().getY() * step + (0.5 * u_mainThrust * Math.cos(inRadians) - G) * Math.pow(step, 2));
 
+        if(WIND)
+            position = position.add(wind);
+
         lander.setPosition(position);
 
         Vector2d velocity = new Vector2d();
         velocity.setX(lander.getVelocity().getX() + (u_mainThrust * Math.sin(inRadians)) * step);
 
         velocity.setY(lander.getVelocity().getY() + (u_mainThrust * Math.cos(inRadians) - G) * step);
+
+        if(WIND)
+            velocity = velocity.add(wind);
 
         lander.setVelocity(velocity);
 

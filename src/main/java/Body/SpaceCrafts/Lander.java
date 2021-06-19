@@ -58,9 +58,7 @@ public class Lander {
         // adding the yScalar to the randomDeviation
         randomDeviation = randomDeviation + (randomDeviation * yScalar);
 
-        Vector2d randomWindVector = new Vector2d(randomDeviation, 0);
-
-        return randomWindVector;
+        return new Vector2d(randomDeviation, 0);
     }
 
     public Lander clone(){

@@ -48,7 +48,7 @@ public class OpenLoopBruteForce {
 
         Lander testLander = lander;
         while (testLander.getPosition().getY() > 0) {
-            testLander = controller.step(t, u_mainThrust, 0, testLander);
+//            testLander = controller.step(t, u_mainThrust, 0, testLander);
             t = t + STEPSIZE;
         }
 

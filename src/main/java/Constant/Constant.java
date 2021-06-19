@@ -15,6 +15,11 @@ public class Constant {
      */
     public static int SOLVER = 3;
 
+
+    /**
+     * Wind
+     */
+    public static boolean WIND = false;
     /**
      * Flag for Verlet JUnit tests
      */

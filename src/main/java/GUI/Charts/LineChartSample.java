@@ -2,8 +2,11 @@ package GUI.Charts;
 
 import Body.Planets.Data;
 import Body.Planets.PlanetBody;
+import Body.SpaceCrafts.Lander;
 import Body.SpaceCrafts.State;
+import Body.Vector.Vector2d;
 import Body.Vector.Vector3d;
+import Controller.OpenLoopController;
 import Interfaces.ODESolverInterface;
 import Interfaces.Vector3dInterface;
 import ODESolver.Function.ODEFunction;
@@ -148,6 +151,7 @@ public class LineChartSample extends Application {
         Menu uranus = new Menu("Uranus");
         Menu neptune = new Menu("Neptune");
         Menu probe = new Menu("Probe");
+        Menu lander = new Menu("Lander");
 
         //SUN BAR
         MenuItem sunV = new MenuItem("Sun Velocity");
@@ -352,9 +356,49 @@ public class LineChartSample extends Application {
         toEarth.getItems().add(probeVToEarth);
         probe.getItems().add(toEarth);
 
+        //Landing Bar
+        Menu openLoop = new Menu("Open-Loop");
+        Menu openWind = new Menu("Wind");
+        MenuItem openWindP = new MenuItem("Position");
+        MenuItem openWindV = new MenuItem("Velocity");
+        Menu openVacuum = new Menu("Vacuum");
+        MenuItem openVacuumP = new MenuItem("Position");
+        MenuItem openVacuumV = new MenuItem("Velocity");
+
+        //Wind
+        openWindP.setOnAction(e -> {
+            update("Seconds");
+            WIND = true;
+            lineChart.getData().addAll(createSeriesLander(getTrajectoryOpenLoop(), true, 10));
+            WIND = false;
+        });
+        openWindV.setOnAction(e -> {
+            update("Seconds");
+            WIND = true;
+            lineChart.getData().addAll(createSeriesLander(getTrajectoryOpenLoop(), false, 10));
+            WIND = false;
+        });
+
+        //Vacuum
+        openVacuumP.setOnAction(e -> {
+            update("Seconds");
+            lineChart.getData().addAll(createSeriesLander(getTrajectoryOpenLoop(), true, 10));
+        });
+        openVacuumV.setOnAction(e -> {
+            update("Seconds");
+            lineChart.getData().addAll(createSeriesLander(getTrajectoryOpenLoop(), false, 10));
+        });
+        openLoop.getItems().add(openWind);
+        openLoop.getItems().add(openVacuum);
+        openWind.getItems().add(openWindP);
+        openWind.getItems().add(openWindV);
+        openVacuum.getItems().add(openVacuumP);
+        openVacuum.getItems().add(openVacuumV);
+        lander.getItems().add(openLoop );
+
         //Adds of bars into a MenuBar
         menuBar.getMenus().addAll(sun, mercury, venus, earth, moon, mars,
-                jupiter, saturn, titan, uranus, neptune, probe, solver, exit);
+                jupiter, saturn, titan, uranus, neptune, probe, lander, solver, exit);
 
         return menuBar;
     }
@@ -547,5 +591,49 @@ public class LineChartSample extends Application {
         arrayList.add(series6);
 
         return arrayList;
+    }
+
+    /**
+     * @param trajectory Data of trajectories
+     * @param flag TRUE = Position, FALSE = Velocity
+     * @return array of the series for the line chart
+     */
+    private ArrayList<XYChart.Series<Number, Number>> createSeriesLander(ArrayList<Lander> trajectory, boolean flag, int scaleData){
+        ArrayList<XYChart.Series<Number, Number>> arrayList = new ArrayList<>();
+
+
+        final XYChart.Series<Number, Number> series4 = new XYChart.Series<>();
+        series4.setName("X");
+
+        final XYChart.Series<Number, Number> series5 = new XYChart.Series<>();
+        series5.setName("Y");
+
+        int scaleOneDay = trajectory.size()/(scaleData);
+        for (int i = 0; i < scaleOneDay; i++) {
+            int point = (i+1);
+            //Solver
+            Vector2d body;
+
+            if(flag) {
+                body = trajectory.get((scaleData)*i).getPosition();
+            } else {
+                body = trajectory.get((scaleData)*i).getVelocity();
+            }
+
+
+            series4.getData().add(new XYChart.Data<Number, Number>(point, body.getX()));
+            series5.getData().add(new XYChart.Data<Number, Number>(point, body.getY()));
+        }
+
+
+        arrayList.add(series4);
+        arrayList.add(series5);
+
+        return arrayList;
+    }
+
+    private ArrayList<Lander> getTrajectoryOpenLoop(){
+        OpenLoopController mission = new OpenLoopController();
+        return mission.land(mission.probeOnTheOrbitTitan());
     }
 }
