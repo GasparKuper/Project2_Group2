@@ -54,7 +54,7 @@ public class PhaseLanding {
 
             lastState = result.get(point);
 
-            //Feul
+            //Fuel
             fuel.calculateFuel(result.get(point), step,u_ToSlowDown, 0);
 
             //Distance from titan

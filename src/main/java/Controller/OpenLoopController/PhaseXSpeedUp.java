@@ -25,15 +25,14 @@ public class PhaseXSpeedUp {
 
         double tmp1 = time - 40.0;
 
-        Lander lastState = state;
         //Distance to x = 0
-        double distance = lastState.getPosition().getX();
+        double distance = state.getPosition().getX();
 
         // Vx_max = ||distance / time||
         double Vx_max = Math.abs((distance/time));
 
         //Sin
-        double angleLander = lastState.getRotation();
+        double angleLander = state.getRotation();
         double degreeInRadians = Math.toRadians(angleLander);
         double sin = Math.sin(degreeInRadians);
 
