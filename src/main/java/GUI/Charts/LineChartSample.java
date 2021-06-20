@@ -73,7 +73,7 @@ public class LineChartSample extends Application {
     private final State[] trajectoryProbeToTitan = new MissionProbe().trajectoryProbeCalculationToTitan();
     private final State[] trajectoryProbeOrbitTitan = new MissionProbe().trajectoryProbeCalculationOrbitTitan(trajectoryProbeToTitan[trajectoryProbeToTitan.length-1]);
     private final State[] trajectoryProbeToEarth = new MissionProbe().trajectoryProbeCalculationToEarth(trajectoryProbeOrbitTitan[trajectoryProbeOrbitTitan.length-1]);
-    private final ArrayList<Lander> trajectoryLander = getTrajectoryOpenLoop();
+    private final ArrayList<Lander> trajectoryLanderCloseLoop = getTrajectoryCloseLoop();
 
     /**
      * Create MenuBar in the GUI
@@ -357,56 +357,56 @@ public class LineChartSample extends Application {
         probe.getItems().add(toEarth);
 
         //Landing Bar
-        Menu openLoop = new Menu("Open-Loop");
-        Menu openWind = new Menu("Wind");
-        MenuItem openWindP = new MenuItem("Position");
-        MenuItem openWindV = new MenuItem("Velocity");
-        Menu openVacuum = new Menu("Vacuum");
-        MenuItem openVacuumP = new MenuItem("Position");
-        MenuItem openVacuumV = new MenuItem("Velocity");
-        MenuItem openVacuumRD = new MenuItem("Angle Degree");
-        MenuItem openVacuumRV = new MenuItem("Angle Velocity");
+        Menu closeLoop = new Menu("Close-Loop");
+        Menu closeWind = new Menu("Wind");
+        MenuItem closeWindP = new MenuItem("Position");
+        MenuItem closeWindV = new MenuItem("Velocity");
+        Menu closeVacuum = new Menu("Vacuum");
+        MenuItem closeVacuumP = new MenuItem("Position");
+        MenuItem closeVacuumV = new MenuItem("Velocity");
+        MenuItem closeVacuumRD = new MenuItem("Angle Degree");
+        MenuItem closeVacuumRV = new MenuItem("Angle Velocity");
 
         //Wind
-        openWindP.setOnAction(e -> {
+        closeWindP.setOnAction(e -> {
             update("Seconds", "Meters");
             WIND = true;
-            lineChart.getData().addAll(createSeriesLander(getTrajectoryOpenLoop(), true, 10));
+            lineChart.getData().addAll(createSeriesLander(getTrajectoryCloseLoop(), true, 10));
             WIND = false;
         });
-        openWindV.setOnAction(e -> {
+        closeWindV.setOnAction(e -> {
             update("Seconds", "Meters");
             WIND = true;
-            lineChart.getData().addAll(createSeriesLander(getTrajectoryOpenLoop(), false, 10));
+            lineChart.getData().addAll(createSeriesLander(getTrajectoryCloseLoop(), false, 10));
             WIND = false;
         });
 
         //Vacuum
-        openVacuumP.setOnAction(e -> {
+        closeVacuumP.setOnAction(e -> {
             update("Seconds", "Meters");
-            lineChart.getData().addAll(createSeriesLander(trajectoryLander, true, 10));
+            lineChart.getData().addAll(createSeriesLander(trajectoryLanderCloseLoop, true, 10));
         });
-        openVacuumV.setOnAction(e -> {
+        closeVacuumV.setOnAction(e -> {
             update("Seconds", "Meters");
-            lineChart.getData().addAll(createSeriesLander(trajectoryLander, false, 10));
+            lineChart.getData().addAll(createSeriesLander(trajectoryLanderCloseLoop, false, 10));
         });
-        openVacuumRD.setOnAction(e -> {
+        closeVacuumRD.setOnAction(e -> {
             update("Seconds", "Degree");
-            lineChart.getData().addAll(createSeriesLanderRotation(trajectoryLander, true, 10, "Degree"));
+            lineChart.getData().addAll(createSeriesLanderRotation(trajectoryLanderCloseLoop, true, 10, "Degree"));
         });
-        openVacuumRV.setOnAction(e -> {
+        closeVacuumRV.setOnAction(e -> {
             update("Seconds", "Meters per second");
-            lineChart.getData().addAll(createSeriesLanderRotation(trajectoryLander, false, 10, "Angle Velocity"));
+            lineChart.getData().addAll(createSeriesLanderRotation(trajectoryLanderCloseLoop, false, 10, "Angle Velocity"));
         });
-        openLoop.getItems().add(openWind);
-        openLoop.getItems().add(openVacuum);
-        openWind.getItems().add(openWindP);
-        openWind.getItems().add(openWindV);
-        openVacuum.getItems().add(openVacuumP);
-        openVacuum.getItems().add(openVacuumV);
-        openVacuum.getItems().add(openVacuumRD);
-        openVacuum.getItems().add(openVacuumRV);
-        lander.getItems().add(openLoop );
+        closeLoop.getItems().add(closeWind);
+        closeLoop.getItems().add(closeVacuum);
+        closeWind.getItems().add(closeWindP);
+        closeWind.getItems().add(closeWindV);
+        closeVacuum.getItems().add(closeVacuumP);
+        closeVacuum.getItems().add(closeVacuumV);
+        closeVacuum.getItems().add(closeVacuumRD);
+        closeVacuum.getItems().add(closeVacuumRV);
+        lander.getItems().add(closeLoop );
 
         //Adds of bars into a MenuBar
         menuBar.getMenus().addAll(sun, mercury, venus, earth, moon, mars,
@@ -626,7 +626,7 @@ public class LineChartSample extends Application {
         return arrayList;
     }
 
-    private ArrayList<Lander> getTrajectoryOpenLoop(){
+    private ArrayList<Lander> getTrajectoryCloseLoop(){
         CloseLoopController mission = new CloseLoopController();
         return mission.land(mission.probeOnTheOrbitTitan());
     }
