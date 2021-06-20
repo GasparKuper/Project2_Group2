@@ -23,7 +23,7 @@ public class PhaseXSpeedUp {
         Integration update = new Integration();
         FuelCalculationLander fuel = new FuelCalculationLander();
 
-        double tmp1 = time - 40.0;
+        double tmp1 = time - 120.0;
 
         //Distance to x = 0
         double distance = state.getPosition().getX();

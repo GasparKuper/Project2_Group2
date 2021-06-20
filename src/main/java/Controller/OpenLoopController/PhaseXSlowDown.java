@@ -29,7 +29,7 @@ public class PhaseXSlowDown {
         double timeToSlowDown = Math.abs(distance/(lastState.getVelocity().getX() * 0.5));
 
         //Acceleration_x to slow down the lander = -Vx_currentVelocity / Time to slow down the lander
-        double x_Acceleration_ToSlowDown = (lastState.getVelocity().getX()/timeToSlowDown) ;
+        double x_Acceleration_ToSlowDown = (-lastState.getVelocity().getX()/timeToSlowDown) ;
 
         //Sin
         double angleLander = lastState.getRotation();

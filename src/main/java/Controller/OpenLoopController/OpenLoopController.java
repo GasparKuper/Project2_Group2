@@ -43,26 +43,27 @@ public class OpenLoopController {
         if(solarSystem[landing].getLander().getPosition().getX() > 0.0)
             theta = -90.0;
 
-        ArrayList<Lander> phaseRotate90 = new RotationPhase().rotationPhase(solarSystem[landing].getLander(), 20, 0.1, theta);
+        ArrayList<Lander> phaseRotate90 = new RotationPhase().rotationPhase(solarSystem[landing].getLander(), 30, 0.1, theta);
+
 
 //        printResult(phaseRotate90);
 
         //Phase 2 = run the main thruster to reach X position = 0 Vx = 0
-        double distance = (Math.abs(phaseRotate90.get(phaseRotate90.size() - 1).getPosition().getX())/2000.0) + 40;
+        double distance = (Math.abs(phaseRotate90.get(phaseRotate90.size() - 1).getPosition().getX())/2000.0) + 120;
         ArrayList<Lander> phaseSpeedUpX = new PhaseXSpeedUp().phaseSpeedUp(phaseRotate90.get(phaseRotate90.size() - 1), distance, 0.1);
 
         double theta_Phase2 = -90.0;
         if(theta == -90.0)
             theta_Phase2 = 90.0;
 
-        ArrayList<Lander> phaseRotateToSlowDown = new RotationPhase().rotationPhase(phaseSpeedUpX.get(phaseSpeedUpX.size()-1), 20, 0.1, theta_Phase2);
+        ArrayList<Lander> phaseRotateToSlowDown = new RotationPhase().rotationPhase(phaseSpeedUpX.get(phaseSpeedUpX.size()-1), 60, 0.1, theta_Phase2);
 
         ArrayList<Lander> phaseToSlowDown = new PhaseXSlowDown().phaseToSlowDownX(phaseRotateToSlowDown.get(phaseRotateToSlowDown.size()-1), 0.1);
 
 //        printResult(phaseToSlowDown);
 
         //Phase 3 = rotate our lander to 0 degree (Vertical state) V_rotation = 0
-        ArrayList<Lander> phaseRotateTo0 = new RotationPhase().rotationPhase(phaseToSlowDown.get(phaseToSlowDown.size()-1), 20, 0.1, 0.0);
+        ArrayList<Lander> phaseRotateTo0 = new RotationPhase().rotationPhase(phaseToSlowDown.get(phaseToSlowDown.size()-1), 40, 0.1, 0.0);
 
 //        printResult(phaseRotateTo0);
 
