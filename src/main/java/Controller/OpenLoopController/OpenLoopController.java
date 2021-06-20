@@ -58,7 +58,7 @@ public class OpenLoopController {
 
         ArrayList<Lander> phaseRotate90 = new RotationPhaseOpen().rotationPhase(state, 20, 0.1, theta);
 
-//        printResult(phaseRotate90);
+//        printResult(phaseRotate90, true);
 
         //Phase 2 = run the main thruster to reach X position = 0 Vx = 0
         double distance = (Math.abs(phaseRotate90.get(phaseRotate90.size() - 1).getPosition().getX())/2000.0) + 40;
@@ -72,17 +72,17 @@ public class OpenLoopController {
 
         ArrayList<Lander> phaseToSlowDown = new PhaseXSlowDownOpen().phaseToSlowDownX(phaseRotateToSlowDown.get(phaseRotateToSlowDown.size()-1), 0.1);
 
-//        printResult(phaseToSlowDown);
+//        printResult(phaseToSlowDown, true);
 
         //Phase 3 = rotate our lander to 0 degree (Vertical state) V_rotation = 0
         ArrayList<Lander> phaseRotateTo0 = new RotationPhaseOpen().rotationPhase(phaseToSlowDown.get(phaseToSlowDown.size()-1), 20, 0.1, 0.0);
 
-//        printResult(phaseRotateTo0);
+//        printResult(phaseRotateTo0, true);
 
         //Phase 4 = final phase, run the main thruster like to reach Y position = 0 and Vy = 0
         ArrayList<Lander> phaseLanding = new PhaseLandingOpen().phaseLanding(phaseRotateTo0.get(phaseRotateTo0.size()-1), 0.1);
 
-//        printResult(phaseLanding);
+//        printResult(phaseLanding, true);
 
         System.out.println("FUEL need for this landing = " + phaseLanding.get(phaseLanding.size() - 1).getFuel());
         //Write all data into one array
@@ -139,7 +139,7 @@ public class OpenLoopController {
      * Print the result of the phase
      * @param phase result with the data of the phase
      */
-    private void printResult(ArrayList<Lander> phase){
+    private void printResult(ArrayList<Lander> phase, boolean flag){
         for (int i = 0; i < phase.size(); i++) {
             Lander t = phase.get(i);
             System.out.println("Position = " + t.getPosition().getX() + "     " + t.getPosition().getY());
@@ -147,7 +147,7 @@ public class OpenLoopController {
             System.out.println("Degree = " + t.getRotation());
             System.out.println("Degree velocity = " + t.getRotationVelocity());
         }
-        if(true)
+        if(flag)
             throw new RuntimeException("stop");
     }
 
