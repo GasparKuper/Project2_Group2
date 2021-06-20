@@ -82,7 +82,7 @@ public class CloseLoopController {
         //Phase 4 = final phase, run the main thruster like to reach Y position = 0 and Vy = 0
         ArrayList<Lander> phaseLanding = new PhaseLandingClose().phaseLanding(phaseRotateTo0.get(phaseRotateTo0.size()-1), 0.1);
 
-        printResult(phaseLanding);
+//        printResult(phaseLanding);
 
         System.out.println("FUEL need for this landing = " + phaseLanding.get(phaseLanding.size() - 1).getFuel());
         //Write all data into one array
