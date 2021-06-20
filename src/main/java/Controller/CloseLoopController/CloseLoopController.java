@@ -1,22 +1,15 @@
-package Controller;
+package Controller.CloseLoopController;
 
 import Body.Planets.PlanetBody;
 import Body.SpaceCrafts.Lander;
 import Body.SpaceCrafts.State;
 import Body.Vector.Vector2d;
 import Body.Vector.Vector3d;
-import ODESolver.Function.ODEFunction;
-import ODESolver.ODESolver;
-import ODESolver.ProbeSimulator;
-import Run.CalculationForProbe.OrbitPlanet;
 import Run.MissionProbe;
 
 import java.util.ArrayList;
 
-import static Constant.Constant.*;
-import static Constant.Constant.SOLVER;
-
-public class OpenLoopController {
+public class CloseLoopController {
 
     private final double RADIUS_TITAN = 2575.5e3;
 
@@ -50,68 +43,42 @@ public class OpenLoopController {
         if(solarSystem[landing].getLander().getPosition().getX() > 0.0)
             theta = -90.0;
 
-        ArrayList<Lander> phase1 = new RotationPhase().rotationPhase(solarSystem[landing].getLander(), 20, 0.1, theta);
+        ArrayList<Lander> phaseRotate90 = new RotationPhase().rotationPhase(solarSystem[landing].getLander(), 20, 0.1, theta);
 
-//        for (int i = 0; i < phase1.size(); i++) {
-//            Lander t = phase1.get(i);
-//            System.out.println("Position = " + t.getPosition().getX() + "     " + t.getPosition().getY());
-//            System.out.println("Velocity = " + t.getVelocity().getX() + "     " + t.getVelocity().getY());
-//            System.out.println("Degree = " + t.getRotation());
-//            System.out.println("Degree velocity = " + t.getRotationVelocity());
-//        }
-
-//        if(true)
-//            throw new RuntimeException("stop");
+//        printResult(phaseRotate90);
 
         //Phase 2 = run the main thruster to reach X position = 0 Vx = 0
-        double distance = Math.abs(phase1.get(phase1.size() - 1).getPosition().getX())/1000.0;
-        ArrayList<Lander> phase2 = new Phase2().phase2(phase1.get(phase1.size() - 1), distance, 0.1);
+        double distance = (Math.abs(phaseRotate90.get(phaseRotate90.size() - 1).getPosition().getX())/2000.0) + 40;
+        ArrayList<Lander> phaseSpeedUpX = new PhaseXSpeedUp().phaseSpeedUp(phaseRotate90.get(phaseRotate90.size() - 1), distance, 0.1);
 
-//        for (int i = 0; i < phase2.size(); i++) {
-//            Lander t = phase2.get(i);
-//            System.out.println("Position = " + t.getPosition().getX() + "     " + t.getPosition().getY());
-//            System.out.println("Velocity = " + t.getVelocity().getX() + "     " + t.getVelocity().getY());
-//            System.out.println("Degree = " + t.getRotation());
-//            System.out.println("Degree velocity = " + t.getRotationVelocity());
-//        }
-////
-//        if(true)
-//            throw new RuntimeException("stop");
+        double theta_Phase2 = -90.0;
+        if(theta == -90.0)
+            theta_Phase2 = 90.0;
+
+        ArrayList<Lander> phaseRotateToSlowDown = new RotationPhase().rotationPhase(phaseSpeedUpX.get(phaseSpeedUpX.size()-1), 20, 0.1, theta_Phase2);
+
+        ArrayList<Lander> phaseToSlowDown = new PhaseXSlowDown().phaseToSlowDownX(phaseRotateToSlowDown.get(phaseRotateToSlowDown.size()-1), 0.1);
+
+//        printResult(phaseToSlowDown);
 
         //Phase 3 = rotate our lander to 0 degree (Vertical state) V_rotation = 0
-        ArrayList<Lander> phase3 = new RotationPhase().rotationPhase(phase2.get(phase2.size()-1), 20, 0.1, 0.0);
+        ArrayList<Lander> phaseRotateTo0 = new RotationPhase().rotationPhase(phaseToSlowDown.get(phaseToSlowDown.size()-1), 20, 0.1, 0.0);
 
-//        for (int i = 0; i < phase3.size(); i++) {
-//            Lander t = phase3.get(i);
-//            System.out.println("Position = " + t.getPosition().getX() + "     " + t.getPosition().getY());
-//            System.out.println("Velocity = " + t.getVelocity().getX() + "     " + t.getVelocity().getY());
-//            System.out.println("Degree = " + t.getRotation());
-//            System.out.println("Degree velocity = " + t.getRotationVelocity());
-//        }
-
-//        if(true)
-//            throw new RuntimeException("stop");
+//        printResult(phaseRotateTo0);
 
         //Phase 4 = final phase, run the main thruster like to reach Y position = 0 and Vy = 0
-        ArrayList<Lander> phase4 = new Phase4().phase4(phase3.get(phase3.size()-1), 0.1);
+        ArrayList<Lander> phaseLanding = new PhaseLanding().phaseLanding(phaseRotateTo0.get(phaseRotateTo0.size()-1), 0.1);
 
-//        for (int i = 0; i < phase4.size(); i++) {
-//            Lander t = phase4.get(i);
-//            System.out.println("Position = " + t.getPosition().getX() + "     " + t.getPosition().getY());
-//            System.out.println("Velocity = " + t.getVelocity().getX() + "     " + t.getVelocity().getY());
-//            System.out.println("Degree = " + t.getRotation());
-//            System.out.println("Degree velocity = " + t.getRotationVelocity());
-//        }
+//        printResult(phaseLanding);
 
-        System.out.println("FUEL need for this landing = " + phase4.get(phase4.size() - 1).getFuel());
+        System.out.println("FUEL need for this landing = " + phaseLanding.get(phaseLanding.size() - 1).getFuel());
         //Write all data into one array
-        ArrayList<Lander> result = new ArrayList<>(phase1);
-
-        result.addAll(phase2);
-
-        result.addAll(phase3);
-
-        result.addAll(phase4);
+        ArrayList<Lander> result = new ArrayList<>(phaseRotate90);
+        result.addAll(phaseSpeedUpX);
+        result.addAll(phaseRotateToSlowDown);
+        result.addAll(phaseToSlowDown);
+        result.addAll(phaseRotateTo0);
+        result.addAll(phaseLanding);
 
         return result;
     }
@@ -156,8 +123,20 @@ public class OpenLoopController {
         return probe.trajectoryProbeCalculationOrbitTitan(toTitanTrajectory[toTitanTrajectory.length - 1]);
     }
 
+    private void printResult(ArrayList<Lander> phase){
+        for (int i = 0; i < phase.size(); i++) {
+            Lander t = phase.get(i);
+            System.out.println("Position = " + t.getPosition().getX() + "     " + t.getPosition().getY());
+            System.out.println("Velocity = " + t.getVelocity().getX() + "     " + t.getVelocity().getY());
+            System.out.println("Degree = " + t.getRotation());
+            System.out.println("Degree velocity = " + t.getRotationVelocity());
+        }
+        if(true)
+            throw new RuntimeException("stop");
+    }
+
     public static void main(String[] args) {
-        OpenLoopController mission = new OpenLoopController();
+        CloseLoopController mission = new CloseLoopController();
         mission.land(mission.probeOnTheOrbitTitan());
     }
 }

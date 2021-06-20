@@ -1,6 +1,8 @@
-package Controller;
+package Controller.CloseLoopController;
 
 import Body.SpaceCrafts.Lander;
+import Controller.FuelCalculationLander;
+import Controller.Integration;
 
 import java.util.ArrayList;
 
@@ -54,11 +56,7 @@ public class RotationPhase {
         //V to slow down the lander = Angle Velocity_current / Time needed to slow down
         double v_ToSlowDown = -angleVelocity / timeToSlowDown;
 
-        double iterationTime = timeToSlowDown;
-
-        double remainTime = timeToSlowDown % step;
-
-        for (double i = 0; i < iterationTime; i+=step) {
+        while (timeToSlowDown >= step) {
             Lander tmp = update.step(result.get(point++), 0, v_ToSlowDown, step);
             result.add(tmp);
 
@@ -80,6 +78,8 @@ public class RotationPhase {
             //V to slow down the lander = Angle Velocity_current / Time needed to slow down
             v_ToSlowDown = -angleVelocity / timeToSlowDown;
         }
+
+        double remainTime = timeToSlowDown % step;
 
         //Final Step
         //V to slow down the lander = Angle Velocity_current / Time needed to slow down

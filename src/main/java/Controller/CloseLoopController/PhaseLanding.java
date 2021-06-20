@@ -1,32 +1,29 @@
-package Controller;
+package Controller.CloseLoopController;
 
 import Body.SpaceCrafts.Lander;
-import Body.Vector.Vector2d;
+import Controller.FuelCalculationLander;
+import Controller.Integration;
 
 import java.util.ArrayList;
 
-public class Phase4 {
+public class PhaseLanding {
 
     private final double G = 1.352;
 
-    public ArrayList<Lander> phase4(Lander state, double step){
+    public ArrayList<Lander> phaseLanding(Lander state, double step){
 
         ArrayList<Lander> result = new ArrayList<>();
         result.add(state);
-
-        double distance_half = state.getPosition().getY()/2.0;
 
         //todo What you know about rollin' down in the deep?
         Integration update = new Integration();
         FuelCalculationLander fuel = new FuelCalculationLander();
         int point = 0;
         //Free fall on the half distance
-        if(distance_half > 50000.0) {
-            while (result.get(point).getPosition().getY() > distance_half) {
+            while (result.get(point).getPosition().getY() > 50000.0) {
                 Lander tmp = update.step(result.get(point++), 0, 0, step);
                 result.add(tmp);
             }
-        }
 
         //todo Slow down Velocity Y
         Lander lastState = result.get(point);
@@ -51,9 +48,7 @@ public class Phase4 {
         //U = |Acceleration_y / cos(theta)| + G
         double u_ToSlowDown = Math.abs(y_Acceleration_ToSlowDown / cos) + G;
 
-        double iterationTime = timeLanding;
-
-        for (double i = 0; i < iterationTime && lastState.getVelocity().getY() < 0.0; i+=step) {
+        while (timeLanding >= step) {
             Lander tmp = update.step(result.get(point++), u_ToSlowDown, 0, step);
             result.add(tmp);
 
@@ -83,8 +78,14 @@ public class Phase4 {
             u_ToSlowDown = Math.abs(y_Acceleration_ToSlowDown / cos) + G;
         }
 
-        if (lastState.getVelocity().getY() > 0 && lastState.getVelocity().getY() < G*2)
-            lastState.setVelocity(new Vector2d(lastState.getVelocity().getX(), 0));
+        double remainTime = timeLanding % step;
+
+        //Final Step
+        y_Acceleration_ToSlowDown = Vy_last / remainTime;
+        u_ToSlowDown = Math.abs(y_Acceleration_ToSlowDown / cos) + G;
+
+        Lander tmp = update.step(result.get(point), u_ToSlowDown, 0, remainTime);
+        result.add(tmp);
 
         return result;
     }

@@ -1,8 +1,9 @@
 import Body.SpaceCrafts.Lander;
 import Body.Vector.Vector2d;
-import Controller.Phase2;
-import Controller.Phase4;
-import Controller.RotationPhase;
+import Controller.CloseLoopController.PhaseLanding;
+import Controller.CloseLoopController.PhaseXSlowDown;
+import Controller.CloseLoopController.PhaseXSpeedUp;
+import Controller.CloseLoopController.RotationPhase;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class OpenLoopControllerTest {
+public class CloseLoopControllerTest {
 
     private final double accuracy = 0.1;
 
@@ -53,8 +54,17 @@ public class OpenLoopControllerTest {
 
         private Lander xAcceleration(double stepSize, double distance, double angle){
             Lander lander = new Lander(new Vector2d(distance, 250000), new Vector2d(0, 0), 6000, 0, angle, 0);
-            ArrayList<Lander> xAccelration = new Phase2().phase2(lander, 150, stepSize);
-            return xAccelration.get(xAccelration.size() - 1);
+            ArrayList<Lander> phaseSpeedUpX = new PhaseXSpeedUp().phaseSpeedUp(lander, 190, 0.1);
+
+            double theta_Phase2 = -90.0;
+            if(angle == -90.0)
+                theta_Phase2 = 90.0;
+
+            ArrayList<Lander> phaseRotateToSlowDown = new RotationPhase().rotationPhase(phaseSpeedUpX.get(phaseSpeedUpX.size()-1), 20, 0.1, theta_Phase2);
+
+            ArrayList<Lander> phaseToSlowDown = new PhaseXSlowDown().phaseToSlowDownX(phaseRotateToSlowDown.get(phaseRotateToSlowDown.size()-1), 0.1);
+
+            return phaseToSlowDown.get(phaseToSlowDown.size() - 1);
         }
     }
 
@@ -158,13 +168,6 @@ public class OpenLoopControllerTest {
         }
 
         @Test
-        @DisplayName("Landing 75000 meters")
-        public void landing75000(){
-            Lander result = landing(75000);
-            assertEquals(0, result.getPosition().getY(), accuracy);
-            assertEquals(0, result.getVelocity().getY(), accuracy);
-        }
-        @Test
         @DisplayName("Landing 100000 meters")
         public void landing100000(){
             Lander result = landing(1000000);
@@ -183,7 +186,7 @@ public class OpenLoopControllerTest {
 
         private Lander landing(double distance){
             Lander lander = new Lander(new Vector2d(0, distance), new Vector2d(0, -735.0), 6000, 0, 0, 0);
-            ArrayList<Lander> xAccelration = new Phase4().phase4(lander, 0.1);
+            ArrayList<Lander> xAccelration = new PhaseLanding().phaseLanding(lander, 0.1);
             return xAccelration.get(xAccelration.size() - 1);
         }
     }

@@ -1,8 +1,7 @@
 package Run.CalculationForProbe;
 
 import Body.SpaceCrafts.Lander;
-import Body.Vector.Vector2d;
-import Controller.OpenLoopController;
+import Controller.CloseLoopController.CloseLoopController;
 
 import static Constant.Constant.STEPSIZE;
 
@@ -42,7 +41,7 @@ public class OpenLoopBruteForce {
      * @return force of the thrust
      */
     public double findThrust() {
-        OpenLoopController controller = new OpenLoopController();
+        CloseLoopController controller = new CloseLoopController();
         double t = 0;
         double u_mainThrust = (maximumThrust + minimumThrust) / i;
 

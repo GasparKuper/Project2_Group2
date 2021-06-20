@@ -6,7 +6,7 @@ import Body.SpaceCrafts.Lander;
 import Body.SpaceCrafts.State;
 import Body.Vector.Vector2d;
 import Body.Vector.Vector3d;
-import Controller.OpenLoopController;
+import Controller.CloseLoopController.CloseLoopController;
 import Interfaces.ODESolverInterface;
 import Interfaces.Vector3dInterface;
 import ODESolver.Function.ODEFunction;
@@ -627,7 +627,7 @@ public class LineChartSample extends Application {
     }
 
     private ArrayList<Lander> getTrajectoryOpenLoop(){
-        OpenLoopController mission = new OpenLoopController();
+        CloseLoopController mission = new CloseLoopController();
         return mission.land(mission.probeOnTheOrbitTitan());
     }
 }

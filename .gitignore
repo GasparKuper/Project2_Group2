@@ -15,5 +15,6 @@ trajectory4th_RUNGE_KUTTA_THRUST.csv
 trajectorySYMPLECTIC_EULER_THRUST.csv
 trajectoryVELOCITY_VERLET_THRUST.csv
 trajectory_Lander.csv
+trajectory_Lander_CloseLoop.csv
 gradlew
 gradlew.bat

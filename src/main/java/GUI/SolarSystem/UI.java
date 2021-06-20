@@ -2,25 +2,11 @@ package GUI.SolarSystem;
 // Scale x,y,z  - 1:1*10^(-9)
 // Scale volume - 1:1*10^(-6)
 
-import Body.Planets.Data;
-import Body.Planets.PlanetBody;
 import Body.SpaceCrafts.State;
-import Body.Vector.Vector3d;
-import Controller.OpenLoopController;
-import Interfaces.ODESolverInterface;
-import Interfaces.Vector3dInterface;
-import ODESolver.Function.ODEFunction;
-import ODESolver.ODESolver;
-import ODESolver.ProbeSimulator;
-import Run.CalculationForProbe.OrbitPlanet;
 import Run.MissionProbe;
-import javafx.animation.Interpolator;
 import javafx.animation.ParallelTransition;
 import javafx.animation.PathTransition;
-import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.geometry.Pos;
-import javafx.geometry.Side;
 import javafx.scene.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -28,14 +14,12 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polyline;
-import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import static Constant.Constant.*;
 
