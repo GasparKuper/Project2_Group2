@@ -64,6 +64,8 @@ public class  CalculationOutput{
             System.out.println(toEarth[toEarth.length - 1].celestialBody.get(3).getPosition());
             System.out.println("Distance between Earth and Probe");
             System.out.println((toEarth[toEarth.length - 1].position.dist(toEarth[toEarth.length - 1].celestialBody.get(3).getPosition()) - 6371000) + " meters");
+
+            System.out.println("\nTotal time of the mission 'A Titanic Space Odyssey' = 3 years(1095 days) 362 days 13 hours 5 minutes 16 second");
         }
 
     }
