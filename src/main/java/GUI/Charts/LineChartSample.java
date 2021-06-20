@@ -58,7 +58,6 @@ public class LineChartSample extends Application {
         lineChart.setAnimated(false);
         lineChart.setCreateSymbols(false);
 
-        lineChart.setTitle("Vector 3D");
 
         VBox vbox = new VBox(createMenuBar(stage), lineChart);
         VBox.setVgrow(lineChart, Priority.ALWAYS);
@@ -159,7 +158,7 @@ public class LineChartSample extends Application {
         MenuItem sunV = new MenuItem("Sun Velocity");
         MenuItem sunP = new MenuItem("Sun Position");
         sunV.setOnAction(e -> {
-            update("Days", "Meters");
+            update("Days", "Meters per seconds");
             lineChart.getData().addAll(createSeries("Vel_Sun", 0, trajectory, false));
         });
         sunP.setOnAction(e -> {
@@ -173,7 +172,7 @@ public class LineChartSample extends Application {
         MenuItem mercuryV = new MenuItem("Mercury Velocity");
         MenuItem mercuryP = new MenuItem("Mercury Position");
         mercuryV.setOnAction(e -> {
-            update("Days", "Meters");
+            update("Days", "Meters per seconds");
             lineChart.getData().addAll(createSeries("Vel_Mercury", 1, trajectory, false));
         });
         mercuryP.setOnAction(e -> {
@@ -187,7 +186,7 @@ public class LineChartSample extends Application {
         MenuItem venusV = new MenuItem("Venus Velocity");
         MenuItem venusP = new MenuItem("Venus Position");
         venusV.setOnAction(e -> {
-            update("Days", "Meters");
+            update("Days", "Meters per seconds");
             lineChart.getData().addAll(createSeries("Vel_Venus", 2, trajectory, false));
         });
         venusP.setOnAction(e -> {
@@ -201,7 +200,7 @@ public class LineChartSample extends Application {
         MenuItem earthV = new MenuItem("Earth Velocity");
         MenuItem earthP = new MenuItem("Earth Position");
         earthV.setOnAction(e -> {
-            update("Days", "Meters");
+            update("Days", "Meters per seconds");
             lineChart.getData().addAll(createSeries("Vel_Earth", 3, trajectory, false));
         });
         earthP.setOnAction(e -> {
@@ -215,7 +214,7 @@ public class LineChartSample extends Application {
         MenuItem moonV = new MenuItem("Moon Velocity");
         MenuItem moonP = new MenuItem("Moon Position");
         moonV.setOnAction(e -> {
-            update("Days", "Meters");
+            update("Days", "Meters per seconds");
             lineChart.getData().addAll(createSeries("Vel_Moon", 4, trajectory, false));
         });
         moonP.setOnAction(e -> {
@@ -229,7 +228,7 @@ public class LineChartSample extends Application {
         MenuItem marsV = new MenuItem("Mars Velocity");
         MenuItem marsP = new MenuItem("Mars Position");
         marsV.setOnAction(e -> {
-            update("Days", "Meters");
+            update("Days", "Meters per seconds");
             lineChart.getData().addAll(createSeries("Vel_Mars", 5, trajectory, false));
         });
         marsP.setOnAction(e -> {
@@ -243,7 +242,7 @@ public class LineChartSample extends Application {
         MenuItem jupiterV = new MenuItem("Jupiter Velocity");
         MenuItem jupiterP = new MenuItem("Jupiter Position");
         jupiterV.setOnAction(e -> {
-            update("Days", "Meters");
+            update("Days", "Meters per seconds");
             lineChart.getData().addAll(createSeries("Vel_Jupiter", 6, trajectory, false));
         });
         jupiterP.setOnAction(e -> {
@@ -257,7 +256,7 @@ public class LineChartSample extends Application {
         MenuItem saturnV = new MenuItem("Saturn Velocity");
         MenuItem saturnP = new MenuItem("Saturn Position");
         saturnV.setOnAction(e -> {
-            update("Days", "Meters");
+            update("Days", "Meters per seconds");
             lineChart.getData().addAll(createSeries("Vel_Saturn", 7, trajectory, false));
         });
         saturnP.setOnAction(e -> {
@@ -271,7 +270,7 @@ public class LineChartSample extends Application {
         MenuItem titanV = new MenuItem("Titan Velocity");
         MenuItem titanP = new MenuItem("Titan Position");
         titanV.setOnAction(e -> {
-            update("Days", "Meters");
+            update("Days", "Meters per seconds");
             lineChart.getData().addAll(createSeries("Vel_Titan", 8, trajectory, false));
         });
         titanP.setOnAction(e -> {
@@ -285,7 +284,7 @@ public class LineChartSample extends Application {
         MenuItem uranusV = new MenuItem("Uranus Velocity");
         MenuItem uranusP = new MenuItem("Uranus Position");
         uranusV.setOnAction(e -> {
-            update("Days", "Meters");
+            update("Days", "Meters per seconds");
             lineChart.getData().addAll(createSeries("Vel_Uranus", 9, trajectory, false));
         });
         uranusP.setOnAction(e -> {
@@ -299,7 +298,7 @@ public class LineChartSample extends Application {
         MenuItem neptuneV = new MenuItem("Neptune Velocity");
         MenuItem neptuneP = new MenuItem("Neptune Position");
         neptuneV.setOnAction(e -> {
-            update("Days", "Meters");
+            update("Days", "Meters per seconds");
             lineChart.getData().addAll(createSeries("Vel_Neptune", 10, trajectory, false));
         });
         neptuneP.setOnAction(e -> {
@@ -315,7 +314,7 @@ public class LineChartSample extends Application {
         MenuItem probeVToTitan = new MenuItem("Probe Velocity");
         MenuItem probePToTitan = new MenuItem("Probe Position");
         probeVToTitan.setOnAction(e -> {
-            update("Days", "Meters");
+            update("Days", "Meters per seconds");
             lineChart.getData().addAll(createSeriesProbe(trajectoryProbeToTitan, false, 6*24));
         });
         probePToTitan.setOnAction(e -> {
@@ -331,7 +330,7 @@ public class LineChartSample extends Application {
         MenuItem probeVOrbitTitan = new MenuItem("Probe Velocity");
         MenuItem probePOrbitTitan = new MenuItem("Probe Position");
         probeVOrbitTitan.setOnAction(e -> {
-            update("1 point = 2 hours 24 minutes", "Meters");
+            update("1 point = 2 hours 24 minutes", "Meters per seconds");
             lineChart.getData().addAll(createSeriesProbe(trajectoryProbeOrbitTitan, false, 6*24));
         });
         probePOrbitTitan.setOnAction(e -> {
@@ -347,7 +346,7 @@ public class LineChartSample extends Application {
         MenuItem probeVToEarth = new MenuItem("Probe Velocity");
         MenuItem probePToEarth = new MenuItem("Probe Position");
         probeVToEarth.setOnAction(e -> {
-            update("Days", "Meters");
+            update("Days", "Meters per seconds");
             lineChart.getData().addAll(createSeriesProbe(trajectoryProbeToEarth, false, 6*24));
         });
         probePToEarth.setOnAction(e -> {
@@ -375,7 +374,7 @@ public class LineChartSample extends Application {
             lineChart.getData().addAll(createSeriesLanderWind(trajectoryLanderCloseLoopWind, true, 10));
         });
         closeWindV.setOnAction(e -> {
-            update("Seconds", "Meters");
+            update("Seconds", "Meters per seconds");
             lineChart.getData().addAll(createSeriesLanderWind(trajectoryLanderCloseLoopWind, false, 10));
         });
 
@@ -385,7 +384,7 @@ public class LineChartSample extends Application {
             lineChart.getData().addAll(createSeriesLander(trajectoryLanderCloseLoop, true, 10));
         });
         closeVacuumV.setOnAction(e -> {
-            update("Seconds", "Meters");
+            update("Seconds", "Meters per seconds");
             lineChart.getData().addAll(createSeriesLander(trajectoryLanderCloseLoop, false, 10));
         });
         closeVacuumRD.setOnAction(e -> {
