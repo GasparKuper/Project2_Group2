@@ -1,5 +1,8 @@
 package GUI.Solvers;
 
+import Body.SpaceCrafts.Lander;
+import Controller.CloseLoopController.CloseLoopController;
+import Controller.OpenLoopController.OpenLoopController;
 import Run.CalculationOutput;
 import GUI.RunGui.Run;
 import javafx.application.Application;
@@ -10,6 +13,8 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
 
 import static Constant.Constant.SOLVER;
 
@@ -45,6 +50,7 @@ public class SolversGUI extends Application {
         });
         exit.getItems().add(exit1);
 
+        //Solvers
         Menu solver = new Menu("Solvers");
         MenuItem eulerSymplectic_solver = new MenuItem("Symplectic Euler");
         MenuItem eulerImplicit_solver = new MenuItem("Implicit Euler");
@@ -76,10 +82,27 @@ public class SolversGUI extends Application {
             new CalculationOutput().Solver();
         });
 
+        //Landing
+        Menu landing = new Menu("Landing");
+        MenuItem closeLanding = new MenuItem("Close-loop");
+        MenuItem openLanding = new MenuItem("Open-loop");
+
+        closeLanding.setOnAction(e -> {
+            ArrayList<Lander> lander = new CloseLoopController().land();
+            printResult(lander);
+        });
+
+        openLanding.setOnAction(e -> {
+            ArrayList<Lander> lander = new OpenLoopController().land();
+            printResult(lander);
+        });
+
+        landing.getItems().addAll(closeLanding, openLanding);
+
         solver.getItems().addAll(eulerSymplectic_solver, eulerImplicit_solver,
                 verletVelocity_solver, runge_solver);
 
-        menuBar.getMenus().addAll(solver, exit);
+        menuBar.getMenus().addAll(solver, landing, exit);
 
         VBox vBox = new VBox(menuBar);
 
@@ -88,5 +111,17 @@ public class SolversGUI extends Application {
         stage.setScene(scene);
         stage.show();
 
+    }
+
+    /**
+     * Print the result of the phase
+     * @param phase result with the data of the phase
+     */
+    private void printResult(ArrayList<Lander> phase){
+            Lander t = phase.get(phase.size() - 1);
+            System.out.println("Position = " + t.getPosition().getX() + "     " + t.getPosition().getY());
+            System.out.println("Velocity = " + t.getVelocity().getX() + "     " + t.getVelocity().getY());
+            System.out.println("Degree = " + t.getRotation());
+            System.out.println("Degree velocity = " + t.getRotationVelocity());
     }
 }
