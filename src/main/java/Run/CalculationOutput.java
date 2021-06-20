@@ -44,25 +44,27 @@ public class  CalculationOutput{
         System.out.println("Distance between Titan and Probe");
         System.out.println((toTitan[toTitan.length - 1].position.dist(toTitan[toTitan.length - 1].celestialBody.get(8).getPosition())-2575.5e3) + " meters");
 
-        State[] orbitTitan = probe.trajectoryProbeCalculationOrbitTitan(toTitan[toTitan.length - 1]);
+        if(SOLVER == 3) {
+            State[] orbitTitan = probe.trajectoryProbeCalculationOrbitTitan(toTitan[toTitan.length - 1]);
 
-        System.out.println("\nStay on the orbit of Titan 30 days");
-        System.out.println("The lase position of the probe before leaving the orbit");
-        System.out.println(orbitTitan[orbitTitan.length - 1].position);
-        System.out.println("Position of Titan");
-        System.out.println(orbitTitan[orbitTitan.length - 1].celestialBody.get(8).getPosition());
-        System.out.println("Distance between Titan and Probe");
-        System.out.println((orbitTitan[orbitTitan.length - 1].position.dist(orbitTitan[orbitTitan.length - 1].celestialBody.get(8).getPosition())-2575.5e3) + " meters");
+            System.out.println("\nStay on the orbit of Titan 30 days");
+            System.out.println("The lase position of the probe before leaving the orbit");
+            System.out.println(orbitTitan[orbitTitan.length - 1].position);
+            System.out.println("Position of Titan");
+            System.out.println(orbitTitan[orbitTitan.length - 1].celestialBody.get(8).getPosition());
+            System.out.println("Distance between Titan and Probe");
+            System.out.println((orbitTitan[orbitTitan.length - 1].position.dist(orbitTitan[orbitTitan.length - 1].celestialBody.get(8).getPosition()) - 2575.5e3) + " meters");
 
-        State[] toEarth = probe.trajectoryProbeCalculationToEarth(orbitTitan[orbitTitan.length - 1]);
+            State[] toEarth = probe.trajectoryProbeCalculationToEarth(orbitTitan[orbitTitan.length - 1]);
 
-        System.out.println("\nReach the Earth after 713 day 18 hours 31 minutes 56 seconds");
-        System.out.println("Position of the probe");
-        System.out.println(toEarth[toEarth.length - 1].position);
-        System.out.println("Position of Earth");
-        System.out.println(toEarth[toEarth.length - 1].celestialBody.get(3).getPosition());
-        System.out.println("Distance between Titan and Probe");
-        System.out.println((toEarth[toEarth.length - 1].position.dist(toEarth[toEarth.length - 1].celestialBody.get(8).getPosition())-6371000) + " meters");
+            System.out.println("\nReach the Earth after 713 day 18 hours 31 minutes 56 seconds");
+            System.out.println("Position of the probe");
+            System.out.println(toEarth[toEarth.length - 1].position);
+            System.out.println("Position of Earth");
+            System.out.println(toEarth[toEarth.length - 1].celestialBody.get(3).getPosition());
+            System.out.println("Distance between Earth and Probe");
+            System.out.println((toEarth[toEarth.length - 1].position.dist(toEarth[toEarth.length - 1].celestialBody.get(3).getPosition()) - 6371000) + " meters");
+        }
 
     }
 }
