@@ -15,7 +15,6 @@ public class Constant {
      */
     public static int SOLVER = 3;
 
-
     /**
      * Wind
      */

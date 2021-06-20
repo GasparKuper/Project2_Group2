@@ -6,7 +6,7 @@ import Controller.Integration;
 
 import java.util.ArrayList;
 
-public class PhaseLanding {
+public class PhaseLandingClose {
 
     private final double G = 1.352;
 

@@ -1,9 +1,9 @@
 import Body.SpaceCrafts.Lander;
 import Body.Vector.Vector2d;
-import Controller.CloseLoopController.PhaseLanding;
-import Controller.CloseLoopController.PhaseXSlowDown;
-import Controller.CloseLoopController.PhaseXSpeedUp;
-import Controller.CloseLoopController.RotationPhase;
+import Controller.CloseLoopController.PhaseLandingClose;
+import Controller.CloseLoopController.PhaseXSlowDownClose;
+import Controller.CloseLoopController.PhaseXSpeedUpClose;
+import Controller.CloseLoopController.RotationPhaseClose;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -54,15 +54,15 @@ public class CloseLoopControllerTest {
 
         private Lander xAcceleration(double stepSize, double distance, double angle){
             Lander lander = new Lander(new Vector2d(distance, 250000), new Vector2d(0, 0), 6000, 0, angle, 0);
-            ArrayList<Lander> phaseSpeedUpX = new PhaseXSpeedUp().phaseSpeedUp(lander, 190, 0.1);
+            ArrayList<Lander> phaseSpeedUpX = new PhaseXSpeedUpClose().phaseSpeedUp(lander, 190, 0.1);
 
             double theta_Phase2 = -90.0;
             if(angle == -90.0)
                 theta_Phase2 = 90.0;
 
-            ArrayList<Lander> phaseRotateToSlowDown = new RotationPhase().rotationPhase(phaseSpeedUpX.get(phaseSpeedUpX.size()-1), 20, 0.1, theta_Phase2);
+            ArrayList<Lander> phaseRotateToSlowDown = new RotationPhaseClose().rotationPhase(phaseSpeedUpX.get(phaseSpeedUpX.size()-1), 20, 0.1, theta_Phase2);
 
-            ArrayList<Lander> phaseToSlowDown = new PhaseXSlowDown().phaseToSlowDownX(phaseRotateToSlowDown.get(phaseRotateToSlowDown.size()-1), 0.1);
+            ArrayList<Lander> phaseToSlowDown = new PhaseXSlowDownClose().phaseToSlowDownX(phaseRotateToSlowDown.get(phaseRotateToSlowDown.size()-1), 0.1);
 
             return phaseToSlowDown.get(phaseToSlowDown.size() - 1);
         }
@@ -150,7 +150,7 @@ public class CloseLoopControllerTest {
 
         private Lander rotation(double stepSize, double distance, double angle, double theta){
             Lander lander = new Lander(new Vector2d(distance, 250000), new Vector2d(0, 0), 6000, 0, angle, 0);
-            ArrayList<Lander> xAccelration = new RotationPhase().rotationPhase(lander, 150, stepSize, theta);
+            ArrayList<Lander> xAccelration = new RotationPhaseClose().rotationPhase(lander, 150, stepSize, theta);
             return xAccelration.get(xAccelration.size() - 1);
         }
     }
@@ -186,7 +186,7 @@ public class CloseLoopControllerTest {
 
         private Lander landing(double distance){
             Lander lander = new Lander(new Vector2d(0, distance), new Vector2d(0, -735.0), 6000, 0, 0, 0);
-            ArrayList<Lander> xAccelration = new PhaseLanding().phaseLanding(lander, 0.1);
+            ArrayList<Lander> xAccelration = new PhaseLandingClose().phaseLanding(lander, 0.1);
             return xAccelration.get(xAccelration.size() - 1);
         }
     }

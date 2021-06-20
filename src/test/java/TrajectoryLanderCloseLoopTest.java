@@ -39,7 +39,7 @@ public class TrajectoryLanderCloseLoopTest {
 
     private Lander testOutput() {
         CloseLoopController lander = new CloseLoopController();
-        ArrayList<Lander> trajectory = lander.land(lander.probeOnTheOrbitTitan());
+        ArrayList<Lander> trajectory = lander.land();
         try {
 
             FileWriter writer = new FileWriter("trajectory_Lander_CloseLoop.csv");

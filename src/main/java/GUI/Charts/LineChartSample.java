@@ -628,6 +628,6 @@ public class LineChartSample extends Application {
 
     private ArrayList<Lander> getTrajectoryCloseLoop(){
         CloseLoopController mission = new CloseLoopController();
-        return mission.land(mission.probeOnTheOrbitTitan());
+        return mission.land();
     }
 }

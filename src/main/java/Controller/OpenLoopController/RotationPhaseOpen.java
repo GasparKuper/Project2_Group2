@@ -6,7 +6,7 @@ import Controller.Integration;
 
 import java.util.ArrayList;
 
-public class RotationPhase {
+public class RotationPhaseOpen {
 
     public ArrayList<Lander> rotationPhase(Lander state, double time, double step, double thetaRequire){
 

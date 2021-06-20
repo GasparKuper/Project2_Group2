@@ -6,7 +6,7 @@ import Controller.Integration;
 
 import java.util.ArrayList;
 
-public class PhaseXSpeedUp {
+public class PhaseXSpeedUpClose {
 
     /**
      *
