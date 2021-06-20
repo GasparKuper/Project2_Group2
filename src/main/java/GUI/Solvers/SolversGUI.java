@@ -106,7 +106,7 @@ public class SolversGUI extends Application {
 
         VBox vBox = new VBox(menuBar);
 
-        Scene scene = new Scene(vBox, 400, 600);
+        Scene scene = new Scene(vBox, 400, 100);
 
         stage.setScene(scene);
         stage.show();
