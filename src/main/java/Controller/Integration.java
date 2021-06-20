@@ -3,6 +3,8 @@ package Controller;
 import Body.SpaceCrafts.Lander;
 import Body.Vector.Vector2d;
 
+import java.util.ArrayList;
+
 import static Constant.Constant.WIND;
 
 public class Integration {
@@ -13,7 +15,8 @@ public class Integration {
 
         Lander lander = state.clone();
 
-        Vector2d wind = state.generateRandomWind().mul(step);
+        //Deviation 20%
+        Vector2d wind = state.generateRandomWind(step, 0.2);
 
         double inRadians = Math.toRadians(lander.getRotation());
 

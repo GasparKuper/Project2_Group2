@@ -7,6 +7,7 @@ import Body.SpaceCrafts.State;
 import Body.Vector.Vector2d;
 import Body.Vector.Vector3d;
 import Controller.CloseLoopController.CloseLoopController;
+import Controller.CloseLoopController.PhaseLandingClose;
 import Interfaces.ODESolverInterface;
 import Interfaces.Vector3dInterface;
 import ODESolver.Function.ODEFunction;
@@ -74,6 +75,7 @@ public class LineChartSample extends Application {
     private final State[] trajectoryProbeOrbitTitan = new MissionProbe().trajectoryProbeCalculationOrbitTitan(trajectoryProbeToTitan[trajectoryProbeToTitan.length-1]);
     private final State[] trajectoryProbeToEarth = new MissionProbe().trajectoryProbeCalculationToEarth(trajectoryProbeOrbitTitan[trajectoryProbeOrbitTitan.length-1]);
     private final ArrayList<Lander> trajectoryLanderCloseLoop = getTrajectoryCloseLoop();
+    private final ArrayList<Lander> trajectoryLanderCloseLoopWind = getTrajectoryCloseLoopWind();
 
     /**
      * Create MenuBar in the GUI
@@ -370,15 +372,11 @@ public class LineChartSample extends Application {
         //Wind
         closeWindP.setOnAction(e -> {
             update("Seconds", "Meters");
-            WIND = true;
-            lineChart.getData().addAll(createSeriesLander(getTrajectoryCloseLoop(), true, 10));
-            WIND = false;
+            lineChart.getData().addAll(createSeriesLanderWind(trajectoryLanderCloseLoopWind, true, 10));
         });
         closeWindV.setOnAction(e -> {
             update("Seconds", "Meters");
-            WIND = true;
-            lineChart.getData().addAll(createSeriesLander(getTrajectoryCloseLoop(), false, 10));
-            WIND = false;
+            lineChart.getData().addAll(createSeriesLanderWind(trajectoryLanderCloseLoopWind, false, 10));
         });
 
         //Vacuum
@@ -597,6 +595,41 @@ public class LineChartSample extends Application {
      * @param flag TRUE = Position, FALSE = Velocity
      * @return array of the series for the line chart
      */
+    private ArrayList<XYChart.Series<Number, Number>> createSeriesLanderWind(ArrayList<Lander> trajectory, boolean flag, int scaleData){
+        ArrayList<XYChart.Series<Number, Number>> arrayList = new ArrayList<>();
+
+
+        final XYChart.Series<Number, Number> series4 = new XYChart.Series<>();
+        series4.setName("X");
+
+
+        int scaleOneDay = trajectory.size()/(scaleData);
+        for (int i = 0; i < scaleOneDay; i++) {
+            int point = (i+1);
+            //Solver
+            Vector2d body;
+
+            if(flag) {
+                body = trajectory.get((scaleData)*i).getPosition();
+            } else {
+                body = trajectory.get((scaleData)*i).getVelocity();
+            }
+
+
+            series4.getData().add(new XYChart.Data<Number, Number>(point, body.getX()));
+        }
+
+
+        arrayList.add(series4);
+
+        return arrayList;
+    }
+
+    /**
+     * @param trajectory Data of trajectories
+     * @param flag TRUE = Position, FALSE = Velocity
+     * @return array of the series for the line chart
+     */
     private ArrayList<XYChart.Series<Number, Number>> createSeriesLanderRotation(ArrayList<Lander> trajectory, boolean flag, int scaleData, String data){
         ArrayList<XYChart.Series<Number, Number>> arrayList = new ArrayList<>();
 
@@ -629,5 +662,13 @@ public class LineChartSample extends Application {
     private ArrayList<Lander> getTrajectoryCloseLoop(){
         CloseLoopController mission = new CloseLoopController();
         return mission.land();
+    }
+
+    private ArrayList<Lander> getTrajectoryCloseLoopWind(){
+        Lander lander = new Lander(new Vector2d(0, 220000), new Vector2d(0, 0), 6000, 0, 0, 0);
+        WIND = true;
+        ArrayList<Lander> tmp = new PhaseLandingClose().phaseLanding(lander, 0.1);
+        WIND = false;
+        return tmp;
     }
 }

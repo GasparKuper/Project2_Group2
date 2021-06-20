@@ -146,7 +146,7 @@ public class CloseLoopController {
             System.out.println("Degree = " + t.getRotation());
             System.out.println("Degree velocity = " + t.getRotationVelocity());
         }
-        if(true)
+        if(flag)
             throw new RuntimeException("stop");
     }
 

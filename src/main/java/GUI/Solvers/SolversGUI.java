@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 
 import static Constant.Constant.SOLVER;
+import static Constant.Constant.WIND;
 
 
 /**
@@ -86,6 +87,8 @@ public class SolversGUI extends Application {
         Menu landing = new Menu("Landing");
         MenuItem closeLanding = new MenuItem("Close-loop");
         MenuItem openLanding = new MenuItem("Open-loop");
+        MenuItem closeLandingWind = new MenuItem("Close-loop Wind");
+        MenuItem openLandingWind = new MenuItem("Open-loop Wind");
 
         closeLanding.setOnAction(e -> {
             ArrayList<Lander> lander = new CloseLoopController().land();
@@ -93,11 +96,25 @@ public class SolversGUI extends Application {
         });
 
         openLanding.setOnAction(e -> {
-            ArrayList<Lander> lander = new OpenLoopController().land();
+            ArrayList<Lander> lander = new OpenLoopController().landXZero();
             printResult(lander);
         });
 
-        landing.getItems().addAll(closeLanding, openLanding);
+        closeLandingWind.setOnAction(e -> {
+            WIND = true;
+            ArrayList<Lander> lander = new CloseLoopController().land();
+            printResult(lander);
+            WIND = false;
+        });
+
+        openLandingWind.setOnAction(e -> {
+            WIND = true;
+            ArrayList<Lander> lander = new OpenLoopController().landXZero();
+            printResult(lander);
+            WIND = false;
+        });
+
+        landing.getItems().addAll(closeLanding, openLanding, closeLandingWind, openLandingWind);
 
         solver.getItems().addAll(eulerSymplectic_solver, eulerImplicit_solver,
                 verletVelocity_solver, runge_solver);
@@ -118,10 +135,12 @@ public class SolversGUI extends Application {
      * @param phase result with the data of the phase
      */
     private void printResult(ArrayList<Lander> phase){
-            Lander t = phase.get(phase.size() - 1);
-            System.out.println("Position = " + t.getPosition().getX() + "     " + t.getPosition().getY());
-            System.out.println("Velocity = " + t.getVelocity().getX() + "     " + t.getVelocity().getY());
-            System.out.println("Degree = " + t.getRotation());
-            System.out.println("Degree velocity = " + t.getRotationVelocity());
+        Lander first = phase.get(0);
+        System.out.println("Initial position of the lander " + first.getPosition().getX() + "     " + first.getPosition().getY());
+        Lander t = phase.get(phase.size() - 1);
+        System.out.println("Position = " + t.getPosition().getX() + "     " + t.getPosition().getY());
+        System.out.println("Velocity = " + t.getVelocity().getX() + "     " + t.getVelocity().getY());
+        System.out.println("Degree = " + t.getRotation());
+        System.out.println("Degree velocity = " + t.getRotationVelocity());
     }
 }

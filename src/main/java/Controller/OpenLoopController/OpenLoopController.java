@@ -95,6 +95,16 @@ public class OpenLoopController {
 
         return result;
     }
+
+    /**
+     * Determines the best time for release of the landing module
+     * Updates the solarSystem with the correct state of the lander after release
+     * @return updated solarSystem with correct state of the lander
+     */
+    public ArrayList<Lander> landXZero() {
+        Lander lander = new Lander(new Vector2d(0, 180000), new Vector2d(0, 0), 6000, 0, 0, 0);
+        return new PhaseLandingOpen().phaseLanding(lander, 0.1);
+    }
     /**
      * Sets the state of a lander at time of release
      * @param lander lander of which to set position, velocity, rotation and rotationVelocity
