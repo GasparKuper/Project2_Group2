@@ -17,6 +17,7 @@ public class WindModel extends Canvas implements Runnable{
         handler = new Handler();
         this.addKeyListener(new KeyInput(handler));
 
+
         // adding the Landing Module
         handler.addObject(new LandingModule(new Vector2d(225,600),new Vector2d(1,-1.352),0,0,0,ID.LandingModule));
 
@@ -29,7 +30,6 @@ public class WindModel extends Canvas implements Runnable{
 
         new Window(WIDTH,HEIGHT,"Let's Start the Wind!", this);
 
-        //hud = new HUD();
     }
 
     // starting the thread

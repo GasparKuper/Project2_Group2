@@ -194,7 +194,7 @@ public class UI extends Application{
 		back.getChildren().add(solarSystem);
 		back.getChildren().add(preImage());
 
-		Scene scene = new Scene(back, 0, 0,true);
+		Scene scene = new Scene(back, 700, 500,true);
 		scene.setFill(Color.BLACK);
 
 		scene.setCamera(camera);

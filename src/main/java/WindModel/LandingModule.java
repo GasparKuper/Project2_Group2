@@ -2,6 +2,8 @@ package WindModel;
 
 import Body.Vector.Vector2d;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
 
 
 public class LandingModule extends Object{
@@ -18,7 +20,7 @@ public class LandingModule extends Object{
 
         //rotation = rotation.add(rotationVelocity);
 
-        // updating the position, I think this is Euler Solver (not sure to be honest)
+        // updating the position
         position = position.add(velocity);
 
         // Velocity influenced by wind
@@ -38,8 +40,8 @@ public class LandingModule extends Object{
 
         // if the probe is at the landing position its done!
         if(position.getY() < 10 && position.getX() <= 240 && position.getX() >= 210 ){
-            System.out.println("Success!!!!");}
-
+            //System.out.println("Success!!!!");
+            }
         //printPosition();
 
     }
@@ -56,7 +58,7 @@ public class LandingModule extends Object{
         // creating a random number between the max and min Deviation constants
         int random_int = (int)Math.floor(Math.random()*(MAX_DEVIATION_WIND - MIN_DEVIATION_WIND +1)+ MIN_DEVIATION_WIND);
 
-        double randomDeviation = random_int * 0.01;
+        double randomDeviation = random_int * 0.001;
 
         // once the lander is below 300 km the wind changes the direction ! Wow !
         if (this.position.getY() < 300){
@@ -83,11 +85,9 @@ public class LandingModule extends Object{
 
         Graphics2D g2d = (Graphics2D) g;
 
-        g2d.setColor(Color.WHITE);
         g2d.draw(getBounds());
-
-
         g2d.setColor(Color.WHITE);
+
         g2d.fillRect((int)position.getX(),(int)position.getY(),12,24);
 
         // drawing the ground of Titan

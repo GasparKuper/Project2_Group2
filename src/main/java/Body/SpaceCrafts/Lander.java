@@ -40,10 +40,8 @@ public class Lander {
     private static double changeDirection = 1.0;
 
     public Vector2d generateRandomWind(double step, double deviation){
-
-        return new Vector2d(0, 0);
+        return new Vector2d(0.075,0);
     }
-
 
     public Lander clone(){
         return new Lander(position, velocity, mass, fuel, rotation, rotationVelocity);

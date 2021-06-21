@@ -26,8 +26,8 @@ public class Integration {
 
         position.setY(lander.getPosition().getY() + lander.getVelocity().getY() * step + (0.5 * u_mainThrust * Math.cos(inRadians) - G) * Math.pow(step, 2));
 
-        if(WIND)
-            position = position.add(wind);
+        //if(WIND)
+        //    position = position.add(wind);
 
         lander.setPosition(position);
 
