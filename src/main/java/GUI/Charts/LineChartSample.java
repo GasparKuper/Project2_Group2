@@ -39,6 +39,8 @@ public class LineChartSample extends Application {
 
     private LineChart<Number,Number> lineChart;
 
+    private int[] series = new int[10];
+
     /**
      * LINE CHART, we can compare coordinates from Nasa with our coordinates
      * @param stage GUI
@@ -614,28 +616,29 @@ public class LineChartSample extends Application {
         ArrayList<XYChart.Series<Number, Number>> arrayList = new ArrayList<>();
 
 
-        final XYChart.Series<Number, Number> series4 = new XYChart.Series<>();
-        series4.setName("X");
+        XYChart.Series<Number, Number> seriesL;
+        for (int i = 0; i < 9; i++) {
+            seriesL= new XYChart.Series<>();
+            int pointSec = 0;
+            int scaleOneDay = series[i+1]/(scaleData);
+            for (int j = series[i]/(scaleData); j < scaleOneDay; j++) {
+                int point = (pointSec + 1);
+                pointSec++;
+                //Solver
+                Vector2d body;
 
+                if (flag) {
+                    body = trajectory.get((scaleData) * j).getPosition();
+                } else {
+                    body = trajectory.get((scaleData) * j).getVelocity();
+                }
 
-        int scaleOneDay = trajectory.size()/(scaleData);
-        for (int i = 0; i < scaleOneDay; i++) {
-            int point = (i+1);
-            //Solver
-            Vector2d body;
+                seriesL.setName("X");
 
-            if(flag) {
-                body = trajectory.get((scaleData)*i).getPosition();
-            } else {
-                body = trajectory.get((scaleData)*i).getVelocity();
+                seriesL.getData().add(new XYChart.Data<Number, Number>(point, body.getX()));
             }
-
-
-            series4.getData().add(new XYChart.Data<Number, Number>(point, body.getX()));
+            arrayList.add(seriesL);
         }
-
-
-        arrayList.add(series4);
 
         return arrayList;
     }
@@ -676,22 +679,29 @@ public class LineChartSample extends Application {
 
     private ArrayList<Lander> getTrajectoryCloseLoop(){
         CloseLoopController mission = new CloseLoopController();
-        return mission.land();
+        return null;
     }
 
     private ArrayList<Lander> getTrajectoryCloseLoopWind(){
         CloseLoopController mission = new CloseLoopController();
         WIND = true;
-        ArrayList<Lander> tmp = mission.land();
+//        ArrayList<Lander> result = mission.land();
         WIND = false;
-        return tmp;
+        return null;
     }
 
     private ArrayList<Lander> getTrajectoryWind(){
         Lander lander = new Lander(new Vector2d(0, 220000), new Vector2d(0, 0), 6000, 0, 0, 0);
         WIND = true;
-        ArrayList<Lander> tmp = new PhaseLandingClose().phaseLanding(lander, 0.1);
+        series[0] = 0;
+        ArrayList<Lander> result = new PhaseLandingClose().phaseLanding(lander, 0.1);;
+        series[1] = result.size();
+        for (int i = 0; i < 8; i++) {
+            ArrayList<Lander> tmp = new PhaseLandingClose().phaseLanding(lander, 0.1);;
+            series[i+2] = tmp.size() + series[i+1];
+            result.addAll(tmp);
+        }
         WIND = false;
-        return tmp;
+        return result;
     }
 }

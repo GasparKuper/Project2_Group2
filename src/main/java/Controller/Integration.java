@@ -3,8 +3,6 @@ package Controller;
 import Body.SpaceCrafts.Lander;
 import Body.Vector.Vector2d;
 
-import java.util.ArrayList;
-
 import static Constant.Constant.WIND;
 
 public class Integration {

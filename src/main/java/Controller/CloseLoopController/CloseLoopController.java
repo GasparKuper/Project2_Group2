@@ -41,7 +41,7 @@ public class CloseLoopController {
 
         solarSystem[landing].getLander().setPosition(new Vector2d(-288000, solarSystem[landing].getLander().getPosition().getY()));
 
-        return calculatePhase(solarSystem[landing].getLander());
+        return calculatePhase(solarSystem[landing].getLander(), 20);
     }
 
     /**
@@ -49,33 +49,34 @@ public class CloseLoopController {
      * @param state current state of the lander
      * @return landing trajectory
      */
-    private ArrayList<Lander> calculatePhase(Lander state){
+    public ArrayList<Lander> calculatePhase(Lander state, double rotationTime){
 
         //Phase 1 = rotate our lander to 90 degree (Horizontal state), depends on which X we have minus or plus V_rotation = 0
         double theta = 90.0;
         if(state.getPosition().getX() > 0.0)
             theta = -90.0;
 
-        ArrayList<Lander> phaseRotate90 = new RotationPhaseClose().rotationPhase(state, 20, 0.1, theta);
+        ArrayList<Lander> phaseRotate90 = new RotationPhaseClose().rotationPhase(state, rotationTime, 0.1, theta);
 
 //        printResult(phaseRotate90, true);
 
         //Phase 2 = run the main thruster to reach X position = 0 Vx = 0
-        double distance = (Math.abs(phaseRotate90.get(phaseRotate90.size() - 1).getPosition().getX())/2000.0) + 40;
+        double distance = (Math.abs(phaseRotate90.get(phaseRotate90.size() - 1).getPosition().getX())/2000.0) + 40; //todo CAC
+
         ArrayList<Lander> phaseSpeedUpX = new PhaseXSpeedUpClose().phaseSpeedUp(phaseRotate90.get(phaseRotate90.size() - 1), distance, 0.1);
 
         double theta_Phase2 = -90.0;
         if(theta == -90.0)
             theta_Phase2 = 90.0;
 
-        ArrayList<Lander> phaseRotateToSlowDown = new RotationPhaseClose().rotationPhase(phaseSpeedUpX.get(phaseSpeedUpX.size()-1), 20, 0.1, theta_Phase2);
+        ArrayList<Lander> phaseRotateToSlowDown = new RotationPhaseClose().rotationPhase(phaseSpeedUpX.get(phaseSpeedUpX.size()-1), rotationTime, 0.1, theta_Phase2);
 
         ArrayList<Lander> phaseToSlowDown = new PhaseXSlowDownClose().phaseToSlowDownX(phaseRotateToSlowDown.get(phaseRotateToSlowDown.size()-1), 0.1);
 
 //        printResult(phaseToSlowDown, true);
 
         //Phase 3 = rotate our lander to 0 degree (Vertical state) V_rotation = 0
-        ArrayList<Lander> phaseRotateTo0 = new RotationPhaseClose().rotationPhase(phaseToSlowDown.get(phaseToSlowDown.size()-1), 20, 0.1, 0.0);
+        ArrayList<Lander> phaseRotateTo0 = new RotationPhaseClose().rotationPhase(phaseToSlowDown.get(phaseToSlowDown.size()-1), rotationTime, 0.1, 0.0);
 
 //        printResult(phaseRotateTo0, true);
 
