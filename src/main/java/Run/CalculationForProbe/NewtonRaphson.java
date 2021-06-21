@@ -14,37 +14,43 @@ import java.util.Arrays;
  * Dg(Vk) is the jacobian matrix (first order derivative of a vector)
  */
 public class NewtonRaphson {
-
     public static void main(String[] args) {
         NewtonRaphson newtonRaphson = new NewtonRaphson();
-        double[][] g = {{3,0,2},{2,0,-2},{0,1,1}};
+      /*  double[][] g = {{3,0,2},{2,0,-2},{0,1,1}};
         Vector3d vec = new Vector3d(5.16,3.26,8.79);
         System.out.println(vec.mulMatrix(g));
         System.out.println(Arrays.deepToString(newtonRaphson.findInverse3by3(g)));
-       // newtonRaphson.minDist(new Vector3d(21744.742783895097,-31956.466390002974,-1113.868596091232));
+       // newtonRaphson.minDist(new Vector3d(21744.742783895097,-31956.466390002974,-1113.868596091232));*/
+        newtonRaphson.initialVel(new Vector3d(0,0,0));
     }
 
 
-    public Vector3d initialVel(Vector3dInterface target, double radius, double distance,
-                               Vector3dInterface initialVelocity, Vector3dInterface startPosition){
+    public Vector3d initialVel(Vector3dInterface initialVelocity){
         double h= 1;
         Vector3d v = (Vector3d) initialVelocity;
-        double dist = minDist((Vector3d) initialVelocity,true).getX();
-        Vector3d velocityVector = minDist((Vector3d) initialVelocity,false);
+        double dist = findDist((Vector3d) initialVelocity);
         Vector3d newV= new Vector3d(0,0,0);
         while(dist>1000){
-            System.out.println("Start");
-            double[][] jac = jacobianDerivative(v,100000);
+            double[][] jac = jacobianDerivative(v,1E-10);
             System.out.println(Arrays.deepToString(jac));
+
             jac =findInverse3by3(jac);
-            newV = (Vector3d) v.sub(velocityVector.mulMatrix(jac));
+
+            newV = (Vector3d) v.add(distVector(jac).mulMatrix(jac));
             v = new Vector3d(newV.getX(),newV.getY(),newV.getZ());
             System.out.println(dist + " "+v.toString());
-            dist = minDist((Vector3d) newV,true).getX();
-            velocityVector = minDist((Vector3d) newV,false);
+
+            dist = findDist(newV);
 
         }
         return newV;
+    }
+    public Vector3d distVector(double[][] jac){
+        Vector3d distVector = new Vector3d();
+        distVector.setX(jac[0][0]+jac[1][0]+jac[2][0]);
+        distVector.setY(jac[0][1]+jac[1][1]+jac[2][1]);
+        distVector.setZ(jac[0][2]+jac[1][2]+jac[2][2]);
+        return distVector;
     }
 
     public double[][] jacobianDerivative(Vector3d v,double h){
@@ -59,14 +65,14 @@ public class NewtonRaphson {
         for(int i=0;i<3;i++){
             for(int j= 0;j<3;j++){
                 if(j==0){
-                    firstDist = minDist(new Vector3d(v.getX()+h,v.getY(),v.getZ()),false);
-                    secondDist = minDist(new Vector3d(v.getX()-h,v.getY(),v.getZ()),false);
+                    firstDist = new Vector3d(v.getX()+h,v.getY(),v.getZ());
+                    secondDist = new Vector3d(v.getX()-h,v.getY(),v.getZ());
                 }else if(j==1){
-                    firstDist = minDist(new Vector3d(v.getX(),v.getY()+h,v.getZ()),false);
-                    secondDist = minDist(new Vector3d(v.getX(),v.getY()-h,v.getZ()),false);
+                    firstDist = new Vector3d(v.getX(),v.getY()+h,v.getZ());
+                    secondDist = new Vector3d(v.getX(),v.getY()-h,v.getZ());
                 }else {
-                    firstDist = minDist(new Vector3d(v.getX(),v.getY(),v.getZ()+h),false);
-                    secondDist = minDist(new Vector3d(v.getX(),v.getY(),v.getZ()-h),false);
+                    firstDist = new Vector3d(v.getX(),v.getY(),v.getZ()+h);
+                    secondDist = new Vector3d(v.getX(),v.getY(),v.getZ()-h);
                 }
                 if(i==0){
                     sub = firstDist.getX()-secondDist.getX();
@@ -80,31 +86,28 @@ public class NewtonRaphson {
         }
         return g;
     }
-    public Vector3d minDist(Vector3d v,boolean flag){
+    public Vector3d findDistVector(Vector3d v){
         ProbeSimulator simulator = new ProbeSimulator();
-        double finalTime = 31557600;
+        double finalTime = 6.167E7;
         double stepSize  = 600;
-        Vector3d minVector = new Vector3d(0,0,0);
         Vector3d pos = new Vector3d(4301000.0, -4692000.0, -276000.0);
         Vector3d[] trajectory = (Vector3d[])simulator.trajectory(pos, v, finalTime, stepSize);
         State[] trajectoryOfAll = simulator.getTrajectory();
-        double min = Double.MAX_VALUE;
-        for(int i =trajectory.length-1;i<trajectory.length;i++){
-            if((trajectory[i].dist(trajectoryOfAll[i].celestialBody.get(8).getPosition())-2575.5e3)<min){
-                min = (trajectory[i].dist(trajectoryOfAll[i].celestialBody.get(8).getPosition())-2575.5e3);
-                minVector = (Vector3d) trajectoryOfAll[i].celestialBody.get(11).getVelocity();
-            }
-
-        }
-
-        if(flag){
-            minVector.setX(min);
-            minVector.setY(min);
-            minVector.setZ(min);
-        }
 
 
-        return minVector;
+        return  trajectoryOfAll[trajectoryOfAll.length-1].celestialBody.get(11).getPosition();
+    }
+
+    public double findDist(Vector3d v){
+        ProbeSimulator simulator = new ProbeSimulator();
+        double finalTime = 6.167E7;
+        double stepSize  = 600;
+        Vector3d pos = new Vector3d(4301000.0, -4692000.0, -276000.0);
+        Vector3d[] trajectory = (Vector3d[])simulator.trajectory(pos, v, finalTime, stepSize);
+        State[] trajectoryOfAll = simulator.getTrajectory();
+
+
+        return  trajectoryOfAll[trajectoryOfAll.length-1].celestialBody.get(11).getPosition().dist(trajectoryOfAll[trajectoryOfAll.length-1].celestialBody.get(8).getPosition());
     }
 
     /**
