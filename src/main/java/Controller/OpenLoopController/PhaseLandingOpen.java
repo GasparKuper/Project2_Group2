@@ -4,6 +4,7 @@ import Body.SpaceCrafts.Lander;
 import Controller.FuelCalculationLander;
 import Controller.Integration;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class PhaseLandingOpen {
@@ -38,7 +39,7 @@ public class PhaseLandingOpen {
         double timeLanding = Math.abs(distance/(Vy_last * 0.5));
 
         //Acceleration_y = Vy_currentState / time needed for landing
-        double y_Acceleration_ToSlowDown = Vy_last / timeLanding;
+        double y_Acceleration_ToSlowDown = Vy_last / (timeLanding);
 
         //Cos
         double angleLander = lastState.getRotation();

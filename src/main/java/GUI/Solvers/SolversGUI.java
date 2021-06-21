@@ -96,7 +96,7 @@ public class SolversGUI extends Application {
         });
 
         openLanding.setOnAction(e -> {
-            ArrayList<Lander> lander = new OpenLoopController().landXZero();
+            ArrayList<Lander> lander = new OpenLoopController().land();
             printResult(lander);
         });
 

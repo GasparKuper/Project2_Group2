@@ -64,25 +64,33 @@ public class OpenLoopController {
         double distance = (Math.abs(phaseRotate90.get(phaseRotate90.size() - 1).getPosition().getX())/2000.0) + 40;
         ArrayList<Lander> phaseSpeedUpX = new PhaseXSpeedUpOpen().phaseSpeedUp(phaseRotate90.get(phaseRotate90.size() - 1), distance, 0.1);
 
-        double theta_Phase2 = -90.0;
+        double theta_Phase2 = 270.0;
         if(theta == -90.0)
-            theta_Phase2 = 90.0;
+            theta_Phase2 = -270.0;
 
         ArrayList<Lander> phaseRotateToSlowDown = new RotationPhaseOpen().rotationPhase(phaseSpeedUpX.get(phaseSpeedUpX.size()-1), 20, 0.1, theta_Phase2);
 
+//        printResult(phaseRotateToSlowDown, true);
+
         ArrayList<Lander> phaseToSlowDown = new PhaseXSlowDownOpen().phaseToSlowDownX(phaseRotateToSlowDown.get(phaseRotateToSlowDown.size()-1), 0.1);
+
+//        ArrayList<Lander> phaseToSlowDownSecond = new PhaseXSlowDownOpen().phaseToSlowDownX(phaseToSlowDown.get(phaseToSlowDown.size()-1), 0.1);
 
 //        printResult(phaseToSlowDown, true);
 
+        double theta_Phase3 = 360.0;
+        if(theta_Phase2 == -270.0)
+            theta_Phase3 = -360.0;
+
         //Phase 3 = rotate our lander to 0 degree (Vertical state) V_rotation = 0
-        ArrayList<Lander> phaseRotateTo0 = new RotationPhaseOpen().rotationPhase(phaseToSlowDown.get(phaseToSlowDown.size()-1), 20, 0.1, 0.0);
+        ArrayList<Lander> phaseRotateTo0 = new RotationPhaseOpen().rotationPhase(phaseToSlowDown.get(phaseToSlowDown.size()-1), 20, 0.1, theta_Phase3);
 
 //        printResult(phaseRotateTo0, true);
 
         //Phase 4 = final phase, run the main thruster like to reach Y position = 0 and Vy = 0
         ArrayList<Lander> phaseLanding = new PhaseLandingOpen().phaseLanding(phaseRotateTo0.get(phaseRotateTo0.size()-1), 0.1);
 
-//        printResult(phaseLanding, true);
+        printResult(phaseLanding, true);
 
         System.out.println("FUEL need for this landing = " + phaseLanding.get(phaseLanding.size() - 1).getFuel());
         //Write all data into one array

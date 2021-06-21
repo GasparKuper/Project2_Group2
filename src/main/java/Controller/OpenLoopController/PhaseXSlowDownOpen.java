@@ -41,18 +41,13 @@ public class PhaseXSlowDownOpen {
 
 
         int point = 0;
-        for (double i = 0; i < timeToSlowDown; i+=step) {
+        while (lastState.getVelocity().getX() > 1E-5) {
             Lander tmp = update.step(result.get(point++), u_ToSlowDown, 0, step);
             result.add(tmp);
+            lastState = result.get(point);
             //Fuel
             fuel.calculateFuel(result.get(point), step,u_ToSlowDown, 0);
         }
-
-        double remainTime = timeToSlowDown % step;
-
-        Lander tmp = update.step(result.get(point), u_ToSlowDown, 0, remainTime);
-        result.add(tmp);
-
 
         return result;
     }

@@ -57,18 +57,13 @@ public class RotationPhaseOpen {
         //V to slow down the lander = Angle Velocity_current / Time needed to slow down
         double v_ToSlowDown = -angleVelocity / timeToSlowDown;
 
-        for (double i = 0; i < timeToSlowDown; i+=step) {
+        while (lastState.getRotationVelocity() > 1E-5) {
             Lander tmp = update.step(result.get(point++), 0, v_ToSlowDown, step);
             result.add(tmp);
+            lastState = result.get(point);
             //Fuel
             fuel.calculateFuel(lastState, step, 0, v_ToSlowDown);
         }
-
-        double remainTime = timeToSlowDown % step;
-
-        //Final Step
-        Lander tmp = update.step(result.get(point), 0, v_ToSlowDown, remainTime);
-        result.add(tmp);
 
 
         return result;
