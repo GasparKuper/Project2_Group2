@@ -76,7 +76,7 @@ public class LineChartSample extends Application {
     private final State[] trajectoryProbeOrbitTitan = new MissionProbe().trajectoryProbeCalculationOrbitTitan(trajectoryProbeToTitan[trajectoryProbeToTitan.length-1]);
     private final State[] trajectoryProbeToEarth = new MissionProbe().trajectoryProbeCalculationToEarth(trajectoryProbeOrbitTitan[trajectoryProbeOrbitTitan.length-1]);
     private final ArrayList<Lander> trajectoryLanderCloseLoop = getTrajectoryCloseLoop();
-    private final ArrayList<Lander> trajectoryLanderCloseLoopWind = getTrajectoryCloseLoopWind();
+    private ArrayList<Lander> trajectoryLanderCloseLoopWind;
     private final ArrayList<Lander> trajectoryLanderWind = getTrajectoryWind();
 
     /**
@@ -385,6 +385,9 @@ public class LineChartSample extends Application {
         });
 
         //Wind Close
+        closeWind.setOnAction(e -> {
+            trajectoryLanderCloseLoopWind = getTrajectoryCloseLoopWind();
+        });
         closeWindP.setOnAction(e -> {
             update("Seconds", "Meters");
             lineChart.getData().addAll(createSeriesLander(trajectoryLanderCloseLoopWind, true, 10));
@@ -679,15 +682,15 @@ public class LineChartSample extends Application {
 
     private ArrayList<Lander> getTrajectoryCloseLoop(){
         CloseLoopController mission = new CloseLoopController();
-        return null;
+        return mission.land();
     }
 
     private ArrayList<Lander> getTrajectoryCloseLoopWind(){
         CloseLoopController mission = new CloseLoopController();
         WIND = true;
-//        ArrayList<Lander> result = mission.land();
+        ArrayList<Lander> result = mission.land();
         WIND = false;
-        return null;
+        return result;
     }
 
     private ArrayList<Lander> getTrajectoryWind(){

@@ -8,6 +8,14 @@ import java.util.ArrayList;
 
 public class RotationPhaseClose {
 
+    /**
+     * Rotate the lander for needed angle
+     * @param state current state of the Lander
+     * @param time time needed
+     * @param step step size
+     * @param thetaRequire Theta = angle
+     * @return trajectory of the lander
+     */
     public ArrayList<Lander> rotationPhase(Lander state, double time, double step, double thetaRequire){
 
         ArrayList<Lander> result = new ArrayList<>();

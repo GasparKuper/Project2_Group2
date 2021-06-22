@@ -17,13 +17,13 @@ public class  CalculationOutput{
     public void Solver() {
 
         if(SOLVER == 1)
-            System.out.println("SYMPLECTIC EULER SOLVER");
+            System.out.println("\n\nSYMPLECTIC EULER SOLVER");
         else if(SOLVER == 2)
-            System.out.println("IMPLICIT EULER SOLVER");
+            System.out.println("\n\nIMPLICIT EULER SOLVER");
         else if(SOLVER == 3)
-            System.out.println("VELOCITY-VERLET SOLVER");
+            System.out.println("\n\nVELOCITY-VERLET SOLVER");
         else if(SOLVER == 4)
-            System.out.println("4th-RUNGE-KUTTA SOLVER");
+            System.out.println("\n\n4th-RUNGE-KUTTA SOLVER");
 
         MissionProbe probe = new MissionProbe();
 
@@ -36,7 +36,7 @@ public class  CalculationOutput{
         System.out.println("Distance between center of the Earth and the Probe");
         System.out.println(toTitan[0].position.dist(toTitan[0].celestialBody.get(3).getPosition()) + " meters");
 
-        System.out.println("\nReach the Titan after 713 day 18 hours 33 minutes 20 seconds");
+        if (SOLVER == 3) System.out.println("\nReach the Titan after 713 day 18 hours 33 minutes 20 seconds");
         System.out.println("Position of the probe");
         System.out.println(toTitan[toTitan.length - 1].position);
         System.out.println("Position of Titan");

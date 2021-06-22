@@ -98,7 +98,7 @@ public class UI extends Application{
 		neptune.setImage("/Image/Textures/Neptune.JPG");
 		solarSystem.getChildren().add(neptune.getShape());
 
-		Orbit probe = new Orbit((double) 63710 / 2000); //500 meters
+		Orbit probe = new Orbit((double) 63710 / 3500); //500 meters
 		probe.setImage("/Image/Textures/probe.JPG");
 		solarSystem.getChildren().add(probe.getShape());
 
@@ -169,7 +169,7 @@ public class UI extends Application{
 				case E -> {
 					camera.translateXProperty().set(orbitArr[3].getShape().getTranslateX());
 					camera.translateYProperty().set(orbitArr[3].getShape().getTranslateY());
-					camera.translateZProperty().set(-500);
+					camera.translateZProperty().set(-3000);
 				}
 				case T -> {
 					camera.translateXProperty().set(orbitArr[7].getShape().getTranslateX());
@@ -279,7 +279,7 @@ public class UI extends Application{
 
 			PathTransition transition = new PathTransition();
 			transition.setNode(f.getOrbit()[i].getShape());
-			transition.setDuration(Duration.seconds(150));
+			transition.setDuration(Duration.seconds(90));
 			transition.setPath(polyline);
 			transition.setCycleCount(PathTransition.INDEFINITE);
 

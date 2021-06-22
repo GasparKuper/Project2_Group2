@@ -10,6 +10,12 @@ public class PhaseLandingClose {
 
     private final double G = 1.352;
 
+    /**
+     * Landing
+     * @param state current State of the lander
+     * @param step step size
+     * @return result of the landing
+     */
     public ArrayList<Lander> phaseLanding(Lander state, double step){
 
         ArrayList<Lander> result = new ArrayList<>();

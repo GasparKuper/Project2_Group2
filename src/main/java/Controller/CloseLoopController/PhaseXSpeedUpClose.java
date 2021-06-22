@@ -9,25 +9,24 @@ import java.util.ArrayList;
 public class PhaseXSpeedUpClose {
 
     /**
-     *
+     * Speed up the lander
+     * @param step step size
      * @param state The state of the lander
-     * @param time time to reach the max Velocity for the lander
+     * @param timeInput time to reach the max Velocity for the lander
      * @return Trajectory of the lander
      */
-    public ArrayList<Lander> phaseSpeedUp(Lander state, double time, double step){
+    public ArrayList<Lander> phaseSpeedUp(Lander state, double timeInput, double step){
 
-
+        double time = timeInput + 23.0;
         ArrayList<Lander> result = new ArrayList<>();
         result.add(state);
 
         Integration update = new Integration();
         FuelCalculationLander fuel = new FuelCalculationLander();
 
-        double tmp1 = time - 40.0;
-
         //todo Speed up Velocity X
         int point = 0;
-        for (double i = 0; i < tmp1; i+=step) {
+        for (double i = 0; i < time; i+=step) {
             Lander lastState = result.get(point);
             //Distance to x = 0
             double distance = lastState.getPosition().getX();
@@ -41,7 +40,7 @@ public class PhaseXSpeedUpClose {
             double sin = Math.sin(degreeInRadians);
 
             // Acceleration_x = Vx_max / time
-            double x_Acceleration = ((Vx_max / tmp1));
+            double x_Acceleration = ((Vx_max / time));
 
             //U = ||Acceleration_x / sin(theta)||
             double u = Math.abs(x_Acceleration/sin);

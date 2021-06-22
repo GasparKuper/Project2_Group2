@@ -9,8 +9,9 @@ import java.util.ArrayList;
 public class PhaseXSlowDownClose {
 
     /**
-     *
+     * Slow down the lander
      * @param state The state of the lander
+     * @param step step size
      * @return Trajectory of the lander
      */
     public ArrayList<Lander> phaseToSlowDownX(Lander state, double step){

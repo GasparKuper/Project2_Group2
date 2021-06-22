@@ -9,6 +9,14 @@ public class Integration {
 
     private final double G = 1.352;
 
+    /**
+     * Calculate double integral
+     * @param state current state of the lander
+     * @param u_mainThrust U = main engine
+     * @param v_sideThrust V = side engines
+     * @param step step size
+     * @return new state of the lander
+     */
     public Lander step(Lander state, double u_mainThrust, double v_sideThrust, double step){
 
         Lander lander = state.clone();

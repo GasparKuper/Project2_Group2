@@ -26,6 +26,12 @@ task runSolver(type: JavaExec) {
     main = 'Run.RunSolver'
 }
 
+task fuel(type: JavaExec) {
+    standardInput = System.in
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'Run.CalculationForProbe.FuelCalculation'
+}
+
 task runVelocity(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'Run.InitialValuesCalculation'
