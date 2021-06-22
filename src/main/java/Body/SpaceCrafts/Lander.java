@@ -37,11 +37,49 @@ public class Lander {
     }
 
     //Direction of the wind
-    private static double changeDirection = 1.0;
+    private static double DirectionWind = 1.0;
 
     public Vector2d generateRandomWind(double step, double deviation){
-        return new Vector2d(0.075,0);
+        double max = 1.0 + deviation;
+        double min = 1.0 - deviation;
+        //todo For experiments change the deviation
+        double randomDeviation = ((Math.random() * (max - min)) + min);
+
+        //Change direction of the wind 5%
+        double randomNumber = Math.random();
+        if(randomNumber > 0.75 && randomNumber < 0.8)
+            DirectionWind *= -1;
+
+        //Maximum speed of the wind
+        //https://www.nasa.gov/mission_pages/cassini/whycassini/cassinif-20070601-05.html
+        double maxSpeed = 120;
+
+        //On the land of the titan, the wind force is 0.3 meters per second
+        //Based on our assumptions, we can assume that 1 km from the Titan = 1 m/s, but its not realistic,
+        // if the lander above 120 km, the speed of the wind is increased,
+        // so on 120km, we have the maximum speed and above the wind force is decreased
+        double heightInfluence = getPosition().getY() / 120000.0;
+
+        if(heightInfluence >= 2.0)
+            heightInfluence = 0;
+
+        if(heightInfluence > 1.0)
+            heightInfluence -= 1;
+
+        //Area of the lander
+        double sideArea = 25.0;
+
+        double windSpeed = ((maxSpeed * heightInfluence) * randomDeviation) * DirectionWind;
+
+        //Wind Force
+        double windForce = sideArea * windSpeed;
+
+        //Wind acceleration = Wind Force / mass of the lander
+        double windAcceleration = windForce/mass;
+
+        return new Vector2d(windAcceleration * step, 0);
     }
+
 
     public Lander clone(){
         return new Lander(position, velocity, mass, fuel, rotation, rotationVelocity);
