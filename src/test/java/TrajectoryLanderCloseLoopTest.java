@@ -48,7 +48,6 @@ public class TrajectoryLanderCloseLoopTest {
             BigDecimal a = new BigDecimal("0.1");
             for (int i = 0; i < trajectory.size(); i++) {
                 String row = a + "," + trajectory.get(i).getPosition().getX() + "," + trajectory.get(i).getPosition().getY() + "," + trajectory.get(i).getVelocity().getX() + "," + trajectory.get(i).getVelocity().getY() + "," + trajectory.get(i).getRotation() + "," + trajectory.get(i).getRotationVelocity();
-                System.out.println(row);
                 writer.write(row + "\n");
                 a = a.add(new BigDecimal("0.1"));
             }
