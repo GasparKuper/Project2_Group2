@@ -63,6 +63,11 @@
    ***gradle runExperiments*** <br /><br />
    ![](readmeImages/runExperiments.png) <br /> <br />
    
+   ### Fuel calculation
+   To watch experiments with solvers, run this command on the terminal inside the main directory (*You need to see "src" folder*): <br /><br />
+   ***gradle fuel*** <br /><br />
+   ![](readmeImages/fuel.png) <br /> <br />
+   
    
 
   
@@ -76,7 +81,7 @@
   Final time = 1 year 6 hours (Average = 3 year and 1 leap year) <br /> 
   ### Implicit Euler
   **&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Earth &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Titan &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;  <br />** 
-  <img src="readmeImages/ImplicitEarth.jpg" width="300" height="200"> &emsp;  <img src="readmeImages/ImplicitTitan.png" width="300" height="200"> &emsp;  <img src="readmeImages/IP.png" width="300" height="200"> <br />
+  <img src="readmeImages/ImplicitEarth.jpg" width="300" height="200"> &emsp;  <img src="readmeImages/ImplicitTitan.png" width="300" height="200">  
 
 |   | 1 day experiments | 1 year and 6 hours experiments |
 | ------------- | ------------- | ------------- |
@@ -90,7 +95,7 @@
 
   ### Symplectic Euler
   **&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Earth &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Titan &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;  <br />** 
-  <img src="readmeImages/SymplEarth.png" width="300" height="200"> &emsp;  <img src="readmeImages/SymplTitan.png" width="300" height="200"> &emsp;  <img src="readmeImages/SP.png" width="300" height="200"> <br />
+  <img src="readmeImages/SymplEarth.png" width="300" height="200"> &emsp;  <img src="readmeImages/SymplTitan.png" width="300" height="200">   
   
 |   | 1 day experiments | 1 year and 6 hours experiments |
 | ------------- | ------------- | ------------- |
@@ -104,7 +109,7 @@
 
   ### Verlet-Velocity (Leap-frog integration)
   **&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Earth &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Titan &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;  <br />** 
-  <img src="readmeImages/VerletEarth.png" width="300" height="200"> &emsp;  <img src="readmeImages/VerletTitan.png" width="300" height="200"> &emsp;  <img src="readmeImages/VP.png" width="300" height="200"> <br />
+  <img src="readmeImages/VerletEarth.png" width="300" height="200"> &emsp;  <img src="readmeImages/VerletTitan.png" width="300" height="200">  
 
 |   | 1 day experiments | 1 year and 6 hours experiments |
 | ------------- | ------------- | ------------- |
@@ -118,7 +123,7 @@
 
   ### 4th order Runge-Kutta
   **&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Earth &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Titan &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;  <br />** 
-  <img src="readmeImages/RungaEath.png" width="300" height="200"> &emsp;  <img src="readmeImages/RungaTitan.png" width="300" height="200"> &emsp;  <img src="readmeImages/RP.png" width="300" height="200"> <br />
+  <img src="readmeImages/RungaEath.png" width="300" height="200"> &emsp;  <img src="readmeImages/RungaTitan.png" width="300" height="200">  
 
 |   | 1 day experiments | 1 year and 6 hours experiments |
 | ------------- | ------------- | ------------- |
@@ -129,3 +134,25 @@
 |The worst step size|1 day|1 day|
 |Average relative error|0.0066612%|107.23832829%|
 |Run time|less than 0ms|21.0ms|
+
+# A Titanic Space Odyssey
+## Mission to Titan
+Reach the Titan after 713 day 18 hours 33 minutes 20 seconds. Images below illustrate the trajectory of the probe Position and Velocity <br /><br />
+<img src="readmeImages/toTitanP.png" width="300" height="200"> &emsp;  <img src="readmeImages/toTitanV.png" width="300" height="200">
+## Stay on the orbit of Titan
+Stay on the orbit of Titan 30 days. Images below illustrate the trajectory of the probe Position and Velocity <br /><br />
+<img src="readmeImages/orbitTitanP.png" width="300" height="200"> &emsp;  <img src="readmeImages/orbitTitanV.png" width="300" height="200">
+## Return mission to Earth
+Reach the Earth after 713 day 18 hours 31 minutes 56 seconds. Images below illustrate the trajectory of the probe Position and Velocity <br /><br />
+<img src="readmeImages/toEarthP.png" width="300" height="200"> &emsp;  <img src="readmeImages/toEarthV.png" width="300" height="200">
+
+# Landing Mission on Titan
+## Line chart representation
+Images below illustrate the trajectory of the lander Position / Velocity / Angle / Angle Velocity <br /><br />
+<img src="readmeImages/landerP.png" width="300" height="200"> &emsp;  <img src="readmeImages/landerV.png" width="300" height="200"> <br />
+<img src="readmeImages/landerA.png" width="300" height="200"> &emsp;  <img src="readmeImages/landerAV.png" width="300" height="200">
+## Stochastic Wind
+Images below illustrate the trajectory of the lander under influence stochastic wind Position and Velocity <br /><br />
+<img src="readmeImages/wind1.png" width="300" height="200"> &emsp;  <img src="readmeImages/wind1V.png" width="300" height="200"> <br />
+<img src="readmeImages/wind2.png" width="300" height="200"> &emsp;  <img src="readmeImages/wind2V.png" width="300" height="200"> <br />
+<img src="readmeImages/wind3.png" width="300" height="200"> &emsp;  <img src="readmeImages/wind3V.png" width="300" height="200"> <br />
