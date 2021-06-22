@@ -54,7 +54,7 @@ public class PhaseLandingClose {
         //U = |Acceleration_y / cos(theta)| + G
         double u_ToSlowDown = Math.abs(y_Acceleration_ToSlowDown / cos) + G;
 
-        while (timeLanding >= step) {
+        while (timeLanding >= step && lastState.getPosition().getY() > -10.0) {
             Lander tmp = update.step(result.get(point++), u_ToSlowDown, 0, step);
             result.add(tmp);
 

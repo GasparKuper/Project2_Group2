@@ -102,7 +102,7 @@ public class SolversGUI extends Application {
 
         closeLandingWind.setOnAction(e -> {
             WIND = true;
-            ArrayList<Lander> lander = new CloseLoopController().land();
+            ArrayList<Lander> lander = new CloseLoopController().getSimulation();
             printResult(lander);
             WIND = false;
         });

@@ -190,6 +190,11 @@ public class OpenLoopController {
         return trajectory.get(trajectory.size()-1);
     }
 
+    public ArrayList<Lander> getSimulation(){
+        Lander lander = new Lander(new Vector2d(-278000, 207000), new Vector2d(0, 0), 6000, 0, 0, 0);
+        return calculatePhase(lander, 3.0);
+    }
+
     public static void main(String[] args) {
         OpenLoopController mission = new OpenLoopController();
         mission.land();
