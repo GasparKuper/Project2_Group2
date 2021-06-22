@@ -5,7 +5,6 @@ import Body.Vector.Vector3d;
 import static Constant.Constant.SOLVER;
 import static org.junit.jupiter.api.Assertions.*;
 
-import ODESolver.Function.ODEFunction;
 import jdk.jfr.Description;
 import org.junit.jupiter.api.*;
 import static Constant.Constant.FLAG_VERLET_TEST;

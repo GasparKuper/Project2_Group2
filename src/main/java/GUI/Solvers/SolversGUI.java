@@ -136,8 +136,9 @@ public class SolversGUI extends Application {
      */
     private void printResult(ArrayList<Lander> phase){
         Lander first = phase.get(0);
-        System.out.println("Initial position of the lander " + first.getPosition().getX() + "     " + first.getPosition().getY());
+        System.out.println("\n\nInitial position of the lander " + first.getPosition().getX() + "     " + first.getPosition().getY());
         Lander t = phase.get(phase.size() - 1);
+        System.out.println("\nFUEL need for this landing = " + t.getFuel());
         System.out.println("Position = " + t.getPosition().getX() + "     " + t.getPosition().getY());
         System.out.println("Velocity = " + t.getVelocity().getX() + "     " + t.getVelocity().getY());
         System.out.println("Degree = " + t.getRotation());

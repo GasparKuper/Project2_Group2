@@ -5,6 +5,7 @@ import Body.SpaceCrafts.Lander;
 import Body.SpaceCrafts.State;
 import Body.Vector.Vector2d;
 import Body.Vector.Vector3d;
+import Controller.CloseLoopController.CloseLoopController;
 import Run.MissionProbe;
 
 import java.util.ArrayList;
@@ -63,7 +64,6 @@ public class OpenLoopController {
 
 //        printResult(phaseLanding, true);
 
-        System.out.println("\n\nFUEL need for this landing = " + phaseLanding.get(phaseLanding.size() - 1).getFuel());
         //Write all data into one array
         result.addAll(phaseLanding);
 
@@ -182,6 +182,12 @@ public class OpenLoopController {
         }
         if(flag)
             throw new RuntimeException("stop");
+    }
+
+    public Lander getLast(){
+        Lander lander = new Lander(new Vector2d(-278000, 207000), new Vector2d(0, 0), 6000, 0, 0, 0);
+        ArrayList<Lander> trajectory = calculatePhase(lander, 3.0);
+        return trajectory.get(trajectory.size()-1);
     }
 
     public static void main(String[] args) {
